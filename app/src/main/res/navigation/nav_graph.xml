@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_vistageneralfragment">
+
+    <fragment
+        android:id="@+id/navigation_vistageneralfragment"
+        android:name="com.example.soluemergencias.ui.vistageneral.VistaGeneralFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_vista_general">
+
+        <action
+            android:id="@+id/action_navigation_vistageneralfragment_to_navigation_perfil"
+            app:destination="@id/navigation_perfil" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="com.example.soluemergencias.ui.perfil.PerfilFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_perfil">
+        <action
+            android:id="@+id/action_navigation_perfil_to_navigation_vistageneralfragment"
+            app:destination="@id/navigation_vistageneralfragment" />
+    </fragment>
+</navigation>

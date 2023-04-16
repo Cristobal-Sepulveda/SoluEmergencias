@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "287286791125",
+    "project_id": "soluemergencias",
+    "storage_bucket": "soluemergencias.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287286791125:android:85d519b6461598bcd60b5c",
+        "android_client_info": {
+          "package_name": "com.example.soluemergencias"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287286791125-4ssgacu3qen430a51j9h9o43me6rb2df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGbaSGU67-zjiTpJpbgLcsnNAe6NDhKE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287286791125-4ssgacu3qen430a51j9h9o43me6rb2df.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

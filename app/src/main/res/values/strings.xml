@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">SoluEmergencias</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="no_hay_internet">No tienes internet por lo que no podras usar la app.</string>
+    <string name="login_error_campos_vacios">Debes completar ambos campos antes de iniciar sesión</string>
+    <string name="login_error_credenciales_incorrectas">Usuario y/o contraseña erroneos.</string>
+    <string name="email">email</string>
+    <string name="password">contraseña</string>
+    <string name="button_login">Iniciar sesión</string>
+    <string name="loading">Cargando</string>
+    <string name="logo_abastible">Logo_app</string>
+    <string name="logo_jorge_gas">Logo app</string>
+    <string name="enviarMensaje">Enviar mensaje</string>
+    <string name="olvidaste_tu_contrasenia">¿Olvidaste tu contraseña?</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="mail">Mail</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="soluemergencias">SoluEmergencias</string>
+</resources>
