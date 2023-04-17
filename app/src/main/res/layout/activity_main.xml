@@ -8,44 +8,114 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ActionBar">
+        android:layout_height="match_parent"
+        >
+        <include layout="@layout/content_main" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/navdrawer_menu"
+            app:headerLayout="@layout/drawer_nav_header">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="?android:attr/actionBarSize"
-                android:contentDescription="@string/logo_jorge_gas"
-                android:paddingStart="0dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="30dp"
-                android:paddingBottom="13dp"
-                android:src="@drawable/logo_normal"
-                tools:ignore="ImageContrastCheck" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:clickable="true"
+                android:orientation="vertical">
 
-        </androidx.appcompat.widget.Toolbar>
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_primeros_pasos"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/primeros_pasos"
+                    />
 
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/primeros_pasos_pregunta"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    />
 
-    </com.google.android.material.appbar.AppBarLayout>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/primeros_pasos_pregunta_contenido"
+                    android:layout_marginHorizontal="@dimen/space_big"
+                    />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/ver_aquí"
+                    android:textColor="@color/hiperlink"
+                    android:layout_marginBottom="100dp"
+                    />
 
-    <include layout="@layout/content_main" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#EEEEEE"
+                    >
+                    <ImageView
+                        android:id="@+id/imageView_footer_logo"
+                        android:layout_height="50dp"
+                        android:layout_width="50dp"
+                        android:layout_marginStart="@dimen/space_big"
+                        android:layout_marginVertical="@dimen/space_big"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/icono_app_sin_fondo"
+                        android:contentDescription="@string/logo_jorge_gas"
+                        />
 
+                    <TextView
+                        android:id="@+id/textView_footer_jorgeGas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_small"
+                        app:layout_constraintStart_toEndOf="@+id/imageView_footer_logo"
+                        app:layout_constraintTop_toTopOf="@+id/imageView_footer_logo"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView_footer_logo"
+                        android:text="@string/jorgegas"
+                        android:textAppearance="?attr/textAppearanceHeadline6"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        android:contentDescription="@string/enviarMensaje" />
+                    <TextView
+                        android:id="@+id/textView_footer_app"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/textView_footer_jorgeGas"
+                        app:layout_constraintTop_toTopOf="@+id/imageView_footer_logo"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView_footer_logo"
+                        android:text="@string/app"
+                        android:layout_marginStart="@dimen/space_small"/>
+
+                    <TextView
+                        android:id="@+id/textView_footer_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView_footer_logo"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_footer_jorgeGas"
+                        android:text="@string/version" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

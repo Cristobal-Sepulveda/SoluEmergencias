@@ -3,6 +3,9 @@ package com.example.soluemergencias
 import android.app.Application
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.AppRepository
+import com.example.soluemergencias.data.app_database.getDatabase
+import com.example.soluemergencias.ui.crearcuenta.CrearCuentaViewModel
+import com.example.soluemergencias.ui.login.LoginViewModel
 import com.example.soluemergencias.ui.perfil.PerfilViewModel
 import com.example.soluemergencias.ui.vistageneral.VistaGeneralViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -34,15 +37,25 @@ class MyApp : Application() {
                     get() as AppDataSource
                 )
             }
-/*
+            single {
+                CrearCuentaViewModel(
+                    get(),
+                    get() as AppDataSource
+                )
+            }
+            single{
+                LoginViewModel(
+                    get(),
+                    get() as AppDataSource
+                )
+            }
             single { getDatabase(this@MyApp).usuarioDao }
-            single { getDatabase(this@MyApp).latLngYHoraActualDao }
-            single { getDatabase(this@MyApp).jwtDao }
-*/
+/*            single { getDatabase(this@MyApp).latLngYHoraActualDao }
+            single { getDatabase(this@MyApp).jwtDao }*/
 
             //REPOSITORY
             //single { AppRepository(get(),get(),get()) as AppDataSource }
-            single { AppRepository() as AppDataSource }
+            single { AppRepository(get()) as AppDataSource }
         }
 
         startKoin {

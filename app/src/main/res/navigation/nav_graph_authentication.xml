@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_loginfragment">
+
+    <fragment
+        android:id="@+id/navigation_loginfragment"
+        android:name="com.example.soluemergencias.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_navigation_loginfragment_to_navigation_crearcuentafragment"
+            app:destination="@id/navigation_crearcuentafragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_crearcuentafragment"
+        android:name="com.example.soluemergencias.ui.crearcuenta.CrearCuentaFragment"
+        android:label="CrearCuentaFragment" >
+        <action
+            android:id="@+id/action_navigation_crearcuentafragment_to_navigation_loginfragment"
+            app:destination="@id/navigation_loginfragment"
+            app:popUpTo="@id/navigation_loginfragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+
+</navigation>

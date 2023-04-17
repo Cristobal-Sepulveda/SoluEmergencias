@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.conductor.R
 import com.example.conductor.adapter.UsuarioAdapter
-import com.example.conductor.data.data_objects.domainObjects.Usuario
+import com.example.soluemergencias.data.data_objects.domainObjects.Usuario
 import com.example.conductor.ui.administrarcuentas.CloudRequestStatus
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

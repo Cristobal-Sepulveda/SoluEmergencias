@@ -26,6 +26,7 @@ class VistaGeneralFragment : Fragment() {
     ): View? {
 
         _binding = FragmentVistaGeneralBinding.inflate(inflater, container, false)
+
         return binding.root
 
     }

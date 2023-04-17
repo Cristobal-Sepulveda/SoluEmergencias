@@ -1,7 +1,10 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="space_very_small">4dp</dimen>
     <dimen name="space_small">8dp</dimen>
     <dimen name="space_big">24dp</dimen>
     <dimen name="space_bigger">48dp</dimen>
     <dimen name="space_biggest">96dp</dimen>
+    <dimen name="font_title">36sp</dimen>
+    <dimen name="font_normal">24sp</dimen>
 </resources>
