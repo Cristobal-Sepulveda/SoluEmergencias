@@ -1,206 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageView_crearCuenta_fotoPerfil"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="#c3c3c3"
-        android:src="@drawable/ic_baseline_person_grey_24"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_biggest"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <TextView
-        android:id="@+id/textView_crearCuenta_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_biggest"
-        app:layout_constraintStart_toEndOf="@id/imageView_crearCuenta_fotoPerfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/crear_cuenta"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textSize="@dimen/font_normal"
-        android:textColor="@color/azulMarino"
-        />
-
-    <Button
-        android:id="@+id/button_crearCuenta_tomarFoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_big"
-        app:layout_constraintTop_toBottomOf="@id/textView_crearCuenta_titulo"
-        app:layout_constraintStart_toStartOf="@id/textView_crearCuenta_titulo"
-        app:layout_constraintEnd_toEndOf="@id/textView_crearCuenta_titulo"
-        android:text="@string/tomar_foto"
-        />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_nombreCompleto"
-        style="?attr/textInputOutlinedStyle"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginEnd="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_small"
-        app:endIconMode="clear_text"
-        android:hint="@string/nombrecompleto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_crearCuenta_fotoPerfil"
-        app:expandedHintEnabled="false"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_dataUsuario_nombreCompleto"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_crearCuenta_fotoPerfil"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_big"
+            android:background="#c3c3c3"
+            android:src="@drawable/ic_baseline_person_grey_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_crearCuenta_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/crear_cuenta"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@color/azulMarino"
+            android:textSize="@dimen/font_normal"
+            app:layout_constraintEnd_toEndOf="@+id/textField"
+            app:layout_constraintStart_toStartOf="@+id/textField"
+            app:layout_constraintTop_toTopOf="@id/imageView_crearCuenta_fotoPerfil" />
+
+        <Button
+            android:id="@+id/button_crearCuenta_tomarFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tomar_foto"
+            app:layout_constraintBottom_toTopOf="@id/textField"
+            app:layout_constraintEnd_toEndOf="@+id/textField"
+            app:layout_constraintStart_toStartOf="@+id/textField"
+            app:layout_constraintTop_toBottomOf="@id/textView_crearCuenta_titulo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            app:layout_constraintStart_toEndOf="@id/imageView_crearCuenta_fotoPerfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_crearCuenta_fotoPerfil"
+            app:expandedHintEnabled="false"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/editText_dataUsuario_rol"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:hint="@string/perfil" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_nombreCompleto"
+            style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_small"
+            app:endIconMode="clear_text"
+            android:hint="@string/nombrecompleto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_crearCuenta_fotoPerfil"
+            app:expandedHintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_dataUsuario_nombreCompleto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_telefono"
-        style="?attr/textInputOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginEnd="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_very_small"
-        app:endIconMode="clear_text"
-        android:hint="@string/telefono"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_nombreCompleto"
-        app:expandedHintEnabled="false"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_dataUsuario_telefono"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_rut"
+            style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_small"
+            app:endIconMode="clear_text"
+            android:hint="@string/rut"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_nombreCompleto"
+            app:expandedHintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_dataUsuario_rut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_usuario"
-        style="?attr/textInputOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginEnd="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_very_small"
-        app:endIconMode="clear_text"
-        android:hint="@string/email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_telefono"
-        app:expandedHintEnabled="false">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_dataUsuario_usuario"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_telefono"
+            style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_very_small"
+            app:endIconMode="clear_text"
+            android:hint="@string/telefono"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_rut"
+            app:expandedHintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_dataUsuario_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_password"
-        style="?attr/textInputOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginEnd="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_very_small"
-        app:endIconMode="clear_text"
-        android:hint="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_usuario"
-        app:expandedHintEnabled="false"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_dataUsuario_password"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_usuario"
+            style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_very_small"
+            app:endIconMode="clear_text"
+            android:hint="@string/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_telefono"
+            app:expandedHintEnabled="false">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_dataUsuario_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_confirmarPassword"
-        style="?attr/textInputOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginEnd="@dimen/space_big"
-        android:layout_marginTop="@dimen/space_very_small"
-        app:endIconMode="clear_text"
-        android:hint="@string/confirmar_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password"
-        app:expandedHintEnabled="false"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_dataUsuario_confirmarPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_password"
+            style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_very_small"
+            app:endIconMode="clear_text"
+            android:hint="@string/password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_usuario"
+            app:expandedHintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_dataUsuario_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_big"
-        android:layout_marginEnd="@dimen/space_big"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_confirmarPassword"
-        app:expandedHintEnabled="false"
-        >
-
-        <AutoCompleteTextView
-            android:id="@+id/editText_dataUsuario_rol"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_confirmarPassword"
+            style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="none"
-            android:hint="@string/perfil" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/button_dataUsuario_volver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/volver"
-        android:textColor="@color/azulMarino"
-        app:layout_constraintBottom_toBottomOf="@+id/button_dataUsuario_confirmar"
-        app:layout_constraintEnd_toStartOf="@id/button_dataUsuario_confirmar"
-        app:layout_constraintTop_toTopOf="@id/button_dataUsuario_confirmar" />
-
-    <Button
-        android:id="@+id/button_dataUsuario_confirmar"
-        style="@style/buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_small"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="@dimen/space_big"
-        android:text="@string/confirmar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textField" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginEnd="@dimen/space_big"
+            android:layout_marginTop="@dimen/space_very_small"
+            app:endIconMode="clear_text"
+            android:hint="@string/confirmar_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password"
+            app:expandedHintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_dataUsuario_confirmarPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/button_dataUsuario_volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/volver"
+            android:textColor="@color/azulMarino"
+            app:layout_constraintBottom_toBottomOf="@+id/button_dataUsuario_confirmar"
+            app:layout_constraintEnd_toStartOf="@id/button_dataUsuario_confirmar"
+            app:layout_constraintTop_toTopOf="@id/button_dataUsuario_confirmar" />
+
+        <Button
+            android:id="@+id/button_dataUsuario_confirmar"
+            style="@style/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="@dimen/space_big"
+            android:text="@string/confirmar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayout_confirmarPassword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

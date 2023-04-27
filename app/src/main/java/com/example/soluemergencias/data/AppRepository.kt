@@ -52,6 +52,7 @@ class AppRepository(private val usuarioDao: UsuarioDao,
                     val usuario = Usuario(
                         document.id,
                         document.get("nombreCompleto") as String,
+                        document.get("fotoPerfil") as String,
                         document.get("telefono") as String,
                         document.get("usuario") as String,
                         document.get("password") as String,
@@ -73,6 +74,7 @@ class AppRepository(private val usuarioDao: UsuarioDao,
                 return@withContext usuarioDao.obtenerUsuarios()
         }
     }
+
     override suspend fun eliminarUsuariosEnSqlite() {
         withContext(ioDispatcher) {
             usuarioDao.eliminarUsuarios()
@@ -95,6 +97,7 @@ class AppRepository(private val usuarioDao: UsuarioDao,
             deferred.await()
         }
     }
+
     override suspend fun sesionActivaAFalseYLogout(context: Context):Boolean = withContext(ioDispatcher){
         withContext(ioDispatcher) {
             val deferred = CompletableDeferred<Boolean>()

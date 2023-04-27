@@ -12,8 +12,8 @@
     <string name="no_hay_internet">No tienes internet por lo que no podras usar la app.</string>
     <string name="login_error_campos_vacios">Debes completar ambos campos antes de iniciar sesión</string>
     <string name="login_error_credenciales_incorrectas">Usuario y/o contraseña erroneos.</string>
-    <string name="email">email</string>
-    <string name="password">contraseña</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
     <string name="button_login">Iniciar sesión</string>
     <string name="loading">Cargando</string>
     <string name="logo_abastible">Logo_app</string>
@@ -55,4 +55,11 @@
     <string name="error_al_logear_en_firebaseauth">Hubo un problema con firebase. comuniquese con su administrador.</string>
     <string name="login_error_no_hay_usuarios_en_firestore">Error al conectarse con firestore. intentelo nuevamente</string>
     <string name="sesion_activa_existente">Su cuenta ya esta activa en otro celular.</string>
+    <string name="rut">RUT</string>
+    <string name="permission_denied_explanation">Haz click en settings para otorgar el permiso de localización.</string>
+    <string name="settings">Settings</string>
+    <string name="aviso_de_permiso">SoluEmergencias necesita el permiso de localización para obtener tu ubicación en el momento que llames por una emergencia con el objetivo de compartirla si así la emergencia lo requierese.</string>
+    <string name="permiso_de_ubicacion">Permiso de ubicación</string>
+
+
 </resources>

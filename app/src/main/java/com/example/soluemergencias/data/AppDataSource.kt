@@ -6,7 +6,7 @@ import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
 import com.example.soluemergencias.data.data_objects.domainObjects.Usuario
 
 interface AppDataSource {
-    /*suspend fun eliminarTokenDeSesion()
+    /*suspend fun eliminarTokeanDeSesion()
     suspend fun validarTokenDeSesion(): Boolean*/
     suspend fun ingresarUsuarioAFirestore(usuario: Usuario, context: Context):Boolean
 

@@ -8,7 +8,7 @@ import java.util.Base64
 @Parcelize
 data class Usuario(
     val id: String,
-    //val fotoPerfil: String,
+    val fotoPerfil: String,
     val nombreCompleto: String,
     val telefono: String,
     val usuario: String,

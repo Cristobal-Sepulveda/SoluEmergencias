@@ -79,7 +79,6 @@ class CrearCuentaFragment: BaseFragment() {
         }
     }
 
-
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
@@ -88,7 +87,6 @@ class CrearCuentaFragment: BaseFragment() {
         }
     }
 
-
     private fun parseandoImagenParaSubirlaAFirestore(bitmap: Bitmap): String {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -96,24 +94,24 @@ class CrearCuentaFragment: BaseFragment() {
         return Base64.encodeToString(data, Base64.NO_PADDING)
     }
 
-
     private suspend fun canICreateANewAccountValidator() {
+        val foto = parseandoImagenParaSubirlaAFirestore(imageBitmap!!)
         val nombreCompleto = _binding!!.editTextDataUsuarioNombreCompleto.text.toString()
+        val rut = _binding!!.editTextDataUsuarioRut.text.toString()
         val telefono = _binding!!.editTextDataUsuarioTelefono.text.toString()
         val email = _binding!!.editTextDataUsuarioUsuario.text.toString()
         val password = _binding!!.editTextDataUsuarioPassword.text.toString()
         val password2 = _binding!!.editTextDataUsuarioConfirmarPassword.text.toString()
         val perfil = _binding!!.editTextDataUsuarioRol.text.toString();
 
-        if (validarInputsYFoto(nombreCompleto, email, password, password2, perfil)) return
+        if (validarInputsYFoto(nombreCompleto, rut, email, password, password2, perfil)) return
 
         val creandoUsuarioEnFirebaseAuth = firebaseAuth.createUserWithEmailAndPassword(email, password)
 
         creandoUsuarioEnFirebaseAuth.addOnSuccessListener{
-            //val foto = parseandoImagenParaSubirlaAFirestore(imageBitmap!!)
             val usuario = Usuario(
                 it.user!!.uid,
-                //foto,
+                foto,
                 nombreCompleto,
                 telefono,
                 email,
@@ -149,30 +147,37 @@ class CrearCuentaFragment: BaseFragment() {
         }
     }
 
-    private fun validarInputsYFoto(
-        nombreCompleto: String,
-        email: String,
-        password: String,
-        password2: String,
-        rol: String
-    ): Boolean {
-/*        if (imageBitmap == null) {
+    private fun validarInputsYFoto(nombreCompleto: String, rut: String, email: String, password: String, password2: String, rol: String): Boolean {
+        if (imageBitmap == null) {
             Snackbar.make(
                 _binding!!.root,
                 "Debes de tomar una foto para poder guardar un usuario",
                 Snackbar.LENGTH_LONG
             ).show()
             return true
-        }*/
-        if (nombreCompleto.isEmpty() || email.isEmpty() ||
-            password.isEmpty() || password2.isEmpty() || rol.isEmpty()) {
-
+        }
+        if (nombreCompleto.isEmpty() || rut.isEmpty() || email.isEmpty() || password.isEmpty() || password2.isEmpty() || rol.isEmpty()) {
             Snackbar.make(
                 _binding!!.root,
                 "Debes completar todos los campos antes de crear una cuenta.",
                 Snackbar.LENGTH_LONG
             ).show()
             return true
+        }
+        if (nombreCompleto.split(" ").size != 3) {
+            Snackbar.make(
+                _binding!!.root,
+                "Debe ingresar su nombre y sus 2 apellidos.",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return true
+        }
+        if (!isValidRut(rut)){
+            Snackbar.make(
+                _binding!!.root,
+                "El rut que ingresaste no es valido.",
+                Snackbar.LENGTH_LONG
+            ).show()
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Snackbar.make(
@@ -198,16 +203,29 @@ class CrearCuentaFragment: BaseFragment() {
             ).show()
             return true
         }
-        if (nombreCompleto.split(" ").size != 3) {
-            Snackbar.make(
-                _binding!!.root,
-                "Debe ingresar su nombre y sus 2 apellidos.",
-                Snackbar.LENGTH_LONG
-            ).show()
-            return true
-        }
+
         return false
     }
 
+    fun isValidRut(rut: String): Boolean {
+        var rutClean = rut.replace(".", "").replace("-", "")
+        if (rutClean.length != 9) return false
+        var dv = rutClean.last().toUpperCase()
+        if (!dv.isDigit() && dv != 'K') return false
+        rutClean = rutClean.dropLast(1)
+        var sum = 0
+        var factor = 2
+        for (i in rutClean.reversed()) {
+            sum += (i.toString().toInt() * factor)
+            factor = if (factor == 7) 2 else factor + 1
+        }
+        val dvCalc = 11 - (sum % 11)
+        val dvExpected = when (dvCalc) {
+            11 -> "0"
+            10 -> "K"
+            else -> dvCalc.toString()
+        }
+        return dv.toString() == dvExpected
+    }
 
 }
