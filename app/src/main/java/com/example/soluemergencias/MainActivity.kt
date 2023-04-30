@@ -24,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.databinding.ActivityMainBinding
+import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 if(dataSource.sesionActivaAFalseYLogout(this@MainActivity)){
-                    FirebaseAuth.getInstance().signOut()
+                    firebaseAuth.signOut()
                     this@MainActivity.finish()
                     startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
                 }

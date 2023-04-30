@@ -1,20 +1,27 @@
 package com.example.soluemergencias.ui.login
 
 import android.app.Application
-import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.conductor.ui.base.BaseViewModel
 import com.example.soluemergencias.data.AppDataSource
-import com.example.soluemergencias.data.data_objects.domainObjects.Usuario
+import com.example.soluemergencias.utils.Constants.CloudRequestStatus
 
 class LoginViewModel(val app: Application, val dataSource: AppDataSource): BaseViewModel(app) {
 
-    suspend fun obtenerUsuariosDesdeFirestore(): MutableList<Usuario>{
-        return dataSource.obtenerUsuariosDesdeFirestore()
-    }
+    private val _status = MutableLiveData<CloudRequestStatus>()
+    val status: LiveData<CloudRequestStatus>
+        get() = _status
 
-    suspend fun sesionActivaATrueYLogin(context: Context):Boolean{
-        return dataSource.sesionActivaATrueYLogin(context)
+    suspend fun iniciarLoginYValidacionesConRut(rut: String): Boolean{
+        _status.postValue(CloudRequestStatus.LOADING)
+        return if(dataSource.iniciarLoginYValidacionesConRut(rut)){
+            _status.postValue(CloudRequestStatus.DONE)
+            true
+        }else{
+            _status.postValue(CloudRequestStatus.ERROR)
+            false
+        }
     }
-
 
 }

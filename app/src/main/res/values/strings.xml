@@ -55,11 +55,20 @@
     <string name="error_al_logear_en_firebaseauth">Hubo un problema con firebase. comuniquese con su administrador.</string>
     <string name="login_error_no_hay_usuarios_en_firestore">Error al conectarse con firestore. intentelo nuevamente</string>
     <string name="sesion_activa_existente">Su cuenta ya esta activa en otro celular.</string>
-    <string name="rut">RUT</string>
+    <string name="rut">Rut</string>
     <string name="permission_denied_explanation">Haz click en settings para otorgar el permiso de localización.</string>
     <string name="settings">Settings</string>
     <string name="aviso_de_permiso">SoluEmergencias necesita el permiso de localización para obtener tu ubicación en el momento que llames por una emergencia con el objetivo de compartirla si así la emergencia lo requierese.</string>
     <string name="permiso_de_ubicacion">Permiso de ubicación</string>
+    <string name="falto_foto">Debes tomarte una foto para crear tu usuario.</string>
+    <string name="email_en_uso">El email ingresado ya esta en uso.</string>
+    <string name="error_al_crear_usuario_en_firebase_auth">En estos momentos no se puede crear la cuenta. Intentelo mas tarde</string>
+    <string name="usuario_creado_con_exito">La cuenta ha sido creada con éxito.</string>
+    <string name="rut_ya_esta_en_uso">El rut ingresado ya esta en uso.</string>
+    <string name="rut_no_encontrado_en_la_base_de_datos">El rut ingresado no esta asociado a ninguna cuenta. Revisa e intentalo nuevamente.</string>
+    <string name="usuario_ya_tiene_sesion_activa">Su sesión se encuentra activa en otro celular. Cierre sesión  e intentelo nuevamente.</string>
+    <string name="error_al_obtener_usuarios_en_firestore">Error al obtener usuarios en firestore</string>
+    <string name="error_al_iniciar_sesion_en_firebase_auth">Error al iniciar sesión con firebase Auth</string>
 
 
 </resources>

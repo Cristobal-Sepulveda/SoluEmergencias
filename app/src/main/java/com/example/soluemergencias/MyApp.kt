@@ -54,8 +54,7 @@ class MyApp : Application() {
             single { getDatabase(this@MyApp).jwtDao }*/
 
             //REPOSITORY
-            //single { AppRepository(get(),get(),get()) as AppDataSource }
-            single { AppRepository(get()) as AppDataSource }
+            single { AppRepository(applicationContext, get()) as AppDataSource }
         }
 
         startKoin {

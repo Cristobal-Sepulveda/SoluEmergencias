@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/space_bigger"
+        android:layout_marginTop="@dimen/space_biggest"
         android:text="@string/soluemergencias"
         android:textColor="@color/azulMarino"
         android:textAppearance="?attr/textAppearanceHeadline6"
@@ -33,7 +33,7 @@
         android:src="@drawable/app_logo" />
 
     <EditText
-        android:id="@+id/edittext_email"
+        android:id="@+id/edittext_rut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_bigger"
@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/space_big"
         android:background="@drawable/edittext_border"
         android:autofillHints="email"
-        android:hint="@string/mail"
+        android:hint="@string/rut"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         app:drawableStartCompat="@drawable/ic_baseline_person_24"
@@ -64,7 +64,7 @@
         app:drawableStartCompat="@drawable/ic_baseline_lock_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_email"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_rut"
         />
 
     <Button

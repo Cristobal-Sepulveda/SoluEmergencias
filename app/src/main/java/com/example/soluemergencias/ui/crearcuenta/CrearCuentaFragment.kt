@@ -14,11 +14,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.R
-import com.example.soluemergencias.data.data_objects.domainObjects.Usuario
+import com.example.soluemergencias.data.data_objects.domainObjects.PreDataUsuarioEnFirestore
 import com.example.soluemergencias.databinding.FragmentCrearCuentaBinding
 import com.example.soluemergencias.ui.base.BaseFragment
 import com.example.soluemergencias.utils.Constants.REQUEST_TAKE_PHOTO
-import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.NavigationCommand
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -34,22 +33,18 @@ class CrearCuentaFragment: BaseFragment() {
     private var imageBitmap: Bitmap? = null
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{
+
         _binding = FragmentCrearCuentaBinding.inflate(inflater, container, false)
 
         val perfiles = listOf("Dueño de casa","Asesora del Hogar")
         val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item,perfiles)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         _binding!!.editTextDataUsuarioRol.setAdapter(adapter)
 
         _binding!!.buttonDataUsuarioConfirmar.setOnClickListener{
             lifecycleScope.launch{
                 withContext(Dispatchers.IO){
-                    canICreateANewAccountValidator()
+                    canICreateANewAccountValidatorAndLauncher()
                 }
             }
         }
@@ -65,7 +60,7 @@ class CrearCuentaFragment: BaseFragment() {
                         .actionNavigationCrearcuentafragmentToNavigationLoginfragment())
         }
 
-        return _binding?.root
+        return _binding!!.root
     }
 
 
@@ -94,7 +89,11 @@ class CrearCuentaFragment: BaseFragment() {
         return Base64.encodeToString(data, Base64.NO_PADDING)
     }
 
-    private suspend fun canICreateANewAccountValidator() {
+    private suspend fun canICreateANewAccountValidatorAndLauncher() {
+        if(imageBitmap == null){
+            Snackbar.make(_binding!!.root, R.string.falto_foto, Snackbar.LENGTH_LONG).show()
+            return
+        }
         val foto = parseandoImagenParaSubirlaAFirestore(imageBitmap!!)
         val nombreCompleto = _binding!!.editTextDataUsuarioNombreCompleto.text.toString()
         val rut = _binding!!.editTextDataUsuarioRut.text.toString()
@@ -106,45 +105,10 @@ class CrearCuentaFragment: BaseFragment() {
 
         if (validarInputsYFoto(nombreCompleto, rut, email, password, password2, perfil)) return
 
-        val creandoUsuarioEnFirebaseAuth = firebaseAuth.createUserWithEmailAndPassword(email, password)
+        _viewModel.crearCuentaEnFirebaseAuthYFirestore(
+            PreDataUsuarioEnFirestore(foto, nombreCompleto, rut, telefono, email, password, perfil)
+        )
 
-        creandoUsuarioEnFirebaseAuth.addOnSuccessListener{
-            val usuario = Usuario(
-                it.user!!.uid,
-                foto,
-                nombreCompleto,
-                telefono,
-                email,
-                password,
-                sesionActiva = false,
-                perfil = perfil
-            )
-
-            lifecycleScope.launch{
-                withContext(Dispatchers.IO){
-                    val creandoUsuarioEnFirestore = _viewModel.ingresarUsuarioAFirestore(usuario, requireContext())
-                    if(creandoUsuarioEnFirestore){
-                        firebaseAuth.signOut()
-                        //firebaseAuth.signInWithEmailAndPassword(actualUserEmail!!, actualUserPassword).await()
-                        withContext(Dispatchers.Main){
-                            Toast.makeText(
-                                requireContext(),
-                                "La cuenta ha sido creada con exito.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                }
-            }
-
-        }
-
-        creandoUsuarioEnFirebaseAuth.addOnFailureListener {
-            Snackbar.make(_binding!!.root,
-                getString(R.string.error_al_crear_cuenta_fireauth),
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
     }
 
     private fun validarInputsYFoto(nombreCompleto: String, rut: String, email: String, password: String, password2: String, rol: String): Boolean {
@@ -207,7 +171,7 @@ class CrearCuentaFragment: BaseFragment() {
         return false
     }
 
-    fun isValidRut(rut: String): Boolean {
+    private fun isValidRut(rut: String): Boolean {
         var rutClean = rut.replace(".", "").replace("-", "")
         if (rutClean.length != 9) return false
         var dv = rutClean.last().toUpperCase()
