@@ -12,11 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.soluemergencias.R
 import com.example.soluemergencias.data.data_objects.domainObjects.PreDataUsuarioEnFirestore
 import com.example.soluemergencias.databinding.FragmentCrearCuentaBinding
-import com.example.soluemergencias.ui.base.BaseFragment
 import com.example.soluemergencias.utils.Constants.REQUEST_TAKE_PHOTO
 import com.example.soluemergencias.utils.NavigationCommand
 import com.google.android.material.snackbar.Snackbar
@@ -26,10 +27,10 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import java.io.ByteArrayOutputStream
 
-class CrearCuentaFragment: BaseFragment() {
+class CrearCuentaFragment: Fragment() {
 
     private var _binding: FragmentCrearCuentaBinding? = null
-    override val _viewModel: CrearCuentaViewModel by inject()
+    private val _viewModel: CrearCuentaViewModel by inject()
     private var imageBitmap: Bitmap? = null
 
 
@@ -54,10 +55,10 @@ class CrearCuentaFragment: BaseFragment() {
         }
 
         _binding!!.buttonDataUsuarioVolver.setOnClickListener{
-            _viewModel.navigationCommand.value =
-                NavigationCommand.To(
-                    CrearCuentaFragmentDirections
-                        .actionNavigationCrearcuentafragmentToNavigationLoginfragment())
+            findNavController().navigate(
+                CrearCuentaFragmentDirections
+                    .actionNavigationCrearcuentafragmentToNavigationLoginfragment()
+            )
         }
 
         return _binding!!.root

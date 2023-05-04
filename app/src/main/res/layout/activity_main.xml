@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    android:layout_height="match_parent">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <include layout="@layout/content_main" />
-
+        <include
+            android:id="@+id/fragment_base_interface"
+            layout="@layout/fragment_base_interface"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"/>
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
             android:layout_width="wrap_content"
@@ -61,7 +62,7 @@
                     android:layout_gravity="center"
                     android:text="@string/ver_aquí"
                     android:textColor="@color/hiperlink"
-                    android:layout_marginBottom="100dp"
+                    android:layout_marginBottom="@dimen/text_medium"
                     />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,5 +118,4 @@
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

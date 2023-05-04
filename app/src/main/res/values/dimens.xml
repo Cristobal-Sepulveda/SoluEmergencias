@@ -7,4 +7,5 @@
     <dimen name="space_biggest">96dp</dimen>
     <dimen name="font_title">36sp</dimen>
     <dimen name="font_normal">24sp</dimen>
+    <dimen name="text_medium">12sp</dimen>
 </resources>

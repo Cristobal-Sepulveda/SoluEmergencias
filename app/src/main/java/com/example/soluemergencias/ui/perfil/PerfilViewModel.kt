@@ -1,8 +1,9 @@
 package com.example.soluemergencias.ui.perfil
 
 import android.app.Application
-import com.example.conductor.ui.base.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.example.soluemergencias.data.AppDataSource
 
-class PerfilViewModel(val app: Application, val dataSource: AppDataSource,) : BaseViewModel(app){
+class PerfilViewModel(private val dataSource: AppDataSource) : ViewModel(){
+
 }

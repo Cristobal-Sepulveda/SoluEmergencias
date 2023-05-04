@@ -69,6 +69,13 @@
     <string name="usuario_ya_tiene_sesion_activa">Su sesión se encuentra activa en otro celular. Cierre sesión  e intentelo nuevamente.</string>
     <string name="error_al_obtener_usuarios_en_firestore">Error al obtener usuarios en firestore</string>
     <string name="error_al_iniciar_sesion_en_firebase_auth">Error al iniciar sesión con firebase Auth</string>
+    <string name="vista_general">Vista General</string>
+    <string name="registro">Registro</string>
+    <string name="error_logout">No se pudo cerrar sesión, Compruebe su conexión a internet.</string>
+    <string name="contactos_de_asistencia">Contactos de asistencia</string>
+    <string name="crear_nuevo_contacto">Crear contacto de asistencia</string>
+    <string name="ingresar_asesor_a">Ingresar Asesor/a</string>
+    <string name="notificar_a_asesor">Notificar a Asesor/a</string>
 
 
 </resources>

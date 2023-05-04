@@ -9,44 +9,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.soluemergencias.MainActivity
 import com.example.soluemergencias.R
 import com.example.soluemergencias.databinding.FragmentLoginBinding
-import com.example.soluemergencias.ui.base.BaseFragment
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class LoginFragment: BaseFragment() {
+class LoginFragment: Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
-    override val _viewModel: LoginViewModel by inject()
+    private val _viewModel: LoginViewModel by inject()
+
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        chequeandoSiYaHayUnUsuarioLogeadoEnAuthentication(firebaseAuth.currentUser)
 
-        hayUsuarioLogeado(firebaseAuth.currentUser)
 
-        _binding!!.textViewAuthenticationCrearCuenta.setOnClickListener{
-            findNavController().navigate(LoginFragmentDirections
-                .actionNavigationLoginfragmentToNavigationCrearcuentafragment()
-            )
-        }
-
-        _binding!!.loginButton.setOnClickListener{
-            lifecycleScope.launch(Dispatchers.IO){
-                iniciandoLogin()
+        _binding!!.apply{
+            this.loginButton.setOnClickListener{ lifecycleScope.launch(Dispatchers.IO){ login() } }
+            this.textViewAuthenticationCrearCuenta.setOnClickListener{ findNavController()
+                .navigate(R.id.action_navigation_loginfragment_to_navigation_crearcuentafragment)
             }
         }
 
         return _binding!!.root
     }
 
-    private fun hayUsuarioLogeado(user: FirebaseUser?){
+    private fun chequeandoSiYaHayUnUsuarioLogeadoEnAuthentication(user: FirebaseUser?){
         aparecerYDesaparecerElementosAlIniciarLogin()
         if (user != null) {
             val intent = Intent(requireActivity(), MainActivity::class.java)
@@ -56,7 +55,9 @@ class LoginFragment: BaseFragment() {
             aparecerYDesaparecerElementosTrasNoLogin()
         }
     }
-    private suspend fun iniciandoLogin() {
+
+
+    private suspend fun login() {
         aparecerYDesaparecerElementosAlIniciarLogin()
         val inputMethodManager = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(_binding!!.edittextPassword.windowToken, 0)
@@ -71,8 +72,10 @@ class LoginFragment: BaseFragment() {
                 ).show()
             }
         }
+        
+        
         if(!_viewModel.iniciarLoginYValidacionesConRut(rut)){
-            Log.e("LoginFragmentt", "iniciandoLogin: ${_viewModel.status.value}")
+            Log.e("LoginFragment", "iniciandoLogin: ${_viewModel.status.value}")
             aparecerYDesaparecerElementosTrasNoLogin()
         }else{
             Log.e("LoginFragment", "iniciandoLogin: ${_viewModel.status.value}")
@@ -81,6 +84,8 @@ class LoginFragment: BaseFragment() {
             startActivity(intent)
         }
     }
+
+
 
     private fun aparecerYDesaparecerElementosAlIniciarLogin() {
         lifecycleScope.launch(Dispatchers.Main) {
@@ -97,6 +102,9 @@ class LoginFragment: BaseFragment() {
             }
         }
     }
+
+
+
     private fun aparecerYDesaparecerElementosTrasNoLogin() {
         lifecycleScope.launch(Dispatchers.Main){
             _binding!!.apply{

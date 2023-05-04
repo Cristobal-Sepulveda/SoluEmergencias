@@ -27,25 +27,21 @@ class MyApp : Application() {
             //Declare singleton definitions to be later injected using by inject()
             single {
                 VistaGeneralViewModel(
-                    get(),
                     get() as AppDataSource
                 )
             }
             single {
                 PerfilViewModel(
-                    get(),
                     get() as AppDataSource
                 )
             }
             single {
                 CrearCuentaViewModel(
-                    get(),
                     get() as AppDataSource
                 )
             }
             single{
                 LoginViewModel(
-                    get(),
                     get() as AppDataSource
                 )
             }

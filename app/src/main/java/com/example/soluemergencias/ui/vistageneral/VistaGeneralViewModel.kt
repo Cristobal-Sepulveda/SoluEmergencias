@@ -1,9 +1,8 @@
 package com.example.soluemergencias.ui.vistageneral
 
-import android.app.Application
-import com.example.conductor.ui.base.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.example.soluemergencias.data.AppDataSource
 
-class VistaGeneralViewModel(val app: Application, val dataSource: AppDataSource,) : BaseViewModel(app){
+class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(){
 
 }
