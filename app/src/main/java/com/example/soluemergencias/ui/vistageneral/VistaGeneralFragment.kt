@@ -19,16 +19,11 @@ class VistaGeneralFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentVistaGeneralBinding.inflate(inflater, container, false)
-
-        _binding!!.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_vistageneralfragment_to_navigation_perfil)
+        _binding!!.apply{
         }
 
         return _binding!!.root
     }
-
-
-
 
 
 

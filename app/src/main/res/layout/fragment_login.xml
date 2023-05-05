@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/space_biggest"
-        android:text="@string/soluemergencias"
+        android:text="@string/solu_emergencias"
         android:textColor="@color/azulMarino"
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:textSize="@dimen/font_title"
@@ -25,12 +25,26 @@
         android:id="@+id/imageview_logoSoluEmergencias"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:contentDescription="@string/logo_abastible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/space_big"
         app:layout_constraintTop_toBottomOf="@id/textView_authentication_titulo"
-        android:src="@drawable/app_logo" />
+        android:layout_marginTop="@dimen/space_big"
+        android:src="@drawable/app_logo"
+        android:contentDescription="@string/logo_abastible"
+         />
+
+    <TextView
+        android:id="@+id/textView_authentication_inicieSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageview_logoSoluEmergencias"
+        android:layout_marginTop="@dimen/space_big"
+        android:text="¡Hola, antes de empezar, inicie sesión!"
+        android:textColor="@color/azulMarino"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edittext_rut"
@@ -47,7 +61,7 @@
         app:drawableStartCompat="@drawable/ic_baseline_person_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageview_logoSoluEmergencias"/>
+        app:layout_constraintTop_toBottomOf="@id/textView_authentication_inicieSesion"/>
 
     <EditText
         android:id="@+id/edittext_password"

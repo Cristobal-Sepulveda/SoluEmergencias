@@ -6,7 +6,7 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import com.example.soluemergencias.R
 
-fun Activity.showAlert(title: Int, message: Int, function: () -> Unit) {
+fun Activity.showAlertWithStringResources(title: Int, message: Int, function: () -> Unit) {
     AlertDialog.Builder(this)
         .setTitle(title)
         .setMessage(message)

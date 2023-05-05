@@ -7,6 +7,7 @@ import com.example.soluemergencias.data.app_database.getDatabase
 import com.example.soluemergencias.ui.crearcuenta.CrearCuentaViewModel
 import com.example.soluemergencias.ui.login.LoginViewModel
 import com.example.soluemergencias.ui.perfil.PerfilViewModel
+import com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel
 import com.example.soluemergencias.ui.vistageneral.VistaGeneralViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,11 @@ class MyApp : Application() {
             }
             single{
                 LoginViewModel(
+                    get() as AppDataSource
+                )
+            }
+            single{
+                VincularCuentasViewModel(
                     get() as AppDataSource
                 )
             }

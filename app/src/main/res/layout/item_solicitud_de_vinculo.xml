@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name ="solicitudItem"
+            type ="com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_item_listado_asistencia"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textView_itemSolicitudDeVinculo_nombreCompleto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{solicitudItem.nombreDelSolicitante}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_excel_content"
+            tools:text="nombreCompleto"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_weight="1.5" />
+
+        <TextView
+            android:id="@+id/textView_itemSolicitudDeVinculo_sueldoDiario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{solicitudItem.rutDelSolicitante}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_excel_content"
+            tools:text="17.740.260-5"
+            android:textAlignment="center"
+            android:layout_weight="1.4"
+            android:layout_marginHorizontal="@dimen/space_small"/>
+
+        <TextView
+            android:id="@+id/textView_itemSolicitudDeVinculo_diasTrabajados"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{solicitudItem.fechaDeSolicitud}"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_excel_content"
+            tools:text="12-12-2023"
+            android:layout_weight="1.2" />
+
+        <TextView
+            android:id="@+id/textView_itemSolicitudDeVinculo_sueldo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/por_aprobar"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_excel_content"
+            tools:text="@string/por_aprobar"
+            android:layout_weight="1.3"
+            android:layout_marginHorizontal="@dimen/space_small"
+            android:textAlignment="center"/>
+        
+        <ImageView
+            android:id="@+id/imageView_itemSolicitudDeVinculo_aprobar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_check_24"
+            android:layout_weight="0.4"
+            />
+        <ImageView
+            android:id="@+id/imageView_itemSolicitudDeVinculo_rechazar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_close_24"
+            android:layout_weight="0.4"
+            />
+    </LinearLayout>
+</layout>

@@ -17,17 +17,18 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="?android:attr/actionBarSize"
-                android:contentDescription="@string/logo_jorge_gas"
-                android:paddingStart="0dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="30dp"
-                android:paddingBottom="13dp"
-                android:src="@drawable/logo_normal"
-                tools:ignore="ImageContrastCheck" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SoluEmergencias"
+                android:textAlignment="center"
+                android:textColor="@color/azulMarino"
+                android:textSize="20sp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginEnd="25dp"
+                />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

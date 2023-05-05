@@ -24,7 +24,7 @@
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="mail">Mail</string>
     <string name="contraseña">Contraseña</string>
-    <string name="soluemergencias">SoluEmergencias</string>
+    <string name="solu_emergencias">SoluEmergencias</string>
     <string name="nombre_completo">Nombre Apellido Apellido</string>
     <string name="nombrecompleto">Nombre y Apellidos</string>
     <string name="apellidos">Apellidos</string>
@@ -76,6 +76,23 @@
     <string name="crear_nuevo_contacto">Crear contacto de asistencia</string>
     <string name="ingresar_asesor_a">Ingresar Asesor/a</string>
     <string name="notificar_a_asesor">Notificar a Asesor/a</string>
+    <string name="descripcion_vincular_cuentas">Para vincular su hogar con algun Asesor/a del hogar, ingrese el rut de este para enviarle una solicitud de vínculo</string>
+    <string name="error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube">Error al obtener datos desde la nube</string>
+    <string name="vincular_cuentas">Vincular Cuentas</string>
+    <string name="vistageneral_ui_duenodecasa_header">Aquí podrás ver todas las emergencias ocurridas en tu hogar</string>
+    <string name="solicitudes_por_aprobar">Solicitudes por aprobar</string>
+    <string name="error_cloud_request">No se pudieron obtener los datos desde la nube. Intentelo Nuevamente.</string>
+    <string name="en_estos_momentos_no_tienes_solicitudes_pendientes">En estos momentos no tienes solicitudes pendientes</string>
+    <string name="por_aprobar">Por aprobar</string>
+    <string name="atencion">Atención</string>
+    <string name="vincular_cuentas_solicitar_confirmacion">¿Estas seguro de que deseas enviar una solicitud a este rut?</string>
+    <string name="vincular_cuentas_solicitar_exito">Solicitud de vinculación enviada exitosamente.</string>
+    <string name="rut_invalido">El rut ingresado no es valido.</string>
+    <string name="solicitud_ya_existente">Según nuestros registros ya haz solicitado una vinculación a este rut por lo que debes esperar a que el usuario te acepte o rechace dicha solicitud antes de enviar una nueva.</string>
+    <string name="error_crear_solicitud">Ha ocurrido un error al crear la solicitud. Intentelo nuevamente.</string>
+    <string name="solicitud_creada">La solicitud ha sido creada con éxito.</string>
+    <string name="exito">La tarea ha sido completada con éxito.</string>
+    <string name="no_hay_solicitudes_por_aprobar">En estos momentos no tienes solicitudes pendientes.</string>
 
 
 </resources>

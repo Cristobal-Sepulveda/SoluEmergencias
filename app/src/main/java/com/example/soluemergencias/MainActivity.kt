@@ -1,16 +1,12 @@
 package com.example.soluemergencias
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -23,11 +19,10 @@ import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.databinding.ActivityMainBinding
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.mostrarSnackBarEnMainThread
-import com.example.soluemergencias.utils.mostrarToastEnMainThread
+import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), MenuProvider {
@@ -55,11 +50,12 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.setupWithNavController(navController)
         rootView = binding.root
+        binding.navView.menu.apply{
+            this.findItem(R.id.logout_item).setOnMenuItemClickListener {
+                lifecycleScope.launch(Dispatchers.IO) { logout() }
+                true
+            }
 
-
-        binding.navView.menu.findItem(R.id.logout_item).setOnMenuItemClickListener {
-            lifecycleScope.launch(Dispatchers.IO) { logout() }
-            true
         }
     }
 
@@ -74,7 +70,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.acercaDe -> {
-                mostrarToastEnMainThread(this, R.string.proxima_funcionalidad)
+                showToastInMainThreadWithStringResource(this, R.string.proxima_funcionalidad)
             }
         }
         return false
