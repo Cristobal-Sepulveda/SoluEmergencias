@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="@string/crear_nuevo_contacto"
-        android:id="@+id/navigation_gestion_de_volanteros"
+        android:title="@string/crear_contacto_de_asistencia"
+        android:id="@+id/navigation_crear_contacto_de_asistencia"
         android:icon="@drawable/ic_outline_insert_drive_file_24"
         />
 

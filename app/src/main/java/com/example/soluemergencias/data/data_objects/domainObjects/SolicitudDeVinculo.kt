@@ -7,7 +7,9 @@ data class SolicitudDeVinculo(
     val fechaDeSolicitud: String,
     val horaDeSolicitud: String,
     val solicitudAprobada: Boolean,
+    val solicitudGestionada: Boolean,
 ){
+    constructor() : this("", "", "", "", "", false, false)
     fun toMap(): Map<String, Any> {
         return mapOf(
             "rutDelSolicitante" to rutDelSolicitante,
@@ -16,6 +18,7 @@ data class SolicitudDeVinculo(
             "fechaDeSolicitud" to fechaDeSolicitud,
             "horaDeSolicitud" to horaDeSolicitud,
             "solicitudAprobada" to solicitudAprobada,
+            "solicitudGestionada" to solicitudGestionada,
         )
     }
 }

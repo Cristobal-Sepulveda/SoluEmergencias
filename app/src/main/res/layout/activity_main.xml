@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"/>
+
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
             android:layout_width="wrap_content"
@@ -25,6 +26,7 @@
             app:menu="@menu/navdrawer_menu"
             app:headerLayout="@layout/drawer_nav_header">
 
+            <!--Footer del NavDrawer-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,16 +59,6 @@
                     android:textAppearance="?attr/textAppearanceHeadline6"/>
 
                 <TextView
-                    android:id="@+id/textView_footer_app"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@+id/textView_footer_jorgeGas"
-                    app:layout_constraintTop_toTopOf="@+id/imageView_footer_logo"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView_footer_logo"
-                    android:text="@string/app"
-                    android:layout_marginStart="@dimen/space_small"/>
-
-                <TextView
                     android:id="@+id/textView_footer_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,6 +67,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView_footer_jorgeGas"
                     android:text="@string/version" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
 

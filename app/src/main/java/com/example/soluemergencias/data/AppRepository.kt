@@ -22,6 +22,9 @@ class AppRepository(private val context: Context,
 
     private val cloudDB = FirebaseFirestore.getInstance()
 
+    override suspend fun obtenerUsuarioDesdeRoom(): UsuarioDBO = withContext(ioDispatcher) {
+        return@withContext usuarioDao.obtenerUsuarios()[0]
+    }
     override suspend fun crearCuentaEnFirebaseAuthYFirestore(dataUsuarioEnFirestore: DataUsuarioEnFirestore): Pair<Boolean, Int> = withContext(ioDispatcher) {
         val deferred = CompletableDeferred<Pair<Boolean, Int>>()
         val nuevoUsuario = DataUsuarioEnFirestore(
@@ -167,7 +170,7 @@ class AppRepository(private val context: Context,
 
             cloudDB.collection("SolicitudesDeVinculacion")
                 .whereEqualTo("rutDelReceptor", rut)
-                .whereEqualTo("solicitudAprobada", false)
+                .whereEqualTo("solicitudGestionada", false)
                 .get()
                 .addOnCompleteListener{
                     deferred.complete(
@@ -190,13 +193,18 @@ class AppRepository(private val context: Context,
         withContext(ioDispatcher){
             val deferred = CompletableDeferred<Pair<Boolean,Int>>()
             val (_,nombreCompleto, rut, perfil) = usuarioDao.obtenerUsuarios()[0]
+            val perfilDelReceptor = when(perfil){
+                "Dueño de casa" -> "Asesora del Hogar"
+                "Asesora del Hogar" -> "Dueño de casa"
+                else -> ""
+            }
             val (date, hour) = gettingLocalCurrentDateAndHour()
             val solicitudDeVinculoMap = SolicitudDeVinculo(rut, nombreCompleto,
-                rutAVincular, date, hour, false).toMap()
+                rutAVincular, date, hour, false,false).toMap()
 
             cloudDB.collection("Usuarios")
                 .whereEqualTo("rut", rutAVincular)
-                .whereEqualTo("perfil", perfil)
+                .whereEqualTo("perfil", perfilDelReceptor)
                 .get()
                 .addOnFailureListener {
                     deferred.complete(Pair(false, R.string.error_cloud_request))
@@ -232,6 +240,37 @@ class AppRepository(private val context: Context,
                     }
                 }
 
+            return@withContext deferred.await()
+        }
+    }
+
+    override suspend fun aprobarORechazarSolicitudDeVinculo(rutSolicitante: String, boolean:Boolean):
+            Pair<Boolean, Int> = withContext(ioDispatcher){
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean,Int>>()
+            cloudDB.collection("SolicitudesDeVinculacion")
+                .whereEqualTo("rutDelSolicitante", rutSolicitante)
+                .whereEqualTo("rutDelReceptor", usuarioDao.obtenerUsuarios()[0].rut)
+                .get()
+                .addOnFailureListener{
+                    deferred.complete(Pair(false, R.string.error_cloud_request))
+                }
+                .addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Pair(false, R.string.error_cloud_request))
+                    }else{
+                        cloudDB.collection("SolicitudesDeVinculacion")
+                            .document(it.documents[0].id)
+                            .update("solicitudAprobada", boolean, "solicitudGestionada", true)
+                            .addOnFailureListener{ deferred.complete(Pair(false, R.string.error_cloud_request)) }
+                            .addOnSuccessListener {
+                                when(boolean){
+                                    true -> deferred.complete(Pair(true, R.string.solicitud_aprobada))
+                                    false -> deferred.complete(Pair(true, R.string.solicitud_rechazada))
+                                }
+                            }
+                    }
+                }
             return@withContext deferred.await()
         }
     }

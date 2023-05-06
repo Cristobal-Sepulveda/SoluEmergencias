@@ -47,6 +47,11 @@ class VincularCuentasFragment: Fragment() {
         return _binding!!.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewModel.vaciarRecyclerView()
+    }
+
     private fun chequearSiHaySolicitudesPorAprobar() {
         lifecycleScope.launch(Dispatchers.IO){
             val request = _viewModel.chequearSiHaySolicitudesPorAprobar()

@@ -1,12 +1,16 @@
 package com.example.soluemergencias
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -21,6 +25,7 @@ import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.mostrarSnackBarEnMainThread
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -56,6 +61,30 @@ class MainActivity : AppCompatActivity(), MenuProvider {
                 true
             }
         }
+        pintandoSideBarMenuYBottomAppBarSegunElPerfilDelUsuario()
+        
+    }
+
+    private fun pintandoSideBarMenuYBottomAppBarSegunElPerfilDelUsuario() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            dataSource.obtenerUsuarioDesdeRoom().let {
+                val nombre = it.nombreCompleto.split(" ")[0]
+                val perfil = it.perfil
+                Log.e("perfil", "${it.perfil}")
+                val fotoPerfil = it.fotoPerfil
+                if (it.perfil == "a") {
+                    binding.navView.menu.findItem(R.id.navigation_crear_contacto_de_asistencia).isVisible = false
+                    binding.navView.menu.findItem(R.id.navigation_contactos_de_asistencia).isVisible = false
+                }
+                binding.navView.getHeaderView(0)
+                    .findViewById<TextView>(R.id.textView_drawerNavHeader_nombreUsuario)
+                    .text = nombre
+                binding.navView.getHeaderView(0)
+                    .findViewById<TextView>(R.id.textView_drawerNavHeader_perfil)
+                    .text = perfil
+                decodeAndSetImageString(fotoPerfil)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -82,6 +111,23 @@ class MainActivity : AppCompatActivity(), MenuProvider {
             firebaseAuth.signOut()
             this@MainActivity.finish()
             startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
+        }
+    }
+
+    private fun decodeAndSetImageString(fotoPerfil: String){
+        val circleImageView = binding.navView.getHeaderView(0)
+            .findViewById<CircleImageView>(R.id.circleImageView_drawerNavHeader_fotoPerfil)
+        circleImageView.invalidate()
+        if ((fotoPerfil.last().toString() == "=") || ((fotoPerfil.first().toString() == "/") && (fotoPerfil[1].toString() == "9"))) {
+            val decodedString = Base64.decode(fotoPerfil, Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            circleImageView.setImageBitmap(decodedByte)
+        } else {
+            val aux2 = fotoPerfil.indexOf("=") + 1
+            val aux3 = fotoPerfil.substring(0, aux2)
+            val decodedString = Base64.decode(aux3, Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            circleImageView.setImageBitmap(decodedByte)
         }
     }
 }

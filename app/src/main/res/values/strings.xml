@@ -73,7 +73,7 @@
     <string name="registro">Registro</string>
     <string name="error_logout">No se pudo cerrar sesión, Compruebe su conexión a internet.</string>
     <string name="contactos_de_asistencia">Contactos de asistencia</string>
-    <string name="crear_nuevo_contacto">Crear contacto de asistencia</string>
+    <string name="crear_contacto_de_asistencia">Crear contacto de asistencia</string>
     <string name="ingresar_asesor_a">Ingresar Asesor/a</string>
     <string name="notificar_a_asesor">Notificar a Asesor/a</string>
     <string name="descripcion_vincular_cuentas">Para vincular su hogar con algun Asesor/a del hogar, ingrese el rut de este para enviarle una solicitud de vínculo</string>
@@ -97,6 +97,8 @@
     <string name="usuario_dueñodecasa_no_existe">El rut ingresado no esta asociado a ninguna cuenta de dueño de casa.</string>
     <string name="error_al_crear_usuario_en_firestore">Error al crear usuario en firestore.</string>
     <string name="usuario_o_contraseña_erroneos">Usuario y/o contraseña invalidos</string>
+    <string name="solicitud_aprobada">La solicitud ha sido aprobada con éxito.</string>
+    <string name="solicitud_rechazada">La solicitud ha sido rechazada con éxito.</string>
 
 
 </resources>

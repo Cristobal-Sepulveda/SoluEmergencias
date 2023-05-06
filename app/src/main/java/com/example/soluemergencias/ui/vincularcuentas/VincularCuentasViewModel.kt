@@ -15,12 +15,16 @@ class VincularCuentasViewModel(val dataSource: AppDataSource) {
         get() = _solicitudesInScreen
 
     suspend fun chequearSiHaySolicitudesPorAprobar(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>>{
+        _status.postValue(CloudRequestStatus.LOADING)
         val task = dataSource.chequearSiHaySolicitudesPorAprobar()
         _status.postValue(
             when {
                 task.third.isEmpty() && !task.first -> CloudRequestStatus.ERROR
                 task.third.isEmpty() && task.first -> CloudRequestStatus.DONE_WITH_NO_DATA
-                else -> CloudRequestStatus.DONE
+                else -> {
+                    _solicitudesInScreen.postValue(task.third)
+                    CloudRequestStatus.DONE
+                }
             }
         )
         return task
@@ -31,5 +35,9 @@ class VincularCuentasViewModel(val dataSource: AppDataSource) {
         val task = dataSource.crearSolicitudDeVinculo(rutAVincular)
         _status.postValue(if(task.first) CloudRequestStatus.DONE else CloudRequestStatus.ERROR)
         return task
+    }
+
+    fun vaciarRecyclerView(){
+        _solicitudesInScreen.value = mutableListOf()
     }
 }
