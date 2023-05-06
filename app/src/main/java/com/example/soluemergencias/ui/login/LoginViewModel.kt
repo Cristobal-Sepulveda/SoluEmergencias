@@ -13,16 +13,10 @@ class LoginViewModel(private val dataSource: AppDataSource): ViewModel() {
         get() = _status
 
 
-
-    suspend fun iniciarLoginYValidacionesConRut(rut: String): Boolean{
+    suspend fun iniciarLoginYValidacionesConRut(rut: String): Pair<Boolean, Int> {
         _status.postValue(CloudRequestStatus.LOADING)
-        return if(dataSource.iniciarLoginYValidacionesConRut(rut)){
-            _status.postValue(CloudRequestStatus.DONE)
-            true
-        }else{
-            _status.postValue(CloudRequestStatus.ERROR)
-            false
-        }
+        val task = dataSource.iniciarLoginYValidacionesConRut(rut)
+        _status.postValue(if(task.first) CloudRequestStatus.DONE else CloudRequestStatus.ERROR)
+        return task
     }
-
 }

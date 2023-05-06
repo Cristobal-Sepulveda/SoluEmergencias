@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity(), MenuProvider {
                 lifecycleScope.launch(Dispatchers.IO) { logout() }
                 true
             }
-
         }
     }
 
@@ -76,14 +75,13 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         return false
     }
     private suspend fun logout() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            if(!dataSource.sesionActivaAFalseYLogout(this@MainActivity)){
-                mostrarSnackBarEnMainThread(this@MainActivity, R.string.error_logout)
-            }else{
-                firebaseAuth.signOut()
-                this@MainActivity.finish()
-                startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
-            }
+        val task = dataSource.sesionActivaAFalseYLogout()
+        if(!task.first){
+            mostrarSnackBarEnMainThread(this@MainActivity, task.second)
+        }else{
+            firebaseAuth.signOut()
+            this@MainActivity.finish()
+            startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
         }
     }
 }

@@ -16,10 +16,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.soluemergencias.R
-import com.example.soluemergencias.data.data_objects.domainObjects.PreDataUsuarioEnFirestore
+import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.databinding.FragmentCrearCuentaBinding
 import com.example.soluemergencias.utils.Constants.REQUEST_TAKE_PHOTO
-import com.example.soluemergencias.utils.NavigationCommand
+import com.example.soluemergencias.utils.isThisRutValid
+import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -106,10 +107,11 @@ class CrearCuentaFragment: Fragment() {
 
         if (validarInputsYFoto(nombreCompleto, rut, email, password, password2, perfil)) return
 
-        _viewModel.crearCuentaEnFirebaseAuthYFirestore(
-            PreDataUsuarioEnFirestore(foto, nombreCompleto, rut, telefono, email, password, perfil)
+        val task = _viewModel.crearCuentaEnFirebaseAuthYFirestore(
+            DataUsuarioEnFirestore(foto, nombreCompleto, rut, telefono,
+                email, password, perfil,false)
         )
-
+        showToastInMainThreadWithStringResource(requireActivity(), task.second)
     }
 
     private fun validarInputsYFoto(nombreCompleto: String, rut: String, email: String, password: String, password2: String, rol: String): Boolean {
@@ -137,7 +139,7 @@ class CrearCuentaFragment: Fragment() {
             ).show()
             return true
         }
-        if (!isValidRut(rut)){
+        if (!isThisRutValid(rut)){
             Snackbar.make(
                 _binding!!.root,
                 "El rut que ingresaste no es valido.",
@@ -170,27 +172,6 @@ class CrearCuentaFragment: Fragment() {
         }
 
         return false
-    }
-
-    private fun isValidRut(rut: String): Boolean {
-        var rutClean = rut.replace(".", "").replace("-", "")
-        if (rutClean.length != 9) return false
-        var dv = rutClean.last().toUpperCase()
-        if (!dv.isDigit() && dv != 'K') return false
-        rutClean = rutClean.dropLast(1)
-        var sum = 0
-        var factor = 2
-        for (i in rutClean.reversed()) {
-            sum += (i.toString().toInt() * factor)
-            factor = if (factor == 7) 2 else factor + 1
-        }
-        val dvCalc = 11 - (sum % 11)
-        val dvExpected = when (dvCalc) {
-            11 -> "0"
-            10 -> "K"
-            else -> dvCalc.toString()
-        }
-        return dv.toString() == dvExpected
     }
 
 }

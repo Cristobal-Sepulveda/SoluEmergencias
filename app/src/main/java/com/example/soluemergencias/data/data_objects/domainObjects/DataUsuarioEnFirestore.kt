@@ -10,4 +10,17 @@ data class DataUsuarioEnFirestore(
     val password: String,
     val perfil: String,
     val sesionActiva: Boolean = false
-)
+){
+    fun toMap(): Map<String, Any> {
+        return mapOf(
+            "fotoPerfil" to fotoPerfil,
+            "nombreCompleto" to nombreCompleto,
+            "rut" to rut,
+            "telefono" to telefono,
+            "email" to email,
+            "password" to password,
+            "perfil" to perfil,
+            "sesionActiva" to sesionActiva,
+        )
+    }
+}

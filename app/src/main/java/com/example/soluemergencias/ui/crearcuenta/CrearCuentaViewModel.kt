@@ -1,11 +1,10 @@
 package com.example.soluemergencias.ui.crearcuenta
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.soluemergencias.data.AppDataSource
-import com.example.soluemergencias.data.data_objects.domainObjects.PreDataUsuarioEnFirestore
+import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.utils.Constants.CloudRequestStatus
 
 class CrearCuentaViewModel(private val dataSource: AppDataSource): ViewModel() {
@@ -15,12 +14,16 @@ class CrearCuentaViewModel(private val dataSource: AppDataSource): ViewModel() {
         get() = _status
 
 
-
-    suspend fun crearCuentaEnFirebaseAuthYFirestore(preDataUsuarioEnFirestore: PreDataUsuarioEnFirestore) {
-        _status.value = CloudRequestStatus.LOADING
-        _status.value = when (dataSource.crearCuentaEnFirebaseAuthYFirestore(preDataUsuarioEnFirestore)) {
+    suspend fun crearCuentaEnFirebaseAuthYFirestore(
+        dataUsuarioEnFirestore: DataUsuarioEnFirestore
+    ): Pair<Boolean,Int> {
+        _status.postValue(CloudRequestStatus.LOADING)
+        val task = dataSource.crearCuentaEnFirebaseAuthYFirestore(dataUsuarioEnFirestore)
+        _status.postValue(when(task.first) {
                 false -> CloudRequestStatus.ERROR
                 true -> CloudRequestStatus.DONE
             }
+        )
+        return task
     }
 }

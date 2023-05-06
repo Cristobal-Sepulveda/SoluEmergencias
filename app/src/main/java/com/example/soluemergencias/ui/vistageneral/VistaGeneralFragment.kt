@@ -21,7 +21,6 @@ class VistaGeneralFragment : Fragment() {
         _binding = FragmentVistaGeneralBinding.inflate(inflater, container, false)
         _binding!!.apply{
         }
-
         return _binding!!.root
     }
 

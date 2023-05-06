@@ -93,6 +93,10 @@
     <string name="solicitud_creada">La solicitud ha sido creada con éxito.</string>
     <string name="exito">La tarea ha sido completada con éxito.</string>
     <string name="no_hay_solicitudes_por_aprobar">En estos momentos no tienes solicitudes pendientes.</string>
+    <string name="usuario_asesora_no_existe">El rut ingresado no esta asociado a ninguna cuenta de asesora del hogar.</string>
+    <string name="usuario_dueñodecasa_no_existe">El rut ingresado no esta asociado a ninguna cuenta de dueño de casa.</string>
+    <string name="error_al_crear_usuario_en_firestore">Error al crear usuario en firestore.</string>
+    <string name="usuario_o_contraseña_erroneos">Usuario y/o contraseña invalidos</string>
 
 
 </resources>

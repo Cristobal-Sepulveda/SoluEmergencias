@@ -16,6 +16,7 @@ import com.example.soluemergencias.MainActivity
 import com.example.soluemergencias.R
 import com.example.soluemergencias.databinding.FragmentLoginBinding
 import com.example.soluemergencias.utils.Constants.firebaseAuth
+import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,19 +74,16 @@ class LoginFragment: Fragment() {
             }
         }
         
-        
-        if(!_viewModel.iniciarLoginYValidacionesConRut(rut)){
-            Log.e("LoginFragment", "iniciandoLogin: ${_viewModel.status.value}")
+        val task = _viewModel.iniciarLoginYValidacionesConRut(rut)
+        if(!task.first){
+            showToastInMainThreadWithStringResource(requireActivity(),task.second)
             aparecerYDesaparecerElementosTrasNoLogin()
         }else{
-            Log.e("LoginFragment", "iniciandoLogin: ${_viewModel.status.value}")
             val intent = Intent(requireActivity(), MainActivity::class.java)
             requireActivity().finish()
             startActivity(intent)
         }
     }
-
-
 
     private fun aparecerYDesaparecerElementosAlIniciarLogin() {
         lifecycleScope.launch(Dispatchers.Main) {
@@ -93,6 +91,7 @@ class LoginFragment: Fragment() {
                 progressBar.visibility = View.VISIBLE
                 textViewAuthenticationTitulo.visibility = View.GONE
                 imageviewLogoSoluEmergencias.visibility = View.GONE
+                textViewAuthenticationInicieSesion.visibility = View.GONE
                 edittextRut.visibility = View.GONE
                 edittextPassword.visibility = View.GONE
                 textViewAuthenticationClaveOlvidada.visibility = View.GONE
@@ -111,6 +110,7 @@ class LoginFragment: Fragment() {
                 progressBar.visibility = View.GONE
                 textViewAuthenticationTitulo.visibility = View.VISIBLE
                 imageviewLogoSoluEmergencias.visibility = View.VISIBLE
+                textViewAuthenticationInicieSesion.visibility = View.VISIBLE
                 edittextRut.visibility = View.VISIBLE
                 edittextPassword.visibility = View.VISIBLE
                 textViewAuthenticationClaveOlvidada.visibility = View.VISIBLE
