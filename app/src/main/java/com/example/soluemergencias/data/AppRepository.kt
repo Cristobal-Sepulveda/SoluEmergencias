@@ -25,6 +25,38 @@ class AppRepository(private val context: Context,
     override suspend fun obtenerUsuarioDesdeRoom(): UsuarioDBO = withContext(ioDispatcher) {
         return@withContext usuarioDao.obtenerUsuarios()[0]
     }
+
+    override suspend fun actualizarFotoDePerfilEnFirestoreYRoom(fotoPerfil: String):Pair<Boolean, Int> = withContext(ioDispatcher){
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean, Int>>()
+            cloudDB.collection("Usuarios")
+                .whereEqualTo("rut", obtenerUsuarioDesdeRoom().rut)
+                .get()
+                .addOnFailureListener{
+                    deferred.complete(Pair(false, R.string.error_cloud_request))
+                }
+                .addOnSuccessListener {
+                    if(it.isEmpty){
+                        deferred.complete(Pair(false, R.string.error_cloud_request))
+                    }else{
+                        cloudDB.collection("Usuarios")
+                            .document(it.documents[0].id)
+                            .update("fotoPerfil", fotoPerfil)
+                            .addOnFailureListener{
+                                deferred.complete(Pair(false, R.string.error_cloud_request))
+                            }
+                            .addOnSuccessListener{
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    usuarioDao.actualizarFotoPerfil(fotoPerfil)
+                                    deferred.complete(Pair(true, R.string.exito))
+                                }
+                            }
+                    }
+
+                }
+            return@withContext deferred.await()
+        }
+    }
     override suspend fun crearCuentaEnFirebaseAuthYFirestore(dataUsuarioEnFirestore: DataUsuarioEnFirestore): Pair<Boolean, Int> = withContext(ioDispatcher) {
         val deferred = CompletableDeferred<Pair<Boolean, Int>>()
         val nuevoUsuario = DataUsuarioEnFirestore(

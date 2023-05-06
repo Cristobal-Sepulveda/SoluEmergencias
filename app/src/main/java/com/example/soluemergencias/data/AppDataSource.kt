@@ -7,6 +7,7 @@ import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVi
 interface AppDataSource {
 
     suspend fun obtenerUsuarioDesdeRoom(): UsuarioDBO
+    suspend fun actualizarFotoDePerfilEnFirestoreYRoom(fotoPerfil: String): Pair<Boolean, Int>
     suspend fun crearCuentaEnFirebaseAuthYFirestore(dataUsuarioEnFirestore: DataUsuarioEnFirestore):Pair<Boolean, Int>
     suspend fun iniciarLoginYValidacionesConRut(rut:String): Pair<Boolean,Int>
     suspend fun sesionActivaAFalseYLogout():Pair<Boolean, Int>

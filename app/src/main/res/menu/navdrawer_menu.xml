@@ -15,7 +15,7 @@
         />
 
     <item
-        android:title="@string/notificar_a_asesor"
+        android:title="@string/vincular_cuentas"
         android:id="@+id/navigation_vincular_cuentas"
         android:icon="@drawable/baseline_phonelink_ring_24"
         />

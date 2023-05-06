@@ -29,14 +29,13 @@ class VincularCuentasFragment: Fragment() {
         _binding = FragmentVincularCuentasBinding.inflate(inflater, container, false)
         _binding!!.lifecycleOwner = this
         _binding!!.viewModel = _viewModel
-        _binding!!.recyclerviewVincularCuentasListadoDeAsesoras.adapter = adapter
+        _binding!!.recyclerviewVincularCuentasSolicitudesPorAprobar.adapter = adapter
         chequearSiHaySolicitudesPorAprobar()
+        chequearSiHaySolicitudesEnviadasSinGestionar()
 
         //Click listeners
         _binding!!.buttonVincularCuentasSolicitar.setOnClickListener{
-            enviarSolicitudDeVinculacion(
-                _binding!!.textInputEditTextVincularCuentasRut.text.toString(), it
-            )
+            enviarSolicitudDeVinculacion(_binding!!.editTextVincularCuentasRut.text.toString(), it)
         }
 
         //Observers
@@ -53,6 +52,13 @@ class VincularCuentasFragment: Fragment() {
     }
 
     private fun chequearSiHaySolicitudesPorAprobar() {
+        lifecycleScope.launch(Dispatchers.IO){
+            val request = _viewModel.chequearSiHaySolicitudesPorAprobar()
+            if(!request.first) showToastInMainThreadWithStringResource(requireContext(), request.second)
+        }
+    }
+
+    private fun chequearSiHaySolicitudesEnviadasSinGestionar() {
         lifecycleScope.launch(Dispatchers.IO){
             val request = _viewModel.chequearSiHaySolicitudesPorAprobar()
             if(!request.first) showToastInMainThreadWithStringResource(requireContext(), request.second)
