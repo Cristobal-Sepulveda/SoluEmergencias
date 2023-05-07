@@ -101,5 +101,7 @@
     <string name="error_actualizar_foto_perfil">Error al actualizar la foto de perfil.</string>
     <string name="solicitudes_enviadas">Solicitudes enviadas</string>
     <string name="rut_sin_puntos_ni_guion">Ingrese rut sin puntos no guión</string>
+    <string name="contacto_emergencia">Contacto de emergencia</string>
+    <string name="llamar">Llamar</string>
 
 </resources>

@@ -6,8 +6,10 @@ import android.widget.Toast
 import com.example.soluemergencias.R
 import com.example.soluemergencias.data.daos.UsuarioDao
 import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
+import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
+import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.gettingLocalCurrentDateAndHour
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
@@ -301,6 +303,31 @@ class AppRepository(private val context: Context,
                                     false -> deferred.complete(Pair(true, R.string.solicitud_rechazada))
                                 }
                             }
+                    }
+                }
+            return@withContext deferred.await()
+        }
+    }
+
+    override suspend fun cargandoListaDeContactosDeEmergencia():
+            Triple<Boolean, Int, MutableList<ContactoDeEmergencia>> = withContext(ioDispatcher) {
+        withContext(Dispatchers.IO) {
+            val deferred = CompletableDeferred<Triple<
+                    Boolean, Int, MutableList<ContactoDeEmergencia>>>()
+            cloudDB.collection("SolicitudesDeVinculacion")
+                .whereEqualTo("rutDelReceptor", usuarioDao.obtenerUsuarios()[0].rut)
+                .whereEqualTo("solicitudAprobada", true)
+                .whereEqualTo("solicitudGestionada", true)
+                .get()
+                .addOnFailureListener {
+                    deferred.complete(Triple(false, R.string.error_cloud_request, defaultContactosDeEmergencia))
+                }.addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+                        Log.e("cargandoListaDeContactosDeEmergencia", "cuenta no vinculada")
+                    }else{
+                        Log.e("cargandoListaDeContactosDeEmergencia", "cuenta vinculada")
+                        deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
                     }
                 }
             return@withContext deferred.await()

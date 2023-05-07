@@ -1,5 +1,6 @@
 package com.example.soluemergencias.utils
 import android.os.Build
+import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.google.firebase.auth.FirebaseAuth
 
 object Constants {
@@ -19,6 +20,13 @@ object Constants {
     //const val JWTAPI_URL = "http://10.0.2.2:8080"
     const val JWTAPI_URL = "https://ahora-si-dkc7p57skq-tl.a.run.app/"
     enum class CloudRequestStatus{LOADING, ERROR, DONE, DONE_WITH_NO_DATA}
+
+    val defaultContactosDeEmergencia = mutableListOf(
+        ContactoDeEmergencia("0", "Bomberos", "111", fotoBomberos),
+        ContactoDeEmergencia("1","Carabineros", "132", fotoBomberos),
+        ContactoDeEmergencia("2","PDI", "133", fotoBomberos),
+        ContactoDeEmergencia("3","DueñoDeCasa", "444", fotoBomberos),
+    )
 }
 
 
