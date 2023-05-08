@@ -18,4 +18,6 @@ interface AppDataSource {
 
     suspend fun cargandoListaDeContactosDeEmergencia(): Triple<Boolean, Int, MutableList<ContactoDeEmergencia>>
 
+    suspend fun crearContactoDeAsistencia(nombre: String, telefono: String): Pair<Boolean, Int>
+
 }

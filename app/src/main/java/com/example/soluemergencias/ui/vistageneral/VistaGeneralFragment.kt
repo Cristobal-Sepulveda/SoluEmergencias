@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.soluemergencias.R
 import com.example.soluemergencias.adapters.ContactoDeEmergenciaAdapter
-import com.example.soluemergencias.adapters.SolicitudDeVinculoAdapter
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.databinding.FragmentVistaGeneralBinding
-import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistencia
+import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaFragment
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +36,7 @@ class VistaGeneralFragment : Fragment() {
         }
 
         _binding!!.buttonVistaGeneralCrearContactoDeAsistencia.setOnClickListener{
-            val dialogFragment = CrearContactoDeAsistencia()
+            val dialogFragment = CrearContactoDeAsistenciaFragment()
             dialogFragment.show(requireActivity().supportFragmentManager, "CrearContactoDeAsistencia")
         }
 

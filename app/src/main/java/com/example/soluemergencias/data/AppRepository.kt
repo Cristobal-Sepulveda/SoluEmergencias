@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.example.soluemergencias.R
 import com.example.soluemergencias.data.daos.UsuarioDao
 import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
+import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeAsistencia
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
@@ -329,6 +330,27 @@ class AppRepository(private val context: Context,
                         Log.e("cargandoListaDeContactosDeEmergencia", "cuenta vinculada")
                         deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
                     }
+                }
+            return@withContext deferred.await()
+        }
+    }
+
+    override suspend fun crearContactoDeAsistencia(nombre: String, telefono: String): Pair<Boolean, Int> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean, Int>>()
+            val contactoDeAsistenciaMap = ContactoDeAsistencia(
+                usuarioDao.obtenerUsuarios()[0].rut,
+                nombre,
+                telefono
+            ).toMap()
+
+            cloudDB.collection("ContactoDeAsistencia")
+                .add(contactoDeAsistenciaMap)
+                .addOnFailureListener {
+                    deferred.complete(Pair(false, R.string.error_cloud_request))
+                }
+                .addOnSuccessListener {
+                    deferred.complete(Pair(true, R.string.exito))
                 }
             return@withContext deferred.await()
         }

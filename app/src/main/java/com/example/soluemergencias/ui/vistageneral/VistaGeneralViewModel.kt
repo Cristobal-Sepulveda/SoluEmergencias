@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
-import com.example.soluemergencias.utils.Constants
+import com.example.soluemergencias.utils.Constants.CloudRequestStatus
 
 class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(){
-    private val _status = MutableLiveData<Constants.CloudRequestStatus>()
-    val status: MutableLiveData<Constants.CloudRequestStatus>
+    private val _status = MutableLiveData<CloudRequestStatus>()
+    val status: MutableLiveData<CloudRequestStatus>
         get() = _status
 
     private val _contactosDeEmergenciaInScreen = MutableLiveData<MutableList<ContactoDeEmergencia>?>()
@@ -18,11 +18,11 @@ class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(
     suspend fun cargandoListaDeContactosDeEmergencia():
             Triple<Boolean, Int, MutableList<ContactoDeEmergencia>>{
 
-        _status.postValue(Constants.CloudRequestStatus.LOADING)
+        _status.postValue(CloudRequestStatus.LOADING)
         val task = dataSource.cargandoListaDeContactosDeEmergencia()
         _status.postValue(when(task.first){
-            true -> Constants.CloudRequestStatus.DONE
-            false -> Constants.CloudRequestStatus.ERROR
+            true -> CloudRequestStatus.DONE
+            false -> CloudRequestStatus.ERROR
         })
         _contactosDeEmergenciaInScreen.postValue(task.third)
         return task

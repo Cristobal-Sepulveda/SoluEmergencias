@@ -59,4 +59,18 @@
         android:layout_marginBottom="@dimen/space_medium"
         android:text="@string/confirmar"
         />
+
+    <ProgressBar
+        android:id="@+id/circularProgressIndicator"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:indeterminate="true"
+        android:contentDescription="@string/loading"
+        app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_crearContactoDeAsistencia_telefono"
+        app:layout_constraintEnd_toStartOf="@id/button_crearContactoDeAsistencia_volver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
