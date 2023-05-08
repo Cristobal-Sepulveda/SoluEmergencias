@@ -25,7 +25,11 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun checkingPermissionsSettings() {
-        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA)
+        val permissions = arrayOf(
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_FINE_LOCATION
+            )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissions.plus(Manifest.permission.POST_NOTIFICATIONS)
         val checkingPermissions = permissions.filter {
             checkSelfPermission(it) == PackageManager.PERMISSION_DENIED

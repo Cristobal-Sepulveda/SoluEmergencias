@@ -22,10 +22,11 @@ object Constants {
     enum class CloudRequestStatus{LOADING, ERROR, DONE, DONE_WITH_NO_DATA}
 
     val defaultContactosDeEmergencia = mutableListOf(
-        ContactoDeEmergencia("0", "Bomberos", "111", fotoBomberos),
-        ContactoDeEmergencia("1","Carabineros", "132", fotoBomberos),
-        ContactoDeEmergencia("2","PDI", "133", fotoBomberos),
-        ContactoDeEmergencia("3","DueñoDeCasa", "444", fotoBomberos),
+        ContactoDeEmergencia("0", "CONAF", "130", fotoCONAF),
+        ContactoDeEmergencia("1","SAMU", "131", fotoSAMU),
+        ContactoDeEmergencia("2", "Bomberos", "132", fotoBomberos),
+        ContactoDeEmergencia("3","Carabineros", "133", fotoCarabineros),
+        ContactoDeEmergencia("4","PDI", "134", fotoPDI),
     )
 }
 

@@ -103,5 +103,6 @@
     <string name="rut_sin_puntos_ni_guion">Ingrese rut sin puntos no guión</string>
     <string name="contacto_emergencia">Contacto de emergencia</string>
     <string name="llamar">Llamar</string>
+    <string name="sugerencias">Sugerencias</string>
 
 </resources>

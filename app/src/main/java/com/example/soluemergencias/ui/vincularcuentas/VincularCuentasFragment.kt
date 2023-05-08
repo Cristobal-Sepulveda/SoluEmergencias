@@ -29,7 +29,7 @@ class VincularCuentasFragment: Fragment() {
         _binding = FragmentVincularCuentasBinding.inflate(inflater, container, false)
         _binding!!.lifecycleOwner = this
         _binding!!.viewModel = _viewModel
-        _binding!!.recyclerviewVincularCuentasSolicitudesPorAprobar.adapter = adapter
+        _binding!!.includeVincularCuentasSolicitudesPorAprobar.recyclerviewVincularCuentasSolicitudesPorAprobar.adapter = adapter
         chequearSiHaySolicitudesPorAprobar()
         chequearSiHaySolicitudesEnviadasSinGestionar()
 

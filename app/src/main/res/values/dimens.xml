@@ -10,4 +10,6 @@
     <dimen name="font_normal">24sp</dimen>
     <dimen name="text_medium">12sp</dimen>
     <dimen name="text_excel_content">12sp</dimen>
+    <dimen name="text_card_title">20sp</dimen>
+    <dimen name="text_card">16sp</dimen>
 </resources>

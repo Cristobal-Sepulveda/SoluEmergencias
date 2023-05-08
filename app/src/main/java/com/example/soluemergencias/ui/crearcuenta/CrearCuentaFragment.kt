@@ -3,6 +3,7 @@ package com.example.soluemergencias.ui.crearcuenta
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -33,7 +35,15 @@ class CrearCuentaFragment: Fragment() {
     private var _binding: FragmentCrearCuentaBinding? = null
     private val _viewModel: CrearCuentaViewModel by inject()
     private var imageBitmap: Bitmap? = null
+    private val requestTakePicture = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
 
+            imageBitmap = result.data?.extras?.get("data") as? Bitmap
+            val foto = parseandoImagenParaSubirlaAFirestore(imageBitmap!!)
+            decodeAndSetImageString(foto)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{
 
@@ -51,7 +61,7 @@ class CrearCuentaFragment: Fragment() {
             }
         }
 
-        _binding!!.buttonCrearCuentaTomarFoto.setOnClickListener{
+        _binding!!.imageViewCrearCuentaTomarFoto.setOnClickListener{
             dispatchTakePictureIntent()
         }
 
@@ -65,21 +75,15 @@ class CrearCuentaFragment: Fragment() {
         return _binding!!.root
     }
 
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-            imageBitmap = data?.extras?.get("data") as Bitmap
-            // Do something with the imageBitmap, such as saving it to a file or displaying it in an ImageView
-        }else{
-            Toast.makeText(requireActivity(),"Debes de tomar una foto para poder guardar un usuario", Toast.LENGTH_LONG).show()
-        }
+    private fun decodeAndSetImageString(fotoPerfil: String){
+        val decodedString = Base64.decode(fotoPerfil, Base64.NO_PADDING)
+        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+        _binding!!.imageViewCrearCuentaFotoPerfil.setImageBitmap(decodedByte)
     }
-
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+                requestTakePicture.launch(takePictureIntent)
             }
         }
     }

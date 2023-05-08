@@ -12,41 +12,68 @@
         android:id="@+id/materialCardView_vistaGeneral_cardVolanteros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_medium"
-        android:layout_marginHorizontal="@dimen/space_big"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardElevation="4dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="@dimen/space_medium">
+        app:cardCornerRadius="5dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/azulMarino">
 
             <ImageView
                 android:id="@+id/imageView_itemContactoDeEmergencia_foto"
-                android:layout_width="match_parent"
-                android:layout_height="126dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/contacto_emergencia" />
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/space_small"
+                android:background="@color/white"
+                android:padding="@dimen/space_very_small"
+                android:contentDescription="@string/contacto_emergencia"
+                tools:src="@drawable/app_logo"/>
             <TextView
-                android:id="@+id/textView_itemContactoDeEmergencia_llamarContacto"
-                android:layout_width="match_parent"
+                android:id="@+id/textView_itemContactoDeEmergencia_nombre"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/imageView_itemContactoDeEmergencia_foto"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:padding="20dp"
-                android:background="@color/azulMarino"
-                android:text="@string/llamar"
+                app:layout_constraintStart_toEndOf="@id/imageView_itemContactoDeEmergencia_foto"
+                app:layout_constraintTop_toTopOf="@id/imageView_itemContactoDeEmergencia_foto"
+                app:layout_constraintBottom_toTopOf="@id/textView_itemContactoDeEmergencia_telefono"
+                android:layout_margin="@dimen/space_small"
+                tools:text="Nombre del contacto"
+                android:textSize="@dimen/text_card"
+                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:textAppearance="?attr/textAppearanceHeadline6"
+                />
+            <TextView
+                android:id="@+id/textView_itemContactoDeEmergencia_telefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/imageView_itemContactoDeEmergencia_foto"
+                app:layout_constraintTop_toBottomOf="@id/textView_itemContactoDeEmergencia_nombre"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_itemContactoDeEmergencia_foto"
+                android:layout_margin="@dimen/space_small"
+                tools:text="Nombre del contacto"
+                android:textSize="@dimen/text_card"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                />
+            <ImageView
+                android:id="@+id/imageView_itemContactoDeEmergencia_llamarContacto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textView_itemContactoDeEmergencia_nombre"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_itemContactoDeEmergencia_foto"
+                android:layout_marginEnd="@dimen/space_small"
+                android:src="@drawable/baseline_icon_phone_white"
+                android:contentDescription="@string/llamar"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
