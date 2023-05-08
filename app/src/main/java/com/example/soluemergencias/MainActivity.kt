@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
             dataSource.obtenerUsuarioDesdeRoom().let {
                 val nombre = it.nombreCompleto.split(" ")[0]
                 val perfil = it.perfil
-                Log.e("perfil", "${it.perfil}")
+                Log.e("perfil", it.perfil)
                 val fotoPerfil = it.fotoPerfil
                 binding.navView.getHeaderView(0)
                     .findViewById<TextView>(R.id.textView_drawerNavHeader_nombreUsuario)

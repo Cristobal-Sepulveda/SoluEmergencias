@@ -17,7 +17,6 @@ import org.koin.android.ext.android.inject
 class CrearContactoDeAsistenciaFragment: BottomSheetDialogFragment() {
     private var _binding: FragmentCrearContactoDeAsistenciaBinding? = null
     private val _viewModel: CrearContactoDeAsistenciaViewModel by inject()
-    private val appDataSource: AppDataSource by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -28,7 +27,6 @@ class CrearContactoDeAsistenciaFragment: BottomSheetDialogFragment() {
 
         return _binding!!.root
     }
-
     private fun crearContactoDeAsistencia() {
         val nombre = _binding!!.editTextCrearContactoDeAsistenciaNombre.text.toString()
         val telefono = _binding!!.editTextCrearContactoDeAsistenciaTelefono.text.toString()
@@ -41,4 +39,6 @@ class CrearContactoDeAsistenciaFragment: BottomSheetDialogFragment() {
             showToastInMainThreadWithStringResource(requireContext(), task.second)
         }
     }
+
+
 }
