@@ -4,10 +4,10 @@
     <item
         android:id="@+id/navigation_vista_general"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/vista_general" />
+        android:title="@string/agenda" />
 
     <item
-        android:id="@+id/navigation_administrar_cuentas"
+        android:id="@+id/navigation_registro"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/registro" />
 </menu>

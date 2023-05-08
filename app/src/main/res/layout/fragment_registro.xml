@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView_registro_titulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/registro_de_actividad"
+        android:textSize="30sp"
+        android:layout_marginTop="@dimen/space_medium"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:background="@color/azulMarino"
+        android:layout_marginHorizontal="@dimen/space_small"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

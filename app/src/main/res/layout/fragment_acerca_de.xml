@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/textView_crearCuenta_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_small"
+        android:layout_marginTop="@dimen/space_medium"
+        android:background="@color/azulMarino"
+        android:text="@string/acerca_de"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        />
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/app_logo"
+        android:layout_marginTop="@dimen/space_medium"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SoluEmergencias"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version 1.0"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="© 2023 Cristóbal Sepúlveda Silva"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at libero non nunc vestibulum accumsan sit amet non velit. Donec sollicitudin est quis augue posuere, sed congue lectus ultrices. Sed eget posuere felis. Praesent varius leo in turpis lobortis, euismod tristique urna vestibulum. Integer posuere tellus vitae odio semper mollis. In hac habitasse platea dictumst."
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="@dimen/space_small"
+        android:textAlignment="center"/>
+
+    <Button
+        style="@style/buttons"
+        android:id="@+id/button_acercaDe_volver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_medium"
+        android:layout_marginHorizontal="@dimen/space_small"
+        android:text="@string/volver" />
+
+
+</LinearLayout>

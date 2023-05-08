@@ -51,7 +51,7 @@
         android:layout_marginTop="@dimen/space_small"
         android:textAppearance="?attr/textAppearanceHeadline3"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView_drawerNavHeader_fotoPerfil"
         app:layout_constraintStart_toStartOf="@+id/textView_drawerNavHeader_nombreUsuario"
         app:layout_constraintTop_toBottomOf="@id/textView_drawerNavHeader_nombreUsuario"

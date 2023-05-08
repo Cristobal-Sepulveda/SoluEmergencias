@@ -146,10 +146,10 @@ class AppRepository(private val context: Context,
                                                     documentoDeInteres["fotoPerfil"] as String,
                                                     documentoDeInteres["nombreCompleto"] as String,
                                                     documentoDeInteres["rut"] as String,
+                                                    documentoDeInteres["perfil"] as String,
                                                     documentoDeInteres["telefono"] as String,
                                                     documentoDeInteres["email"] as String,
                                                     documentoDeInteres["password"] as String,
-                                                    documentoDeInteres["perfil"] as String,
                                                 )
                                             )
                                         }

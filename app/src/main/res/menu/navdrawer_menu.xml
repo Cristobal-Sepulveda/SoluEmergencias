@@ -3,18 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="@string/crear_contacto_de_asistencia"
-        android:id="@+id/navigation_crear_contacto_de_asistencia"
-        android:icon="@drawable/ic_outline_insert_drive_file_24"
-        />
-
-    <item
-        android:title="@string/contactos_de_asistencia"
-        android:id="@+id/navigation_contactos_de_asistencia"
-        android:icon="@drawable/outline_auto_stories_24"
-        />
-
-    <item
         android:title="@string/vincular_cuentas"
         android:id="@+id/navigation_vincular_cuentas"
         android:icon="@drawable/baseline_phonelink_ring_24"

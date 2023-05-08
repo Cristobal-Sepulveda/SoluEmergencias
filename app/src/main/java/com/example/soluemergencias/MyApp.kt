@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.AppRepository
 import com.example.soluemergencias.data.app_database.getDatabase
+import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaViewModel
 import com.example.soluemergencias.ui.crearcuenta.CrearCuentaViewModel
 import com.example.soluemergencias.ui.login.LoginViewModel
 import com.example.soluemergencias.ui.perfil.PerfilViewModel
@@ -50,7 +51,14 @@ class MyApp : Application() {
                 VincularCuentasViewModel(
                     get() as AppDataSource
                 )
+
             }
+            single{
+                CrearContactoDeAsistenciaViewModel(
+                    get() as AppDataSource
+                )
+            }
+
             single { getDatabase(this@MyApp).usuarioDao }
 /*            single { getDatabase(this@MyApp).latLngYHoraActualDao }
             single { getDatabase(this@MyApp).jwtDao }*/

@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/vista_general"
+            android:text="@string/agenda"
             android:textSize="30sp"
             android:layout_marginTop="@dimen/space_medium"
             android:textAlignment="center"
@@ -30,20 +30,18 @@
             android:background="@color/azulMarino"
             android:layout_marginHorizontal="@dimen/space_small"
             />
-        <TextView
-            android:id="@+id/textView_vistaGeneral_uiDuenoDeCasa_descripcion"
+        <Button
+            style="@style/buttons"
+            android:id="@+id/button_vistaGeneral_crear_contacto_de_asistencia"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_vistaGeneral_uiDuenoDeCasa_titulo"
-            android:text="@string/vistageneral_ui_duenodecasa_header"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:layout_marginTop="@dimen/space_big"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+            android:layout_marginVertical="@dimen/space_medium"
             android:layout_marginHorizontal="@dimen/space_small"
-            android:background="@drawable/border_item_listado_asistencia"
-            android:padding="@dimen/space_small"
+            android:text="@string/crear_contacto_de_asistencia"
             />
 
         <!--Listado de contactos de emergencia-->
@@ -55,7 +53,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_vistaGeneral_uiDuenoDeCasa_descripcion"
+            app:layout_constraintTop_toBottomOf="@id/button_vistaGeneral_crear_contacto_de_asistencia"
             android:layout_marginHorizontal="@dimen/space_small"
             android:layout_marginBottom="@dimen/space_medium"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

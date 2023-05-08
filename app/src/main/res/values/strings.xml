@@ -104,5 +104,11 @@
     <string name="contacto_emergencia">Contacto de emergencia</string>
     <string name="llamar">Llamar</string>
     <string name="sugerencias">Sugerencias</string>
+    <string name="contactos_de_emergencia">Contactos de emergencia</string>
+    <string name="agenda">Agenda</string>
+    <string name="crear_contacto">Crear contacto</string>
+    <string name="registro_de_actividad">Registro de actividad</string>
+    <string name="adjuntar_foto">Adjuntar foto (Si se requiere)</string>
+    <string name="formulario_incompleto">Debes de completar todos los campos antes de confirmar</string>
 
 </resources>

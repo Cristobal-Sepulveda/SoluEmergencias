@@ -21,10 +21,13 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.databinding.ActivityMainBinding
+import com.example.soluemergencias.ui.acercade.AcercaDeFragment
+import com.example.soluemergencias.ui.vistageneral.VistaGeneralFragmentDirections
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.mostrarSnackBarEnMainThread
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
@@ -96,34 +99,6 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         }
 
     }
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(this.packageManager)?.also {
-                requestTakePicture.launch(takePictureIntent)
-            }
-        }
-    }
-    private fun pintandoSideBarMenuYBottomAppBarSegunElPerfilDelUsuario() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            dataSource.obtenerUsuarioDesdeRoom().let {
-                val nombre = it.nombreCompleto.split(" ")[0]
-                val perfil = it.perfil
-                Log.e("perfil", "${it.perfil}")
-                val fotoPerfil = it.fotoPerfil
-                if (it.perfil == "a") {
-                    binding.navView.menu.findItem(R.id.navigation_crear_contacto_de_asistencia).isVisible = false
-                    binding.navView.menu.findItem(R.id.navigation_contactos_de_asistencia).isVisible = false
-                }
-                binding.navView.getHeaderView(0)
-                    .findViewById<TextView>(R.id.textView_drawerNavHeader_nombreUsuario)
-                    .text = "$nombre"
-                binding.navView.getHeaderView(0)
-                    .findViewById<TextView>(R.id.textView_drawerNavHeader_perfil)
-                    .text = perfil
-                decodeAndSetImageString(fotoPerfil)
-            }
-        }
-    }
     override fun onSupportNavigateUp(): Boolean {
         val drawerLayout = binding.drawerLayout
         NavigationUI.navigateUp(navController, drawerLayout)
@@ -134,11 +109,40 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     }
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.sugerencias -> {
+                navController.navigate(R.id.navigation_sugerencias)
+                return true
+            }
             R.id.acercaDe -> {
-                showToastInMainThreadWithStringResource(this, R.string.proxima_funcionalidad)
+                navController.navigate(R.id.navigation_acerca_de)
+                return true
             }
         }
         return false
+    }
+    private fun pintandoSideBarMenuYBottomAppBarSegunElPerfilDelUsuario() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            dataSource.obtenerUsuarioDesdeRoom().let {
+                val nombre = it.nombreCompleto.split(" ")[0]
+                val perfil = it.perfil
+                Log.e("perfil", "${it.perfil}")
+                val fotoPerfil = it.fotoPerfil
+                binding.navView.getHeaderView(0)
+                    .findViewById<TextView>(R.id.textView_drawerNavHeader_nombreUsuario)
+                    .text = nombre
+                binding.navView.getHeaderView(0)
+                    .findViewById<TextView>(R.id.textView_drawerNavHeader_perfil)
+                    .text = perfil
+                decodeAndSetImageString(fotoPerfil)
+            }
+        }
+    }
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(this.packageManager)?.also {
+                requestTakePicture.launch(takePictureIntent)
+            }
+        }
     }
     private suspend fun logout() {
         val task = dataSource.sesionActivaAFalseYLogout()

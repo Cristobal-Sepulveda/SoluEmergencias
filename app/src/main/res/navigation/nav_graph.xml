@@ -31,4 +31,27 @@
         android:id="@+id/navigation_vincular_cuentas"
         android:name="com.example.soluemergencias.ui.vincularcuentas.VincularCuentasFragment"
         android:label="VincularCuentasFragment" />
+
+    <fragment
+        android:id="@+id/navigation_acerca_de"
+        android:name="com.example.soluemergencias.ui.acercade.AcercaDeFragment"
+        android:label="AcercaDeFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_sugerencias"
+        android:name="com.example.soluemergencias.ui.sugerencias.SugerenciasFragment"
+        android:label="SugerenciasFragment" />
+    <fragment
+        android:id="@+id/navigation_ajustes"
+        android:name="com.example.soluemergencias.ui.ajustes.AjustesFragment"
+        android:label="AjustesFragment" />
+    <fragment
+        android:id="@+id/navigation_crear_contacto_de_asistencia"
+        android:name="com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaFragment"
+        android:label="CrearContactoDeAsistenciaFragment" />
+    <fragment
+        android:id="@+id/navigation_registro"
+        android:name="com.example.soluemergencias.ui.registro.RegistroFragment"
+        android:label="RegistroFragment" />
+
 </navigation>

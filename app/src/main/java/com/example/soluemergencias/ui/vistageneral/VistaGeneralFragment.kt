@@ -13,6 +13,7 @@ import com.example.soluemergencias.adapters.SolicitudDeVinculoAdapter
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.databinding.FragmentVistaGeneralBinding
+import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistencia
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +36,11 @@ class VistaGeneralFragment : Fragment() {
 
         _viewModel.contactosDeEmergenciaInScreen.observe(viewLifecycleOwner){
             it.let { adapter.submitList(it as MutableList<ContactoDeEmergencia>) }
+        }
+
+        _binding!!.buttonVistaGeneralCrearContactoDeAsistencia.setOnClickListener{
+            val dialogFragment = CrearContactoDeAsistencia()
+            dialogFragment.show(requireActivity().supportFragmentManager, "CrearContactoDeAsistencia")
         }
 
         cargandoListaDeContactosDeEmergencia()
