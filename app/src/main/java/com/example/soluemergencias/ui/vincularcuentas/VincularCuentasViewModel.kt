@@ -18,7 +18,7 @@ class VincularCuentasViewModel(val dataSource: AppDataSource) {
         _status.postValue(CloudRequestStatus.LOADING)
 
         val task = dataSource.chequearSiHaySolicitudesPorAprobar()
-/*        _status.postValue(
+        _status.postValue(
             when {
                 task.third.isEmpty() && !task.first -> CloudRequestStatus.ERROR
                 task.third.isEmpty() && task.first -> CloudRequestStatus.DONE_WITH_NO_DATA
@@ -27,7 +27,7 @@ class VincularCuentasViewModel(val dataSource: AppDataSource) {
                     CloudRequestStatus.DONE
                 }
             }
-        )*/
+        )
         return task
     }
 

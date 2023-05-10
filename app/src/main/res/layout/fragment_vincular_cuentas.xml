@@ -8,79 +8,331 @@
             name="viewModel"
             type="com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel" />
     </data>
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:background="@color/container">
+        <TextView
+            android:id="@+id/textView_vincularCuentas_titulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vincular_cuentas"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/space_medium"
+            android:textColor="@color/white"
+            android:background="@color/azulMarino"
+            android:layout_marginHorizontal="@dimen/space_small"
+            />
+        <EditText
+            android:id="@+id/editText_vincularCuentas_rut"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="@dimen/space_small"
+            android:background="@drawable/edittext_border"
+            android:hint="@string/rut_sin_puntos_ni_guion"
+            android:padding="@dimen/space_small"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/button_vincularCuentas_solicitar"
+            app:layout_constraintStart_toStartOf="@id/textView_vincularCuentas_titulo"
+            app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_titulo" />
+        <Button
+            android:id="@+id/button_vincularCuentas_solicitar"
+            android:layout_height="51dp"
+            android:layout_width="0dp"
+            android:text="Solicitar"
+            app:layout_constraintEnd_toEndOf="@id/textView_vincularCuentas_titulo"
+            app:layout_constraintTop_toTopOf="@id/editText_vincularCuentas_rut"
+            app:layout_constraintBottom_toBottomOf="@id/editText_vincularCuentas_rut"
+            android:layout_marginTop="2dp"
+            />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/container">
-            <!--Header del layout-->
-            <TextView
-                android:id="@+id/textView_vincularCuentas_titulo"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_vincularCuentas_solicitar">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/vincular_cuentas"
-                android:textSize="30sp"
-                android:textAlignment="center"
-                android:layout_marginTop="@dimen/space_medium"
-                android:textColor="@color/white"
-                android:background="@color/azulMarino"
-                android:layout_marginHorizontal="@dimen/space_small"
-                />
-            <EditText
-                android:id="@+id/editText_vincularCuentas_rut"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                app:layout_constraintStart_toStartOf="@id/textView_vincularCuentas_titulo"
-                app:layout_constraintEnd_toStartOf="@id/button_vincularCuentas_solicitar"
-                app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_titulo"
-                android:layout_marginTop="@dimen/space_small"
-                android:layout_marginEnd="@dimen/space_small"
-                android:hint="@string/rut_sin_puntos_ni_guion"
-                android:textSize="13sp"
-                android:background="@drawable/edittext_border"
-                android:padding="@dimen/space_small"
-                />
-            <Button
-                android:id="@+id/button_vincularCuentas_solicitar"
-                android:layout_height="51dp"
-                android:layout_width="0dp"
-                android:text="Solicitar"
-                app:layout_constraintEnd_toEndOf="@id/textView_vincularCuentas_titulo"
-                app:layout_constraintTop_toTopOf="@id/editText_vincularCuentas_rut"
-                app:layout_constraintBottom_toBottomOf="@id/editText_vincularCuentas_rut"
-                android:layout_marginTop="2dp"
-                />
-            <!--Solicitudes por aprobar-->
-            <include
-                android:id="@+id/include_vincularCuentas_solicitudesPorAprobar"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_vincularCuentas_solicitar"
-                app:layout_constraintBottom_toTopOf="@id/include_vincularCuentas_solicitudesEnviadas"
-                android:layout_marginTop="@dimen/space_medium"
-                android:layout_marginHorizontal="@dimen/space_small"
-                layout="@layout/tabla_solicitudes_por_aprobar"
-                />
-            <!--Solicitudes enviadas-->
-            <include
-                android:id="@+id/include_vincularCuentas_solicitudesEnviadas"
-                layout="@layout/tabla_solicitudes_enviadas"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/space_small"
-                android:layout_marginVertical="@dimen/space_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/include_vincularCuentas_solicitudesPorAprobar" />
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="100dp"
+                android:layout_marginBottom="12dp"
+                android:elevation="3dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintStart_toStartOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
+                app:layout_constraintEnd_toEndOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
+                app:layout_constraintTop_toTopOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
+                app:layout_constraintBottom_toBottomOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
+                app:fabCustomSize="48dp"
+                android:elevation="3dp"
+                android:backgroundTint="@color/green" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <!--Solicitudes por aprobar-->
+        <TextView
+            android:id="@+id/textView_vincularCuentas_solicitudesPorAprobar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/azulMarino"
+            android:text="@string/solicitudes_por_aprobar"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_vincularCuentas_rut" />
+        <LinearLayout
+            android:id="@+id/linearLayout_vincularCuentas_nombreDeColumnas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/border_item_listado_asistencia"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/space_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_solicitudesPorAprobar">
+
+            <TextView
+                android:id="@+id/textView_vincularCuentas_nombreCompleto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_small"
+                android:layout_weight="1.5"
+                android:text="Nombre del solicitante"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_excel_content" />
+
+            <TextView
+                android:id="@+id/textView_vincularCuentas_rutDelSolicitante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:layout_weight="1.4"
+                android:text="Rut del solicitante"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_excel_content" />
+
+            <TextView
+                android:id="@+id/textView_itemSolicitudDeVinculo_diasTrabajados"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Fecha de solicitud"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_excel_content" />
+
+
+            <TextView
+                android:id="@+id/imageView_itemSolicitudDeVinculo_aprobar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Aprobar" />
+
+            <TextView
+                android:id="@+id/imageView_itemSolicitudDeVinculo_rechazar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Rechazar" />
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/shape_recyclerview_border"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/textView_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_vincularCuentas_nombreDeColumnas" />
+        <ProgressBar
+            android:id="@+id/circularProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:contentDescription="@string/loading"
+            app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            />
+        <ImageView
+            android:id="@+id/imageView_vincularCuentas_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:cloudRequestStatusImage="@{viewModel.status}"
+            android:src="@drawable/ic_connection_error_100"
+            android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_vincularCuentas_solicitudesPorAprobar"
+            android:layout_marginHorizontal="@dimen/space_small"
+            app:cloudRequestStatusTextView="@{viewModel.status}"
+            android:text="@string/en_estos_momentos_no_tienes_solicitudes_pendientes"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            />
+        <!--Solicitudes por aprobar-->
+        <TextView
+            android:id="@+id/textView_vincularCuentas_solicitudesEnviadas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="24dp"
+
+            android:background="@color/azulMarino"
+            android:text="@string/solicitudes_enviadas"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_solicitudesPorAprobar" />
+        <LinearLayout
+            android:id="@+id/linearLayout_vincularCuentas_nombreDeColumnas2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/border_item_listado_asistencia"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/space_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_solicitudesEnviadas">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_small"
+                android:layout_weight="1.5"
+                android:text="Nombre del solicitante"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_excel_content" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:layout_weight="1.4"
+                android:text="Rut del solicitante"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_excel_content" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Fecha de solicitud"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_excel_content" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Aprobar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Rechazar" />
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/shape_recyclerview_border"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_vincularCuentas_nombreDeColumnas2" />
+        <ProgressBar
+            android:id="@+id/circularProgressIndicator2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:contentDescription="@string/loading"
+            app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            />
+        <ImageView
+            android:id="@+id/imageView_vincularCuentas_error2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:cloudRequestStatusImage="@{viewModel.status}"
+            android:src="@drawable/ic_connection_error_100"
+            android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_vincularCuentas_solicitudesEnviadas"
+            app:cloudRequestStatusTextView="@{viewModel.status}"
+            android:text="@string/en_estos_momentos_no_tienes_solicitudes_pendientes"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
