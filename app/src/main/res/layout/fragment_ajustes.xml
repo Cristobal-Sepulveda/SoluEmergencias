@@ -22,4 +22,12 @@
         android:layout_marginHorizontal="@dimen/space_small"
         />
 
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switch_ajustes_darkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_ajustes_titulo"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

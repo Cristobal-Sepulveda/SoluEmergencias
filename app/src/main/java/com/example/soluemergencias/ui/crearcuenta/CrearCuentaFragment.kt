@@ -20,7 +20,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.soluemergencias.R
 import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.databinding.FragmentCrearCuentaBinding
-import com.example.soluemergencias.utils.Constants.REQUEST_TAKE_PHOTO
 import com.example.soluemergencias.utils.isThisRutValid
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.android.material.snackbar.Snackbar

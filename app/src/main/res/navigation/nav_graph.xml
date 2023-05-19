@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_vistageneralfragment"
         android:name="com.example.soluemergencias.ui.vistageneral.VistaGeneralFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/fragment_vista_general"
         tools:layout="@layout/fragment_vista_general">
 
         <action

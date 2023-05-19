@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.soluemergencias.ui.recuperarclave.RecuperarClaveViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_recuperarClave_titulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="@string/recuperar_clave"
+            android:textSize="30sp"
+            android:layout_marginTop="@dimen/space_medium"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@color/azulMarino"
+            android:layout_marginHorizontal="@dimen/space_small"
+            />
+
+        <EditText
+            android:id="@+id/editText_recuperarClave_ingreseRut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/space_medium"
+            android:autofillHints="text"
+            android:background="@drawable/edittext_border"
+            android:hint="@string/ingrese_rut"
+            android:padding="@dimen/space_small"
+            app:layout_constraintStart_toStartOf="@+id/textView_recuperarClave_titulo"
+            app:layout_constraintEnd_toEndOf="@+id/textView_recuperarClave_titulo"
+            app:layout_constraintTop_toBottomOf="@id/textView_recuperarClave_titulo" />
+        <TextView
+            android:id="@+id/button_recuperarClave_volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/volver"
+            android:textColor="@color/azulMarino"
+            app:layout_constraintBottom_toBottomOf="@+id/button_recuperarClave_confirmar"
+            app:layout_constraintEnd_toStartOf="@id/button_recuperarClave_confirmar"
+            app:layout_constraintTop_toTopOf="@id/button_recuperarClave_confirmar" />
+        <Button
+            android:id="@+id/button_recuperarClave_confirmar"
+            style="@style/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_small"
+            android:text="@string/confirmar"
+            app:layout_constraintEnd_toEndOf="@id/editText_recuperarClave_ingreseRut"
+            app:layout_constraintTop_toBottomOf="@id/editText_recuperarClave_ingreseRut" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_recuperarClave_confirmar"
+            app:layout_constraintBottom_toBottomOf="@id/button_recuperarClave_confirmar"
+            android:indeterminate="true"
+            android:contentDescription="@string/loading"
+            android:progressDrawable="@color/orange"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

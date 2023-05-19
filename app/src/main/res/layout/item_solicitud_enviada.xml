@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name ="solicitudItem"
@@ -17,26 +17,15 @@
         android:padding="@dimen/space_small">
 
         <TextView
-            android:id="@+id/textView_itemSolicitudDeVinculo_nombreCompleto"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{solicitudItem.nombreDelSolicitante}"
-            android:textSize="@dimen/text_excel_content"
-            android:textColor="@color/text"
-            tools:text="nombreCompleto"
-            android:layout_marginStart="@dimen/space_small"
-            android:layout_weight="0.65" />
-
-        <TextView
             android:id="@+id/textView_itemSolicitudDeVinculo_rutDelSolicitante"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{solicitudItem.rutDelSolicitante}"
+            android:text="@{solicitudItem.rutDelReceptor}"
             android:textColor="@color/text"
             android:textSize="@dimen/text_excel_content"
             tools:text="17.740.260-5"
             android:textAlignment="center"
-            android:layout_weight="0.8" />
+            android:layout_weight="1.7" />
 
         <TextView
             android:id="@+id/textView_itemSolicitudDeVinculo_fechaDeSolicitud"
@@ -47,22 +36,27 @@
             android:textSize="@dimen/text_excel_content"
             tools:text="12-12-2023"
             android:textAlignment="center"
-            android:layout_weight="0.7" />
+            android:layout_weight="1.5" />
 
-        <ImageView
-            android:id="@+id/imageView_itemSolicitudDeVinculo_aprobar"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:src="@drawable/baseline_check_24" />
-
-        <ImageView
-            android:id="@+id/imageView_itemSolicitudDeVinculo_rechazar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_close_24"
-            android:layout_weight="0.55"
-            android:layout_marginEnd="@dimen/space_small"
+            android:layout_weight="1.5"
+            android:textAlignment="center"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_excel_content"
+            app:cambiarBooleanAString="@{solicitudItem.solicitudGestionada}"
             />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:textAlignment="center"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_excel_content"
+            app:boolean1="@{solicitudItem.solicitudGestionada}"
+            app:boolean2="@{solicitudItem.solicitudAprobada}"/>
+
     </LinearLayout>
 </layout>

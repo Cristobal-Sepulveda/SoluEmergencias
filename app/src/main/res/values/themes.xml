@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
         <item name="windowSplashScreenBackground">@color/white</item>
@@ -13,11 +12,13 @@
         <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
     </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!--Esta fuerza a que la app este siempre en modo claro-->
+    <!--<style name="AppTheme" parent="Theme.MaterialComponents.Light">-->
+    <!-- Base application theme. --> <!--Este hace que el theme cambie según
+    el usuario tenga customizado su device-->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/azulMarino</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -28,14 +29,10 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
-
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--        <item name="fontFamily"></item>-->
+        <item name="fontFamily"></item>
     </style>
-
-
-
 
 </resources>

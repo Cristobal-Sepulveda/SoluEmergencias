@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardElevation="2dp"
+        app:cardElevation="1dp"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="5dp"
         >
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:background="@color/azulMarino">
+            android:background="@color/itemContactoDeEmergencia">
 
             <ImageView
                 android:id="@+id/imageView_itemContactoDeEmergencia_foto"

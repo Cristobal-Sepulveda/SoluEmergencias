@@ -1,6 +1,7 @@
 package com.example.soluemergencias
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.AppRepository
 import com.example.soluemergencias.data.app_database.getDatabase
@@ -8,6 +9,8 @@ import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeA
 import com.example.soluemergencias.ui.crearcuenta.CrearCuentaViewModel
 import com.example.soluemergencias.ui.login.LoginViewModel
 import com.example.soluemergencias.ui.perfil.PerfilViewModel
+import com.example.soluemergencias.ui.recuperarclave.RecuperarClaveViewModel
+import com.example.soluemergencias.ui.sugerencias.SugerenciasViewModel
 import com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel
 import com.example.soluemergencias.ui.vistageneral.VistaGeneralViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -28,35 +31,28 @@ class MyApp : Application() {
         val myModule = module {
             //Declare singleton definitions to be later injected using by inject()
             single {
-                VistaGeneralViewModel(
-                    get() as AppDataSource
-                )
+                VistaGeneralViewModel(get() as AppDataSource)
             }
             single {
-                PerfilViewModel(
-                    get() as AppDataSource
-                )
+                PerfilViewModel(get() as AppDataSource)
             }
             single {
-                CrearCuentaViewModel(
-                    get() as AppDataSource
-                )
+                CrearCuentaViewModel(get() as AppDataSource)
             }
             single{
-                LoginViewModel(
-                    get() as AppDataSource
-                )
+                LoginViewModel(get() as AppDataSource)
             }
             single{
-                VincularCuentasViewModel(
-                    get() as AppDataSource
-                )
-
+                VincularCuentasViewModel(get() as AppDataSource)
             }
             single{
-                CrearContactoDeAsistenciaViewModel(
-                    get() as AppDataSource
-                )
+                CrearContactoDeAsistenciaViewModel(get() as AppDataSource)
+            }
+            single{
+                RecuperarClaveViewModel(get() as AppDataSource)
+            }
+            single{
+                SugerenciasViewModel(get() as AppDataSource)
             }
 
             single { getDatabase(this@MyApp).usuarioDao }

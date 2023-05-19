@@ -24,11 +24,11 @@
             android:layout_height="wrap_content"
             android:text="@string/agenda"
             android:textSize="30sp"
-            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginTop="@dimen/space_big"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:background="@color/azulMarino"
-            android:layout_marginHorizontal="@dimen/space_small"
+            android:background="@color/titles"
+            android:layout_marginHorizontal="@dimen/space_big"
             />
         <Button
             style="@style/buttons"
@@ -40,8 +40,23 @@
             app:layout_constraintTop_toBottomOf="@id/textView_vistaGeneral_uiDuenoDeCasa_titulo"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
             android:layout_marginVertical="@dimen/space_medium"
-            android:layout_marginHorizontal="@dimen/space_small"
+            android:layout_marginHorizontal="@dimen/space_big"
             android:text="@string/crear_contacto_de_asistencia"
+            />
+
+        <TextView
+            android:id="@+id/textView_vistaGeneral_rutVinculado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_vistaGeneral_uiDuenoDeCasa_titulo"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+            android:layout_marginVertical="@dimen/space_medium"
+            android:layout_marginHorizontal="@dimen/space_big"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_normal"
+            android:textStyle="bold"
             />
 
         <!--Listado de contactos de emergencia-->

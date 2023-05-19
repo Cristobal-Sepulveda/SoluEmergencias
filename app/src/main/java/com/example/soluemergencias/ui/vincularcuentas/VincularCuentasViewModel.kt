@@ -1,29 +1,49 @@
 package com.example.soluemergencias.ui.vincularcuentas
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
 import com.example.soluemergencias.utils.Constants.CloudRequestStatus
 
-class VincularCuentasViewModel(val dataSource: AppDataSource) {
+class VincularCuentasViewModel(val dataSource: AppDataSource): ViewModel() {
     private val _status = MutableLiveData<CloudRequestStatus>()
     val status: MutableLiveData<CloudRequestStatus>
         get() = _status
 
-    private val _solicitudesInScreen = MutableLiveData<MutableList<SolicitudDeVinculo>?>()
-    val solicitudesInScreen: MutableLiveData<MutableList<SolicitudDeVinculo>?>
-        get() = _solicitudesInScreen
+    private val _solicitudesRecibidasInScreen = MutableLiveData<MutableList<SolicitudDeVinculo>?>()
+    val solicitudesRecibidasInScreen: MutableLiveData<MutableList<SolicitudDeVinculo>?>
+        get() = _solicitudesRecibidasInScreen
 
-    suspend fun chequearSiHaySolicitudesPorAprobar(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>>{
+    private val _solicitudesEnviadasInScreen = MutableLiveData<MutableList<SolicitudDeVinculo>?>()
+    val solicitudesEnviadasInScreen: MutableLiveData<MutableList<SolicitudDeVinculo>?>
+        get() = _solicitudesEnviadasInScreen
+
+    suspend fun chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>>{
         _status.postValue(CloudRequestStatus.LOADING)
-
-        val task = dataSource.chequearSiHaySolicitudesPorAprobar()
+        val task = dataSource.chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar()
         _status.postValue(
             when {
                 task.third.isEmpty() && !task.first -> CloudRequestStatus.ERROR
                 task.third.isEmpty() && task.first -> CloudRequestStatus.DONE_WITH_NO_DATA
                 else -> {
-                    _solicitudesInScreen.postValue(task.third)
+                    _solicitudesRecibidasInScreen.postValue(task.third)
+                    CloudRequestStatus.DONE
+                }
+            }
+        )
+        return task
+    }
+
+    suspend fun chequearSiHaySolicitudesDeVinculacionEnviadas(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>>{
+        _status.postValue(CloudRequestStatus.LOADING)
+        val task = dataSource.chequearSiHaySolicitudesDeVinculacionEnviadas()
+        _status.postValue(
+            when {
+                task.third.isEmpty() && !task.first -> CloudRequestStatus.ERROR
+                task.third.isEmpty() && task.first -> CloudRequestStatus.DONE_WITH_NO_DATA
+                else -> {
+                    _solicitudesEnviadasInScreen.postValue(task.third)
                     CloudRequestStatus.DONE
                 }
             }
@@ -39,6 +59,6 @@ class VincularCuentasViewModel(val dataSource: AppDataSource) {
     }
 
     fun vaciarRecyclerView(){
-        _solicitudesInScreen.value = mutableListOf()
+        _solicitudesRecibidasInScreen.value = mutableListOf()
     }
 }

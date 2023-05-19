@@ -79,7 +79,7 @@
     <string name="error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube">Error al obtener datos desde la nube</string>
     <string name="vincular_cuentas">Vincular Cuentas</string>
     <string name="vistageneral_ui_duenodecasa_header">Aquí podrás ver todas las emergencias ocurridas en tu hogar</string>
-    <string name="solicitudes_por_aprobar">Solicitudes por aprobar</string>
+    <string name="solicitudes_por_aprobar">Solicitudes recibidas</string>
     <string name="error_cloud_request">No se pudieron obtener los datos desde la nube. Intentelo Nuevamente.</string>
     <string name="en_estos_momentos_no_tienes_solicitudes_pendientes">En estos momentos no tienes solicitudes pendientes</string>
     <string name="por_aprobar">Por aprobar</string>
@@ -110,5 +110,21 @@
     <string name="registro_de_actividad">Registro de actividad</string>
     <string name="adjuntar_foto">Adjuntar foto (Si se requiere)</string>
     <string name="formulario_incompleto">Debes de completar todos los campos antes de confirmar</string>
+    <string name="recuperar_clave">Recuperar clave</string>
+    <string name="ingrese_rut">Ingrese su rut</string>
+    <string name="escriba_sugerencias">Si tienes alguna observación u comentario, escribelo aquí y te responderemos en cuanto podamos.</string>
+    <string name="tus_solicitudes_enviadas_han_sido_gestionadas">Tus solicitudes enviadas ya han sido gestionadas.</string>
+    <string name="rut_del_receptor">Rut del receptor</string>
+    <string name="nombre_del_receptor">Nombre del receptor</string>
+    <string name="fecha_de_solicitud">Fecha de solicitud</string>
+    <string name="solicitud_gestionada">Solicitud gestionada</string>
+    <string name="estado_solicitud">Estado de la solicitud</string>
+    <string name="light_mode">Light mode</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="nombre_del_solicitante">Nombre del solicitante</string>
+    <string name="rut_del_solicitante">Rut del solicitante</string>
+    <string name="aprobar">Aprobar</string>
+    <string name="rechazar">Rechazar</string>
+    <string name="fragment_vista_general">VistaGeneralFragment</string>
 
 </resources>

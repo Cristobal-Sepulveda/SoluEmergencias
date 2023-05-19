@@ -73,3 +73,27 @@ fun bindStatusErrorTextView(textView: TextView, status: LiveData<CloudRequestSta
         }
     }
 }
+
+@BindingAdapter("cambiarBooleanAString")
+fun bindCambiarBooleanAString(textView: TextView, boolean: Boolean){
+    when(boolean){
+        true -> {
+            textView.text = "Si"
+        }
+        false -> {
+            textView.text = "No"
+        }
+    }
+}
+@BindingAdapter("boolean1", "boolean2")
+fun bindCambiarBooleanAString2(textView: TextView, boolean1: Boolean, boolean2: Boolean){
+    if(boolean1){
+        if(boolean2) {
+            textView.text = "Aprobada"
+        }else{
+            textView.text = "Rechazada"
+        }
+    }else{
+        textView.text = "Sin gestionar"
+    }
+}

@@ -80,6 +80,17 @@ dependencies {
     // Koin main features for Android
     implementation 'io.insert-koin:koin-android:3.3.3'
 
+    //Moshi
+    implementation 'com.squareup.moshi:moshi:1.14.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+
     //Room dependencies
     implementation "androidx.room:room-ktx:2.5.0"
     implementation "androidx.room:room-runtime:2.5.0"

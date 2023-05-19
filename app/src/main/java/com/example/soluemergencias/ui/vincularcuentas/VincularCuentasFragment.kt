@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.R
-import com.example.soluemergencias.adapters.SolicitudDeVinculoAdapter
+import com.example.soluemergencias.adapters.SolicitudEnviadaAdapter
+import com.example.soluemergencias.adapters.SolicitudRecibidaAdapter
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
 import com.example.soluemergencias.databinding.FragmentVincularCuentasBinding
@@ -23,15 +24,15 @@ class VincularCuentasFragment: Fragment() {
     private var _binding: FragmentVincularCuentasBinding? = null
     private val _viewModel: VincularCuentasViewModel by inject()
     private val _appDataSource: AppDataSource by inject()
-    private val adapter = SolicitudDeVinculoAdapter(_viewModel,_appDataSource , SolicitudDeVinculoAdapter.OnClickListener{ })
+    private val adapterAprobar = SolicitudRecibidaAdapter(_viewModel,_appDataSource , SolicitudRecibidaAdapter.OnClickListener{ })
+    private val adapterEnviadas = SolicitudEnviadaAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentVincularCuentasBinding.inflate(inflater, container, false)
         _binding!!.lifecycleOwner = this
         _binding!!.viewModel = _viewModel
-        _binding!!.recyclerviewVincularCuentasSolicitudesPorAprobar.adapter = adapter
-        chequearSiHaySolicitudesPorAprobar()
-        chequearSiHaySolicitudesEnviadasSinGestionar()
+        _binding!!.recyclerviewVincularCuentasSolicitudesPorAprobar.adapter = adapterAprobar
+        _binding!!.recyclerviewVincularCuentasSolicitudesEnviadas.adapter = adapterEnviadas
 
         //Click listeners
         _binding!!.buttonVincularCuentasSolicitar.setOnClickListener{
@@ -39,9 +40,16 @@ class VincularCuentasFragment: Fragment() {
         }
 
         //Observers
-        _viewModel.solicitudesInScreen.observe(requireActivity()){
-            it.let { adapter.submitList(it as MutableList<SolicitudDeVinculo>) }
+        _viewModel.solicitudesRecibidasInScreen.observe(requireActivity()){
+            it.let { adapterAprobar.submitList(it as MutableList<SolicitudDeVinculo>) }
         }
+
+        _viewModel.solicitudesEnviadasInScreen.observe(requireActivity()){
+            it.let { adapterEnviadas.submitList(it as MutableList<SolicitudDeVinculo>) }
+        }
+
+        chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar()
+        chequearSiHaySolicitudesDeVinculacionEnviadas()
 
         return _binding!!.root
     }
@@ -51,16 +59,16 @@ class VincularCuentasFragment: Fragment() {
         _viewModel.vaciarRecyclerView()
     }
 
-    private fun chequearSiHaySolicitudesPorAprobar() {
+    private fun chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar() {
         lifecycleScope.launch(Dispatchers.IO){
-            val request = _viewModel.chequearSiHaySolicitudesPorAprobar()
+            val request = _viewModel.chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar()
             if(!request.first) showToastInMainThreadWithStringResource(requireContext(), request.second)
         }
     }
 
-    private fun chequearSiHaySolicitudesEnviadasSinGestionar() {
+    private fun chequearSiHaySolicitudesDeVinculacionEnviadas() {
         lifecycleScope.launch(Dispatchers.IO){
-            val request = _viewModel.chequearSiHaySolicitudesPorAprobar()
+            val request = _viewModel.chequearSiHaySolicitudesDeVinculacionEnviadas()
             if(!request.first) showToastInMainThreadWithStringResource(requireContext(), request.second)
         }
     }

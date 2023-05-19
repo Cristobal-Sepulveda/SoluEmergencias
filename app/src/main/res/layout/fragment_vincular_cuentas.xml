@@ -20,12 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/vincular_cuentas"
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:textAlignment="center"
-            android:layout_marginTop="@dimen/space_medium"
-            android:textColor="@color/white"
-            android:background="@color/azulMarino"
-            android:layout_marginHorizontal="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_big"
+            android:background="@color/titles"
+            android:layout_marginHorizontal="@dimen/space_big"
             />
         <EditText
             android:id="@+id/editText_vincularCuentas_rut"
@@ -50,67 +50,31 @@
             app:layout_constraintBottom_toBottomOf="@id/editText_vincularCuentas_rut"
             android:layout_marginTop="2dp"
             />
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView_vincularCuentas_solicitudesPorAprobar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_vincularCuentas_solicitar">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:backgroundTint="@color/white"
-                app:fabCustomSize="100dp"
-                android:layout_marginBottom="12dp"
-                android:elevation="3dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                app:layout_constraintStart_toStartOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
-                app:layout_constraintEnd_toEndOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
-                app:layout_constraintTop_toTopOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
-                app:layout_constraintBottom_toBottomOf="@id/fab_vistaGeneral_volantero_iniciarODetenerTrasmision_container"
-                app:fabCustomSize="48dp"
-                android:elevation="3dp"
-                android:backgroundTint="@color/green" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--Solicitudes por aprobar-->
+        <!--Solicitudes recibidas-->
         <TextView
             android:id="@+id/textView_vincularCuentas_solicitudesPorAprobar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="@dimen/space_big"
             android:background="@color/azulMarino"
             android:text="@string/solicitudes_por_aprobar"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_vincularCuentas_rut" />
+            app:layout_constraintTop_toBottomOf="@id/editText_vincularCuentas_rut"/>
+
         <LinearLayout
             android:id="@+id/linearLayout_vincularCuentas_nombreDeColumnas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/border_item_listado_asistencia"
+            android:layout_marginHorizontal="@dimen/space_big"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/space_small"
+            android:background="@drawable/linearlayout_vincularcuentas_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_solicitudesPorAprobar">
@@ -121,8 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_weight="1.5"
-                android:text="Nombre del solicitante"
-                android:textColor="@color/black"
+                android:text="@string/nombre_del_solicitante"
+                android:textColor="@color/text"
                 android:textSize="@dimen/text_excel_content" />
 
             <TextView
@@ -131,9 +95,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_small"
                 android:layout_weight="1.4"
-                android:text="Rut del solicitante"
+                android:text="@string/rut_del_solicitante"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/text"
                 android:textSize="@dimen/text_excel_content" />
 
             <TextView
@@ -141,9 +105,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Fecha de solicitud"
+                android:text="@string/fecha_de_solicitud"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/text"
                 android:textSize="@dimen/text_excel_content" />
 
 
@@ -152,22 +116,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="Aprobar" />
+                android:text="@string/aprobar"
+                android:textColor="@color/text"/>
 
             <TextView
                 android:id="@+id/imageView_itemSolicitudDeVinculo_rechazar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="Rechazar" />
+                android:text="@string/rechazar"
+                android:textColor="@color/text"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_vincularCuentas_solicitudesPorAprobar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/shape_recyclerview_border"
+            android:layout_marginHorizontal="@dimen/space_big"
+            android:layout_marginBottom="@dimen/space_small"
+            android:paddingVertical="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/textView_vincularCuentas_solicitudesEnviadas"
             app:layout_constraintEnd_toEndOf="parent"
@@ -211,15 +177,13 @@
             android:textColor="@color/black"
             android:visibility="gone"
             />
-        <!--Solicitudes por aprobar-->
+        <!--Solicitudes enviadas-->
         <TextView
             android:id="@+id/textView_vincularCuentas_solicitudesEnviadas"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="@dimen/space_big"
             android:layout_marginBottom="24dp"
-
             android:background="@color/azulMarino"
             android:text="@string/solicitudes_enviadas"
             android:textAlignment="center"
@@ -233,9 +197,8 @@
             android:id="@+id/linearLayout_vincularCuentas_nombreDeColumnas2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/border_item_listado_asistencia"
+            android:layout_marginHorizontal="@dimen/space_big"
+            android:background="@drawable/linearlayout_vincularcuentas_border"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/space_small"
@@ -246,57 +209,55 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_small"
-                android:layout_weight="1.5"
-                android:text="Nombre del solicitante"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_excel_content" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_small"
                 android:layout_weight="1.4"
-                android:text="Rut del solicitante"
+                android:text="@string/rut_del_receptor"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text_excel_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="@string/fecha_de_solicitud"
+                android:textAlignment="center"
+                android:textColor="@color/text"
                 android:textSize="@dimen/text_excel_content" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Fecha de solicitud"
+                android:text="@string/solicitud_gestionada"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/text"
                 android:textSize="@dimen/text_excel_content" />
 
-
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:text="Aprobar" />
+                android:layout_weight="1.5"
+                android:text="@string/estado_solicitud"
+                android:textAlignment="center"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text_excel_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:text="Rechazar" />
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_vincularCuentas_solicitudesEnviadas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="@dimen/space_big"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/shape_recyclerview_border"
+            android:paddingVertical="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout_vincularCuentas_nombreDeColumnas2" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_vincularCuentas_nombreDeColumnas2"
+            app:layout_constraintVertical_bias="0.0" />
+
         <ProgressBar
             android:id="@+id/circularProgressIndicator2"
             android:layout_width="wrap_content"

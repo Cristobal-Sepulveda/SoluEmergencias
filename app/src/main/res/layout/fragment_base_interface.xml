@@ -12,8 +12,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ActionBar"
-        >
+        android:theme="@style/ActionBar">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SoluEmergencias"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/azulMarino"
                 android:textSize="20sp"

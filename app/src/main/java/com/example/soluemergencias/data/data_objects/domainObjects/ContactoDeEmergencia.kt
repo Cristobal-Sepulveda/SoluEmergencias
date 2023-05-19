@@ -6,4 +6,5 @@ data class ContactoDeEmergencia(
     val nombre: String,
     val telefono: String,
     val foto: String,
+    val rut: String?,
 )

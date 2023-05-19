@@ -14,4 +14,17 @@
     <color name="azulMarino">#283484</color>
     <color name="grafitoOscuro">#3c3c3c</color>
     <color name="container">#f5f5f5</color>
+    <color name="containerDarkMode">#3c3c3c</color>
+    <color name="color_primary_dark_mode">#1E1E1E</color>
+    <color name="color_primary_dark">#283484</color>
+    <color name="textDrawerNavHeader">#3c3c3c</color>
+    <color name="text">#000000</color>
+    <color name="action_bar">#ffffff</color>
+    <color name="drawerNavHeader">#f5f5f5</color>
+    <color name="drawerNavFooter">#f5f5f5</color>
+    <color name="iconColor">#3c3c3c</color>
+    <color name="editTextBorder">#283484</color>
+    <color name="recyclerViewBorder">#283484</color>
+    <color name="titles">#283484</color>
+    <color name="itemContactoDeEmergencia">#283484</color>
 </resources>

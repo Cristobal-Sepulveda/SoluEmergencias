@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -109,6 +110,20 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     }
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.lightMode -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                recreate()
+                return true
+            }
+            R.id.darkMode -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                recreate()
+                return true
+            }
+            R.id.sugerencias -> {
+                navController.navigate(R.id.navigation_sugerencias)
+                return true
+            }
             R.id.sugerencias -> {
                 navController.navigate(R.id.navigation_sugerencias)
                 return true

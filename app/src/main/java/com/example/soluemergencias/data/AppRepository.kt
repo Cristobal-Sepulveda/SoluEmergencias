@@ -4,18 +4,26 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.soluemergencias.R
+import com.example.soluemergencias.data.apiservices.RecuperarClaveApi
 import com.example.soluemergencias.data.daos.UsuarioDao
 import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeAsistencia
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
+import com.example.soluemergencias.data.data_objects.dto.ApiResponse
 import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.Constants.firebaseAuth
+import com.example.soluemergencias.utils.fotoDuenoDeCasa
 import com.example.soluemergencias.utils.gettingLocalCurrentDateAndHour
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.*
+import retrofit2.HttpException
+import retrofit2.await
 import java.util.*
 
 @Suppress("LABEL_NAME_CLASH")
@@ -197,7 +205,7 @@ class AppRepository(private val context: Context,
         }
     }
 
-    override suspend fun chequearSiHaySolicitudesPorAprobar(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>> = withContext(ioDispatcher) {
+    override suspend fun chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>> = withContext(ioDispatcher) {
         withContext(Dispatchers.IO){
             val rut = usuarioDao.obtenerUsuarios()[0].rut
             val deferred = CompletableDeferred<Triple<Boolean, Int,
@@ -207,23 +215,42 @@ class AppRepository(private val context: Context,
                 .whereEqualTo("rutDelReceptor", rut)
                 .whereEqualTo("solicitudGestionada", false)
                 .get()
-                .addOnCompleteListener{
-                    deferred.complete(
-                        when(it.isSuccessful){
-                            false -> Triple(false, R.string.error_cloud_request, mutableListOf())
-                            true -> {
-                                when(it.result.isEmpty){
-                                    false -> Triple(true, R.string.exito, it.result.toObjects(SolicitudDeVinculo::class.java))
-                                    true -> Triple(true, R.string.no_hay_solicitudes_por_aprobar, mutableListOf())
-                                }
-                            }
-                        }
-                    )
+                .addOnFailureListener {
+                    deferred.complete(Triple(false, R.string.error_cloud_request, mutableListOf()))
                 }
+                .addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Triple(true, R.string.no_hay_solicitudes_por_aprobar, mutableListOf()))
+                    }else{
+                        deferred.complete(Triple(true, R.string.exito, it.toObjects(SolicitudDeVinculo::class.java)))
+                    }
+                }
+
             deferred.await()
         }
     }
 
+    override suspend fun chequearSiHaySolicitudesDeVinculacionEnviadas(): Triple<Boolean, Int, MutableList<SolicitudDeVinculo>> = withContext(ioDispatcher){
+        withContext(ioDispatcher){
+            val rut = usuarioDao.obtenerUsuarios()[0].rut
+            val deferred = CompletableDeferred<Triple<Boolean, Int, MutableList<SolicitudDeVinculo>>>()
+
+            cloudDB.collection("SolicitudesDeVinculacion")
+                .whereEqualTo("rutDelSolicitante", rut)
+                .get()
+                .addOnFailureListener {
+                    deferred.complete(Triple(false, R.string.error_cloud_request, mutableListOf()))
+                }
+                .addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Triple(true, R.string.tus_solicitudes_enviadas_han_sido_gestionadas, mutableListOf()))
+                    }else{
+                        deferred.complete(Triple(true, R.string.exito, it.toObjects(SolicitudDeVinculo::class.java)))
+                    }
+                }
+            return@withContext deferred.await()
+        }
+    }
     override suspend fun crearSolicitudDeVinculo(rutAVincular: String): Pair<Boolean,Int> = withContext(ioDispatcher){
         withContext(ioDispatcher){
             val deferred = CompletableDeferred<Pair<Boolean,Int>>()
@@ -315,22 +342,69 @@ class AppRepository(private val context: Context,
         withContext(Dispatchers.IO) {
             val deferred = CompletableDeferred<Triple<
                     Boolean, Int, MutableList<ContactoDeEmergencia>>>()
-            cloudDB.collection("SolicitudesDeVinculacion")
-                .whereEqualTo("rutDelReceptor", usuarioDao.obtenerUsuarios()[0].rut)
-                .whereEqualTo("solicitudAprobada", true)
-                .whereEqualTo("solicitudGestionada", true)
-                .get()
-                .addOnFailureListener {
-                    deferred.complete(Triple(false, R.string.error_cloud_request, defaultContactosDeEmergencia))
-                }.addOnSuccessListener{
-                    if(it.isEmpty){
-                        deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
-                        Log.e("cargandoListaDeContactosDeEmergencia", "cuenta no vinculada")
-                    }else{
-                        Log.e("cargandoListaDeContactosDeEmergencia", "cuenta vinculada")
-                        deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+            val usuario= usuarioDao.obtenerUsuarios()[0]
+            if(usuario.perfil == "Dueño de casa"){
+                cloudDB.collection("ContactoDeAsistencia")
+                    .whereEqualTo("rut", usuario.rut)
+                    .get()
+                    .addOnFailureListener{
+                        deferred.complete(Triple(false, R.string.error_cloud_request, defaultContactosDeEmergencia))
                     }
-                }
+                    .addOnSuccessListener{
+                        if(it.isEmpty){
+                            deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+                            Log.e("cargandoListaDeContactosDeEmergencia", "cuenta no vinculada")
+                        }else{
+                            it.documents.forEachIndexed{ index, documentSnapshot ->
+                                defaultContactosDeEmergencia.add(0,ContactoDeEmergencia(
+                                    "$index"+"$index",
+                                    documentSnapshot.getString("nombre").toString(),
+                                    documentSnapshot.getString("telefono").toString(),
+                                    fotoDuenoDeCasa,null
+                                ))
+                            }
+                            deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+                        }
+                    }
+            }else{
+                cloudDB.collection("SolicitudesDeVinculacion")
+                    .whereEqualTo("rutDelReceptor", usuario.rut)
+                    .whereEqualTo("solicitudAprobada", true)
+                    .whereEqualTo("solicitudGestionada", true)
+                    .get()
+                    .addOnFailureListener {
+                        deferred.complete(Triple(false, R.string.error_cloud_request, defaultContactosDeEmergencia))
+                    }.addOnSuccessListener{
+                        if(it.isEmpty){
+                            deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+                            Log.e("cargandoListaDeContactosDeEmergencia", "cuenta no vinculada")
+                        }else{
+                            cloudDB.collection("ContactoDeAsistencia")
+                                .whereEqualTo("rut", it.documents[0].getString("rutDelSolicitante"))
+                                .get()
+                                .addOnFailureListener{
+                                    deferred.complete(Triple(false, R.string.error_cloud_request, defaultContactosDeEmergencia))
+                                }.addOnSuccessListener {
+                                    if(it.isEmpty){
+                                        deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+                                        Log.e("cargandoListaDeContactosDeEmergencia", "cuenta no vinculada")
+                                    }else{
+                                        it.documents.forEachIndexed{ index, documentSnapshot ->
+                                            defaultContactosDeEmergencia.add(0,ContactoDeEmergencia(
+                                                "$index"+"$index",
+                                                documentSnapshot.getString("nombre").toString(),
+                                                documentSnapshot.getString("telefono").toString(),
+                                                fotoDuenoDeCasa,
+                                                documentSnapshot.getString("rut").toString()
+                                            ))
+                                        }
+                                        deferred.complete(Triple(true, R.string.exito, defaultContactosDeEmergencia))
+                                    }
+                                }
+
+                        }
+                    }
+            }
             return@withContext deferred.await()
         }
     }
@@ -355,4 +429,54 @@ class AppRepository(private val context: Context,
             return@withContext deferred.await()
         }
     }
+
+    override suspend fun recuperarClave(rut: String): Pair<Boolean, String> = withContext(ioDispatcher) {
+        val deferred = CompletableDeferred<Pair<Boolean, String>>()
+        try {
+            val response = RecuperarClaveApi.RETROFIT_RECUPERAR_CLAVE.recuperarClave(rut).execute()
+            if (response.isSuccessful) {
+                val apiResponse = response.body()
+                if (apiResponse != null) {
+                    deferred.complete(Pair(true, apiResponse.msg))
+                } else {
+                    deferred.complete(Pair(false, "Null response body"))
+                }
+            } else if (response.code() == 404) {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = parseErrorResponse(errorBody)
+                deferred.complete(Pair(false, errorMessage))
+                deferred.complete(Pair(false, errorMessage))
+            } else {
+                deferred.complete(Pair(false, "Unknown error"))
+            }
+        } catch (e: Exception) {
+            deferred.complete(Pair(false, e.message.toString()))
+        }
+        return@withContext deferred.await()
+    }
+
+    override suspend fun enviarSugerencia(comentario: String): Pair<Boolean, Int> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean, Int>>()
+            val sugerencia = mapOf("comentario" to comentario, "rut" to usuarioDao.obtenerUsuarios()[0].rut)
+            cloudDB.collection("Sugerencias").add(sugerencia)
+                .addOnFailureListener {
+                    deferred.complete(Pair(false, R.string.error_cloud_request))
+                }
+                .addOnSuccessListener {
+                    deferred.complete(Pair(true, R.string.exito))
+                }
+            return@withContext deferred.await()
+        }
+    }
+
+    private fun parseErrorResponse(errorBody: String?): String {
+        if (errorBody == null) return "Unknown error"
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val adapter: JsonAdapter<ApiResponse> = moshi.adapter(ApiResponse::class.java)
+        val errorResponse: ApiResponse? = adapter.fromJson(errorBody)
+        return errorResponse?.msg ?: "Unknown error"
+    }
+
+
 }

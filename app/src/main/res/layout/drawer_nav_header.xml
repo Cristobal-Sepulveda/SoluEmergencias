@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="#EEEEEE">
+    android:background="@color/drawerNavHeader">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView_drawerNavHeader_fotoPerfil"
@@ -39,8 +39,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/space_medium"
-        android:textColor="@color/black"
         android:textSize="20sp"
+        android:textColor="@color/textDrawerNavHeader"
         android:textAppearance="?attr/textAppearanceHeadline6"
         tools:text="Cristóbal Sepúlveda Silva"/>
 
@@ -50,8 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_small"
         android:textAppearance="?attr/textAppearanceHeadline3"
-        android:textColor="@color/black"
         android:textSize="15sp"
+        android:textColor="@color/textDrawerNavHeader"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView_drawerNavHeader_fotoPerfil"
         app:layout_constraintStart_toStartOf="@+id/textView_drawerNavHeader_nombreUsuario"
         app:layout_constraintTop_toBottomOf="@id/textView_drawerNavHeader_nombreUsuario"

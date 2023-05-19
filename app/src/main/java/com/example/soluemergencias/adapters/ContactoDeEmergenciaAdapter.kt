@@ -54,6 +54,7 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: 
                 "Bomberos" -> bindearElItemSegunElNombre(fotoBomberos, this, contactoDeEmergencia)
                 "Carabineros" -> bindearElItemSegunElNombre(fotoCarabineros, this, contactoDeEmergencia)
                 "PDI" -> bindearElItemSegunElNombre(fotoPDI, this, contactoDeEmergencia)
+                else -> bindearElItemSegunElNombre(contactoDeEmergencia.foto, this, contactoDeEmergencia)
             }
         }
         holder.bind(contactoDeEmergencia)

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.soluemergencias.MainActivity
 import com.example.soluemergencias.R
 import com.example.soluemergencias.databinding.FragmentLoginBinding
+import com.example.soluemergencias.ui.recuperarclave.RecuperarClaveFragment
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.firebase.auth.FirebaseUser
@@ -28,21 +29,21 @@ class LoginFragment: Fragment() {
     private val _viewModel: LoginViewModel by inject()
 
 
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         chequeandoSiYaHayUnUsuarioLogeadoEnAuthentication(firebaseAuth.currentUser)
 
-
-        _binding!!.apply{
-            this.loginButton.setOnClickListener{ lifecycleScope.launch(Dispatchers.IO){ login() } }
-            this.textViewAuthenticationCrearCuenta.setOnClickListener{ findNavController()
-                .navigate(R.id.action_navigation_loginfragment_to_navigation_crearcuentafragment)
-            }
+        _binding!!.loginButton.setOnClickListener{ lifecycleScope.launch(Dispatchers.IO){ login() } }
+        _binding!!.textViewAuthenticationCrearCuenta.setOnClickListener{ findNavController()
+            .navigate(R.id.action_navigation_loginfragment_to_navigation_crearcuentafragment)
         }
-
+        _binding!!.textViewAuthenticationClaveOlvidada.setOnClickListener{
+            RecuperarClaveFragment().show(
+                requireActivity().supportFragmentManager,
+                "RecuperarClaveFragment"
+            )
+        }
         return _binding!!.root
     }
 

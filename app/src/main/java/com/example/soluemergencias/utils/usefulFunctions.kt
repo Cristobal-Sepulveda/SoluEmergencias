@@ -15,6 +15,12 @@ fun showToastInMainThreadWithStringResource(context: Context, message: Int){
     }
 }
 
+fun showToastInMainThreadWithHardcoreString(context: Context, message: String){
+    Handler(Looper.getMainLooper()).post {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+}
+
 fun gettingLocalCurrentDateAndHour(): Pair<String, String> {
     val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale("es", "CL"))
     val now = LocalDateTime.now(TimeZone.getTimeZone("America/Santiago").toZoneId())

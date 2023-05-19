@@ -31,19 +31,44 @@ class VistaGeneralFragment : Fragment() {
         _binding!!.lifecycleOwner = this
         _binding!!.recyclerviewVistaGeneralListadoDeEmergencias.adapter = adapter
 
-        _viewModel.contactosDeEmergenciaInScreen.observe(viewLifecycleOwner){
-            it.let { adapter.submitList(it as MutableList<ContactoDeEmergencia>) }
-        }
-
         _binding!!.buttonVistaGeneralCrearContactoDeAsistencia.setOnClickListener{
             val dialogFragment = CrearContactoDeAsistenciaFragment()
             dialogFragment.show(requireActivity().supportFragmentManager, "CrearContactoDeAsistencia")
         }
 
+        _viewModel.contactosDeEmergenciaInScreen.observe(viewLifecycleOwner){
+            it.let {
+                adapter.submitList(it as MutableList<ContactoDeEmergencia>)
+                it.forEach{ contactoDeEmergencia ->
+                    if(!contactoDeEmergencia.rut.isNullOrBlank()){
+                        val aux = "Tu cuenta está vinculada al rut: ${contactoDeEmergencia.rut}"
+                        _binding!!.textViewVistaGeneralRutVinculado.text = aux
+                    }
+                }
+            }
+        }
+
+        editarUISegunPerfil()
         cargandoListaDeContactosDeEmergencia()
 
         return _binding!!.root
     }
+
+    private fun editarUISegunPerfil() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val user = _appDataSource.obtenerUsuarioDesdeRoom()
+            if (user.perfil == "Dueño de casa") {
+                lifecycleScope.launch(Dispatchers.Main) {
+                    _binding!!.textViewVistaGeneralRutVinculado.visibility = View.INVISIBLE
+                }
+            }else{
+                lifecycleScope.launch(Dispatchers.Main) {
+                    _binding!!.buttonVistaGeneralCrearContactoDeAsistencia.visibility = View.INVISIBLE
+                }
+            }
+        }
+    }
+
     private fun cargandoListaDeContactosDeEmergencia() {
         lifecycleScope.launch(Dispatchers.IO){
             val task = _viewModel.cargandoListaDeContactosDeEmergencia()

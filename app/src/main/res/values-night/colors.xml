@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="container">#121212</color>
+    <color name="textDrawerNavHeader">#ffffff</color>
+    <color name="action_bar">#000000</color>
+    <color name="drawerNavHeader">#1e1e1e</color>
+    <color name="drawerNavFooter">#1e1e1e</color>
+    <color name="text">#FFFFFF</color>
+    <color name="iconColor">#FFFFFF</color>
+    <color name="editTextBorder">#ffffff</color>
+    <color name="recyclerViewBorder">#ffffff</color>
+    <color name="itemContactoDeEmergencia">#1e1e1e</color>
+</resources>
