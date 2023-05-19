@@ -4,7 +4,6 @@
     <style name="ActionBar">
         <item name="colorPrimary">@color/action_bar</item>
         <item name="colorPrimaryDark">@color/action_bar</item>
-        <item name="colorPrimaryDark">@color/action_bar</item>
     </style>
 
     <style name="buttons">

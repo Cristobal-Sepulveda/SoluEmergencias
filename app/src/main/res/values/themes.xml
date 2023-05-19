@@ -20,10 +20,14 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/azulMarino</item>
         <item name="colorOnPrimary">@color/white</item>
+
+        <!--This colors gives support to secondary views like FABS, switchs,etc.
+            For mor details se colors in material2 or 3 -->
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/calipso_oscuro</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/colorSecondaryLightTheme</item>
+        <item name="colorSecondaryVariant">@color/azulMarino</item>
+        <item name="colorOnSecondary">@color/azulMarino</item>
+
         <!-- Custom status bar. -->
         <item name="android:statusBarColor">@color/azulMarino</item>
         <item name="android:windowLightStatusBar">false</item>

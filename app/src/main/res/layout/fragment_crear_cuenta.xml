@@ -25,24 +25,8 @@
                 android:layout_marginTop="@dimen/space_medium"
                 android:background="@drawable/edittext_border"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView_crearCuenta_titulo"
-                app:layout_constraintBottom_toBottomOf="@id/textInputLayout_telefono"/>
-            <TextView
-                android:id="@+id/textView_crearCuenta_titulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginHorizontal="@dimen/space_small"
-                android:layout_marginTop="@dimen/space_bigger"
-                android:background="@color/azulMarino"
-                android:text="@string/crear_cuenta"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textAlignment="center"
-                 />
+                app:layout_constraintBottom_toBottomOf="@id/textInputLayout_telefono"/>
 
             <ImageView
                 android:id="@+id/imageView_crearCuenta_tomarFoto"

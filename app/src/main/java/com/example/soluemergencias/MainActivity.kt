@@ -81,8 +81,8 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
         menuHost.addMenuProvider(this, this, Lifecycle.State.RESUMED)
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view)
-        bottomNavigationView.setupWithNavController(navController)
+        /*bottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.setupWithNavController(navController)*/
         rootView = binding.root
         pintandoSideBarMenuYBottomAppBarSegunElPerfilDelUsuario()
 
@@ -110,20 +110,6 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     }
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.lightMode -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                recreate()
-                return true
-            }
-            R.id.darkMode -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                recreate()
-                return true
-            }
-            R.id.sugerencias -> {
-                navController.navigate(R.id.navigation_sugerencias)
-                return true
-            }
             R.id.sugerencias -> {
                 navController.navigate(R.id.navigation_sugerencias)
                 return true

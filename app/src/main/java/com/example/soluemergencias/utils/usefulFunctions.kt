@@ -53,3 +53,5 @@ fun isThisRutValid(rutAValidar: String): Boolean{
     return dv.toString() == dvExpected
 }
 
+
+

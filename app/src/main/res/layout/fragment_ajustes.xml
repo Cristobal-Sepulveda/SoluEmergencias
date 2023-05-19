@@ -8,26 +8,26 @@
 
     <TextView
         android:id="@+id/textView_ajustes_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ajustes"
-        android:textSize="30sp"
-        android:layout_marginTop="@dimen/space_medium"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:background="@color/azulMarino"
-        android:layout_marginHorizontal="@dimen/space_small"
+        android:paddingHorizontal="@dimen/space_medium"
+        android:paddingVertical="@dimen/textPadding"
+        android:background="@color/settingOptionsBackground"
+        android:text="@string/dark_mode"
+        android:textColor="@color/text"
+        android:textSize="20sp"
         />
 
-    <com.google.android.material.materialswitch.MaterialSwitch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_ajustes_darkMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_titulo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_ajustes_titulo"/>
+        app:layout_constraintTop_toTopOf="@id/textView_ajustes_titulo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

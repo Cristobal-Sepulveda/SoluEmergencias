@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_vistageneralfragment"
         android:name="com.example.soluemergencias.ui.vistageneral.VistaGeneralFragment"
-        android:label="@string/fragment_vista_general"
+        android:label="@string/solu_emergencias"
         tools:layout="@layout/fragment_vista_general">
 
         <action
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/navigation_perfil"
         android:name="com.example.soluemergencias.ui.perfil.PerfilFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/registro"
         tools:layout="@layout/fragment_perfil">
         <action
             android:id="@+id/action_navigation_perfil_to_navigation_vistageneralfragment"
@@ -30,21 +30,21 @@
     <fragment
         android:id="@+id/navigation_vincular_cuentas"
         android:name="com.example.soluemergencias.ui.vincularcuentas.VincularCuentasFragment"
-        android:label="VincularCuentasFragment" />
+        android:label="@string/vincular_cuentas" />
 
     <fragment
         android:id="@+id/navigation_acerca_de"
         android:name="com.example.soluemergencias.ui.acercade.AcercaDeFragment"
-        android:label="AcercaDeFragment" >
+        android:label="@string/acerca_de" >
     </fragment>
     <fragment
         android:id="@+id/navigation_sugerencias"
         android:name="com.example.soluemergencias.ui.sugerencias.SugerenciasFragment"
-        android:label="SugerenciasFragment" />
+        android:label="@string/sugerencias" />
     <fragment
         android:id="@+id/navigation_ajustes"
         android:name="com.example.soluemergencias.ui.ajustes.AjustesFragment"
-        android:label="AjustesFragment" />
+        android:label="@string/ajustes" />
     <fragment
         android:id="@+id/navigation_crear_contacto_de_asistencia"
         android:name="com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaFragment"
@@ -52,6 +52,6 @@
     <fragment
         android:id="@+id/navigation_registro"
         android:name="com.example.soluemergencias.ui.registro.RegistroFragment"
-        android:label="RegistroFragment" />
+        android:label="@string/registro" />
 
 </navigation>

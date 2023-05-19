@@ -120,7 +120,7 @@
     <string name="solicitud_gestionada">Solicitud gestionada</string>
     <string name="estado_solicitud">Estado de la solicitud</string>
     <string name="light_mode">Light mode</string>
-    <string name="dark_mode">Dark mode</string>
+    <string name="dark_mode">Dark Mode</string>
     <string name="nombre_del_solicitante">Nombre del solicitante</string>
     <string name="rut_del_solicitante">Rut del solicitante</string>
     <string name="aprobar">Aprobar</string>

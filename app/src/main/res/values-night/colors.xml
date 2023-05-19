@@ -5,6 +5,7 @@
     <color name="action_bar">#000000</color>
     <color name="drawerNavHeader">#1e1e1e</color>
     <color name="drawerNavFooter">#1e1e1e</color>
+    <color name="settingOptionsBackground">#1e1e1e</color>
     <color name="text">#FFFFFF</color>
     <color name="iconColor">#FFFFFF</color>
     <color name="editTextBorder">#ffffff</color>

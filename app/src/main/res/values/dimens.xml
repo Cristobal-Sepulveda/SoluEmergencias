@@ -12,4 +12,6 @@
     <dimen name="text_excel_content">12sp</dimen>
     <dimen name="text_card_title">20sp</dimen>
     <dimen name="text_card">16sp</dimen>
+    <dimen name="textPaddingVertical">5dp</dimen>
+    <dimen name="textPadding">10sp</dimen>
 </resources>
