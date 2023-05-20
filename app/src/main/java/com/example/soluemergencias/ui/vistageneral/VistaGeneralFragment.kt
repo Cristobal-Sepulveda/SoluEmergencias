@@ -11,6 +11,8 @@ import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.databinding.FragmentVistaGeneralBinding
 import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaFragment
+import com.example.soluemergencias.utils.Constants
+import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,12 +55,26 @@ class VistaGeneralFragment : Fragment() {
             val task = _viewModel.obtenerUsuarioVinculado()
             if(task.third != ""){
                 val aux = "Tu cuenta está vinculada al rut: ${task.third}"
-                _binding!!.textViewVistaGeneralRutVinculado.text = aux
+                lifecycleScope.launch(Dispatchers.Main){
+                    _binding!!.textViewVistaGeneralRutVinculado.text = aux
+                }
             }else{
                 val aux = "Tu cuenta no esta vinculada a ningún rut"
-                _binding!!.textViewVistaGeneralRutVinculado.text = aux
+                lifecycleScope.launch(Dispatchers.Main){
+                    _binding!!.textViewVistaGeneralRutVinculado.text = aux
+
+                }
             }
+
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val aux = defaultContactosDeEmergencia.filter{
+            it.id.length !=2
+        }
+        defaultContactosDeEmergencia = aux as MutableList<ContactoDeEmergencia>
     }
 
     private fun editarUISegunPerfil() {

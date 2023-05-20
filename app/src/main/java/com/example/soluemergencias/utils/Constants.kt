@@ -9,7 +9,7 @@ object Constants {
     //const val backend_url = "http://192.168.1.138:8080"
     enum class CloudRequestStatus{LOADING, ERROR, DONE, DONE_WITH_NO_DATA}
 
-    val defaultContactosDeEmergencia = mutableListOf(
+    var defaultContactosDeEmergencia = mutableListOf(
         ContactoDeEmergencia("0", "CONAF", "130", fotoCONAF,null),
         ContactoDeEmergencia("1","SAMU", "131", fotoSAMU,null),
         ContactoDeEmergencia("2", "Bomberos", "132", fotoBomberos,null),

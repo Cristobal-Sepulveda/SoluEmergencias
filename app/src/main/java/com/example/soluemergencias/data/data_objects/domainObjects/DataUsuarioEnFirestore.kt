@@ -9,7 +9,8 @@ data class DataUsuarioEnFirestore(
     val email: String,
     val password: String,
     val perfil: String,
-    val sesionActiva: Boolean = false
+    val sesionActiva: Boolean = false,
+    val rutVinculado: String = ""
 ){
     fun toMap(): Map<String, Any> {
         return mapOf(
@@ -21,6 +22,7 @@ data class DataUsuarioEnFirestore(
             "password" to password,
             "perfil" to perfil,
             "sesionActiva" to sesionActiva,
+            "rutVinculado" to rutVinculado
         )
     }
 }
