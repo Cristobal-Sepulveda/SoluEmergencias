@@ -26,5 +26,4 @@ interface AppDataSource {
     suspend fun enviarSugerencia(comentario: String): Pair<Boolean, Int>
     suspend fun actualizarDatosDelUsuario(nombreCompleto: String, telefono: String): Pair<Boolean, Int>
     suspend fun actualizarPassword(password: String): Pair<Boolean, Int>
-
-}
+    suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, String>

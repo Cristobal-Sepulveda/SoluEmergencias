@@ -310,10 +310,11 @@ class AppRepository(private val context: Context,
     override suspend fun aprobarORechazarSolicitudDeVinculo(rutSolicitante: String, boolean:Boolean):
             Pair<Boolean, Int> = withContext(ioDispatcher){
         withContext(ioDispatcher){
+            val currentUser = usuarioDao.obtenerUsuarios()[0]
             val deferred = CompletableDeferred<Pair<Boolean,Int>>()
             cloudDB.collection("SolicitudesDeVinculacion")
                 .whereEqualTo("rutDelSolicitante", rutSolicitante)
-                .whereEqualTo("rutDelReceptor", usuarioDao.obtenerUsuarios()[0].rut)
+                .whereEqualTo("rutDelReceptor", currentUser.rut)
                 .get()
                 .addOnFailureListener{
                     deferred.complete(Pair(false, R.string.error_cloud_request))
@@ -327,10 +328,46 @@ class AppRepository(private val context: Context,
                             .update("solicitudAprobada", boolean, "solicitudGestionada", true)
                             .addOnFailureListener{ deferred.complete(Pair(false, R.string.error_cloud_request)) }
                             .addOnSuccessListener {
-                                when(boolean){
-                                    true -> deferred.complete(Pair(true, R.string.solicitud_aprobada))
-                                    false -> deferred.complete(Pair(true, R.string.solicitud_rechazada))
-                                }
+                                cloudDB.collection("Usuarios")
+                                    .whereEqualTo("rut", rutSolicitante)
+                                    .get()
+                                    .addOnFailureListener{ deferred.complete(Pair(false, R.string.error_cloud_request)) }
+                                    .addOnSuccessListener{
+                                        if(it.isEmpty){
+                                            deferred.complete(Pair(false, R.string.error_cloud_request))
+                                        }else{
+                                            cloudDB.collection("Usuarios")
+                                                .document(it.documents[0].id)
+                                                .update("usuarioVinculado", currentUser.rut)
+                                                .addOnFailureListener { deferred.complete(Pair(false, R.string.error_cloud_request)) }
+                                                .addOnSuccessListener {
+                                                    cloudDB.collection("Usuarios")
+                                                        .whereEqualTo("rut", currentUser.rut)
+                                                        .get()
+                                                        .addOnFailureListener {
+                                                            deferred.complete(Pair(false, R.string.error_cloud_request))
+                                                        }
+                                                        .addOnSuccessListener{
+                                                            if(it.isEmpty) {
+                                                                deferred.complete(Pair(false, R.string.error_cloud_request))
+                                                            }else{
+                                                                cloudDB.collection("Usuarios")
+                                                                    .document(it.documents[0].id)
+                                                                    .update("usuarioVinculado", rutSolicitante)
+                                                                    .addOnFailureListener { deferred.complete(Pair(false, R.string.error_cloud_request)) }
+                                                                    .addOnSuccessListener{
+                                                                        when(boolean){
+                                                                            true -> deferred.complete(Pair(true, R.string.solicitud_aprobada))
+                                                                            false -> deferred.complete(Pair(true, R.string.solicitud_rechazada))
+                                                                        }
+                                                                    }
+                                                            }
+
+                                                        }
+                                                }
+                                        }
+                                    }
+
                             }
                     }
                 }
@@ -344,6 +381,7 @@ class AppRepository(private val context: Context,
             val deferred = CompletableDeferred<Triple<
                     Boolean, Int, MutableList<ContactoDeEmergencia>>>()
             val usuario= usuarioDao.obtenerUsuarios()[0]
+
             if(usuario.perfil == "Dueño de casa"){
                 cloudDB.collection("ContactoDeAsistencia")
                     .whereEqualTo("rut", usuario.rut)
@@ -533,6 +571,26 @@ class AppRepository(private val context: Context,
                         .addOnSuccessListener {
                             deferred.complete(Pair(true, R.string.exito))
                         }
+                }
+            return@withContext deferred.await()
+        }
+    }
+
+    override suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, String> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Triple<Boolean,Int, String>>()
+            cloudDB.collection("Usuarios")
+                .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
+                .get()
+                .addOnFailureListener{
+                    deferred.complete(Triple(false, R.string.error_cloud_request, ""))
+                }
+                .addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Triple(false, R.string.error_cloud_request, ""))
+                    }else{
+                        deferred.complete(Triple(true, R.string.exito, it.documents[0].getString("rutVinculado")!!))
+                    }
                 }
             return@withContext deferred.await()
         }

@@ -27,4 +27,8 @@ class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(
         _contactosDeEmergenciaInScreen.postValue(task.third)
         return task
     }
+
+    suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, String>{
+        return dataSource.obtenerUsuarioVinculado()
+    }
 }

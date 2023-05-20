@@ -39,19 +39,26 @@ class VistaGeneralFragment : Fragment() {
         _viewModel.contactosDeEmergenciaInScreen.observe(viewLifecycleOwner){
             it.let {
                 adapter.submitList(it as MutableList<ContactoDeEmergencia>)
-                it.forEach{ contactoDeEmergencia ->
-                    if(!contactoDeEmergencia.rut.isNullOrBlank()){
-                        val aux = "Tu cuenta está vinculada al rut: ${contactoDeEmergencia.rut}"
-                        _binding!!.textViewVistaGeneralRutVinculado.text = aux
-                    }
-                }
             }
         }
 
         editarUISegunPerfil()
         cargandoListaDeContactosDeEmergencia()
-
+        setearRutVinculado()
         return _binding!!.root
+    }
+
+    private fun setearRutVinculado() {
+        lifecycleScope.launch(Dispatchers.IO){
+            val task = _viewModel.obtenerUsuarioVinculado()
+            if(task.third != ""){
+                val aux = "Tu cuenta está vinculada al rut: ${task.third}"
+                _binding!!.textViewVistaGeneralRutVinculado.text = aux
+            }else{
+                val aux = "Tu cuenta no esta vinculada a ningún rut"
+                _binding!!.textViewVistaGeneralRutVinculado.text = aux
+            }
+        }
     }
 
     private fun editarUISegunPerfil() {
