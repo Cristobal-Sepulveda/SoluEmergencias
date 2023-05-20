@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/action_bar</item>
     </style>
 
-    <style name="buttons">
+    <style name="buttons" parent ="@style/Widget.Material3.Button">
         <item name="android:padding">15dp</item>
         <item name="android:textSize">11sp</item>
     </style>

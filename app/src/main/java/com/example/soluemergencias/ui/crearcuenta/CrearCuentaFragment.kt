@@ -8,11 +8,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Patterns
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -73,6 +70,7 @@ class CrearCuentaFragment: Fragment() {
 
         return _binding!!.root
     }
+
 
     private fun decodeAndSetImageString(fotoPerfil: String){
         val decodedString = Base64.decode(fotoPerfil, Base64.NO_PADDING)

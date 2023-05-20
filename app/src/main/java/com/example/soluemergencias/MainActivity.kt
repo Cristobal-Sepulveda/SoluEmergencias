@@ -15,20 +15,16 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.databinding.ActivityMainBinding
-import com.example.soluemergencias.ui.acercade.AcercaDeFragment
-import com.example.soluemergencias.ui.vistageneral.VistaGeneralFragmentDirections
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.mostrarSnackBarEnMainThread
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
@@ -108,6 +104,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.overflow_menu, menu)
     }
+
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.sugerencias -> {

@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/navigation_loginfragment"
         android:name="com.example.soluemergencias.ui.login.LoginFragment"
-        android:label="LoginFragment"
+        android:label="@string/solu_emergencias"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_navigation_loginfragment_to_navigation_crearcuentafragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/navigation_crearcuentafragment"
         android:name="com.example.soluemergencias.ui.crearcuenta.CrearCuentaFragment"
-        android:label="CrearCuentaFragment" >
+        android:label="@string/crear_cuenta" >
         <action
             android:id="@+id/action_navigation_crearcuentafragment_to_navigation_loginfragment"
             app:destination="@id/navigation_loginfragment"

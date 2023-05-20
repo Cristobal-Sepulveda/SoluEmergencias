@@ -10,18 +10,36 @@ import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.databinding.ActivityAuthenticationBinding
 import org.koin.android.ext.android.inject
 import android.Manifest
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthenticationBinding
+    private lateinit var navController: NavController
     //private val cloudDB = FirebaseFirestore.getInstance()
     val dataSource: AppDataSource by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_authentication)
+        binding = ActivityAuthenticationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val toolbar = findViewById<Toolbar>(R.id.toolbarAuthenticationActivity)
+        setSupportActionBar(toolbar)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_authentication) as NavHostFragment
+        navController = navHostFragment.navController
+        setupActionBarWithNavController(navController)
         checkingPermissionsSettings()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_authentication)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     private fun checkingPermissionsSettings() {

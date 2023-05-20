@@ -25,7 +25,7 @@
     <string name="mail">Mail</string>
     <string name="contraseña">Contraseña</string>
     <string name="solu_emergencias">SoluEmergencias</string>
-    <string name="nombre_completo">Nombre Apellido Apellido</string>
+    <string name="nombre_completo">Nombre Completo</string>
     <string name="nombrecompleto">Nombre y Apellidos</string>
     <string name="apellidos">Apellidos</string>
     <string name="telefono">Teléfono</string>
@@ -126,5 +126,20 @@
     <string name="aprobar">Aprobar</string>
     <string name="rechazar">Rechazar</string>
     <string name="fragment_vista_general">VistaGeneralFragment</string>
-
+    <string name="apariencia">Apariencia</string>
+    <string name="datos_editables_de_la_cuenta">Datos editables de la cuenta</string>
+    <string name="actualizar_datosA">Actualizar datos</string>
+    <string name="actualizar_datos">Actualizar datos</string>
+    <string name="datos_actualizados">Los datos han sido actualizados.</string>
+    <string name="actualizar_campos_check">Para actualizar tus datos debes de cambiar a lo menos un campo.</string>
+    <string name="confirmar_password_2">Reingresar \ncontraseña</string>
+    <string name="datos_editables_de_la_perfil">Datos editables del perfil</string>
+    <string name="actualizar_password">Actualizar contraseña</string>
+    <string name="actualizar_datos_consulta">¿Estas seguro que quieres actualizar tus datos?</string>
+    <string name="actualizar_password_check">No puedes usar tu misma contraseña como una nueva.</string>
+    <string name="password_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="actualizar_password_consulta">¿Estas seguro que quieres actualizar tu contraseña?</string>
+    <string name="error_al_cambiar_password_en_firestore">Ha ocurrido un error al actualizar su contraseña.</string>
+    <string name="actualizar_clave_check">Para actualizar la clave debes completar ambos cambos</string>
+    <string name="agregar_contacto_de_emergencia">Agregar contacto de emergencia</string>
 </resources>

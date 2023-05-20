@@ -17,6 +17,7 @@ import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.fotoDuenoDeCasa
 import com.example.soluemergencias.utils.gettingLocalCurrentDateAndHour
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -478,5 +479,62 @@ class AppRepository(private val context: Context,
         return errorResponse?.msg ?: "Unknown error"
     }
 
+    override suspend fun actualizarDatosDelUsuario(nombreCompleto: String,
+                                                   telefono: String):
+            Pair<Boolean, Int> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean, Int>>()
+            val user = usuarioDao.obtenerUsuarios()[0]
+            val map = mapOf("nombreCompleto" to nombreCompleto, "telefono" to telefono)
+            cloudDB.collection("Usuarios")
+                    .whereEqualTo("rut", user.rut)
+                    .get()
+                    .addOnFailureListener {
+                        Log.e("actualizarDatosDelUsuario", "error al obtener usuario desde cloud")
+                        deferred.complete(Pair(false, R.string.error_cloud_request))
+                    }
+                    .addOnSuccessListener {
+                        if(it.isEmpty){
+                            Log.e("actualizarDatosDelUsuario", "error al obtener usuario desde cloud")
+                            deferred.complete(Pair(false, R.string.error_cloud_request))
+                        }else{
+                            cloudDB.collection("Usuarios")
+                                .document(it.documents[0].id)
+                                .update(map)
+                                    .addOnFailureListener {
+                                        Log.e("actualizarDatosDelUsuario", "error al actualizar el usuario en firestore")
+                                        deferred.complete(Pair(false, R.string.error_cloud_request))
+                                    }
+                                    .addOnSuccessListener {
+                                        deferred.complete(Pair(true, R.string.datos_actualizados))
+                                    }
+                        }
+                    }
+            return@withContext deferred.await()
+        }
+    }
 
+    override suspend fun actualizarPassword(password: String)
+    : Pair<Boolean, Int> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean,Int>>()
+            val currentUser = firebaseAuth.currentUser
+            val user = usuarioDao.obtenerUsuarios()[0]
+            val credential = EmailAuthProvider.getCredential(currentUser!!.email!!, user.password)
+            currentUser.reauthenticate(credential)
+                .addOnFailureListener {
+                    deferred.complete(Pair(false, R.string.error_al_cambiar_password_en_firestore))
+                }
+                .addOnSuccessListener {
+                    currentUser.updatePassword(password)
+                        .addOnFailureListener {
+                            deferred.complete(Pair(false, R.string.error_al_cambiar_password_en_firestore))
+                        }
+                        .addOnSuccessListener {
+                            deferred.complete(Pair(true, R.string.exito))
+                        }
+                }
+            return@withContext deferred.await()
+        }
+    }
 }

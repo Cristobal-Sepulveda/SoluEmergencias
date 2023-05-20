@@ -26,7 +26,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondaryLightTheme</item>
         <item name="colorSecondaryVariant">@color/azulMarino</item>
-        <item name="colorOnSecondary">@color/azulMarino</item>
+        <item name="colorOnSecondary">@color/grafitoOscuro</item>
 
         <!-- Custom status bar. -->
         <item name="android:statusBarColor">@color/azulMarino</item>

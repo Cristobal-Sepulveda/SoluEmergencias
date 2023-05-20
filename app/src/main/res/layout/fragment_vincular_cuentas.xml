@@ -12,43 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/container">
-        <TextView
-            android:id="@+id/textView_vincularCuentas_titulo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vincular_cuentas"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:layout_marginTop="@dimen/space_big"
-            android:background="@color/titles"
-            android:layout_marginHorizontal="@dimen/space_big"
-            />
+
         <EditText
             android:id="@+id/editText_vincularCuentas_rut"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/space_big"
+            android:layout_marginStart="@dimen/space_big"
             android:layout_marginEnd="@dimen/space_small"
             android:background="@drawable/edittext_border"
             android:hint="@string/rut_sin_puntos_ni_guion"
             android:padding="@dimen/space_small"
             android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_vincularCuentas_solicitar"
-            app:layout_constraintStart_toStartOf="@id/textView_vincularCuentas_titulo"
-            app:layout_constraintTop_toBottomOf="@id/textView_vincularCuentas_titulo" />
+            app:layout_constraintTop_toTopOf="parent" />
         <Button
             android:id="@+id/button_vincularCuentas_solicitar"
             android:layout_height="51dp"
             android:layout_width="0dp"
             android:text="Solicitar"
-            app:layout_constraintEnd_toEndOf="@id/textView_vincularCuentas_titulo"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/editText_vincularCuentas_rut"
             app:layout_constraintBottom_toBottomOf="@id/editText_vincularCuentas_rut"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/space_big"
             />
         <!--Solicitudes recibidas-->
         <TextView

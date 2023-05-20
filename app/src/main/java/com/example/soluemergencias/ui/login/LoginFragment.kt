@@ -3,10 +3,7 @@ package com.example.soluemergencias.ui.login
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -32,6 +29,7 @@ class LoginFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
         chequeandoSiYaHayUnUsuarioLogeadoEnAuthentication(firebaseAuth.currentUser)
 
         _binding!!.loginButton.setOnClickListener{ lifecycleScope.launch(Dispatchers.IO){ login() } }
@@ -57,7 +55,6 @@ class LoginFragment: Fragment() {
             aparecerYDesaparecerElementosTrasNoLogin()
         }
     }
-
 
     private suspend fun login() {
         aparecerYDesaparecerElementosAlIniciarLogin()
@@ -90,7 +87,6 @@ class LoginFragment: Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             _binding!!.apply {
                 progressBar.visibility = View.VISIBLE
-                textViewAuthenticationTitulo.visibility = View.GONE
                 imageviewLogoSoluEmergencias.visibility = View.GONE
                 textViewAuthenticationInicieSesion.visibility = View.GONE
                 edittextRut.visibility = View.GONE
@@ -109,7 +105,6 @@ class LoginFragment: Fragment() {
         lifecycleScope.launch(Dispatchers.Main){
             _binding!!.apply{
                 progressBar.visibility = View.GONE
-                textViewAuthenticationTitulo.visibility = View.VISIBLE
                 imageviewLogoSoluEmergencias.visibility = View.VISIBLE
                 textViewAuthenticationInicieSesion.visibility = View.VISIBLE
                 edittextRut.visibility = View.VISIBLE

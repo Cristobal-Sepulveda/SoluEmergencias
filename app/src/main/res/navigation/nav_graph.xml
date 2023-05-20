@@ -11,21 +11,8 @@
         android:label="@string/solu_emergencias"
         tools:layout="@layout/fragment_vista_general">
 
-        <action
-            android:id="@+id/action_navigation_vistageneralfragment_to_navigation_perfil"
-            app:destination="@id/navigation_perfil" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/navigation_perfil"
-        android:name="com.example.soluemergencias.ui.perfil.PerfilFragment"
-        android:label="@string/registro"
-        tools:layout="@layout/fragment_perfil">
-        <action
-            android:id="@+id/action_navigation_perfil_to_navigation_vistageneralfragment"
-            app:destination="@id/navigation_vistageneralfragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/navigation_vincular_cuentas"
@@ -52,6 +39,6 @@
     <fragment
         android:id="@+id/navigation_registro"
         android:name="com.example.soluemergencias.ui.registro.RegistroFragment"
-        android:label="@string/registro" />
+        android:label="@string/registro_de_actividad" />
 
 </navigation>

@@ -1,33 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView_ajustes_titulo"
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.soluemergencias.ui.ajustes.AjustesViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:paddingHorizontal="@dimen/space_medium"
-        android:paddingVertical="@dimen/textPadding"
-        android:background="@color/settingOptionsBackground"
-        android:text="@string/dark_mode"
-        android:textColor="@color/text"
-        android:textSize="20sp"
-        />
+        android:layout_height="match_parent"
+        android:background="@color/container">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_ajustes_darkMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_titulo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView_ajustes_titulo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView_ajustes_apariencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/space_big"
+            android:layout_marginStart="@dimen/space_medium"
+            android:text="@string/apariencia"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/textView_ajustes_darkMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_apariencia"
+            android:layout_marginTop="@dimen/space_small"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:background="@color/settingOptionsBackground"
+            android:text="@string/modo_oscuro"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:elevation="4dp"
+            />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_ajustes_darkMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_darkMode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_ajustes_darkMode" />
+
+        <TextView
+            android:id="@+id/textView_ajustes_datosEditablesDeLPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_darkMode"
+            android:layout_marginTop="@dimen/space_big"
+            android:layout_marginStart="@dimen/space_medium"
+            android:text="@string/datos_editables_de_la_perfil"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/textView_ajustes_nombreCompleto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_datosEditablesDeLPerfil"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:layout_marginTop="@dimen/space_small"
+            android:background="@color/settingOptionsBackground"
+            android:text="@string/nombre_completo"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:elevation="4dp"
+            />
+
+        <EditText
+            android:id="@+id/editText_ajustes_nombreCompleto"
+            android:layout_height="wrap_content"
+            android:layout_width="195dp"
+            app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_nombreCompleto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_ajustes_nombreCompleto"
+            android:layout_marginEnd="16dp"
+            android:background="@color/settingOptionsBackground"
+            android:textSize="16sp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:inputType="textPersonName"
+            android:hint="@string/nombre_completo"
+            android:elevation="4dp"
+            />
+
+        <TextView
+            android:id="@+id/textView_ajustes_telefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_nombreCompleto"
+            android:layout_marginTop="3dp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:background="@color/settingOptionsBackground"
+            android:text="@string/telefono"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:elevation="4dp"
+            />
+
+        <EditText
+            android:id="@+id/editText_ajustes_telefono"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="@id/editText_ajustes_nombreCompleto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_ajustes_telefono"
+            app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_telefono"
+            android:layout_marginEnd="16dp"
+            android:background="@color/settingOptionsBackground"
+            android:textSize="16sp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:inputType="number"
+            android:hint="@string/telefono"
+            android:elevation="4dp" />
+
+        <Button
+            style="@style/buttons"
+            android:id="@+id/button_ajustes_actualizarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginHorizontal="@dimen/space_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_telefono"
+            android:text="@string/actualizar_datos"
+            />
+
+        <TextView
+            android:id="@+id/textView_ajustes_datosEditablesDeLaCuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_ajustes_actualizarPerfil"
+            android:layout_marginTop="@dimen/space_big"
+            android:layout_marginStart="@dimen/space_medium"
+            android:text="@string/datos_editables_de_la_cuenta"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/textView_ajustes_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_datosEditablesDeLaCuenta"
+            android:layout_marginTop="3dp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:background="@color/settingOptionsBackground"
+            android:text="@string/password"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:elevation="4dp" />
+
+        <EditText
+            android:id="@+id/editText_ajustes_password"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="@id/editText_ajustes_nombreCompleto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_ajustes_password"
+            app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_password"
+            android:layout_marginEnd="16dp"
+            android:background="@color/settingOptionsBackground"
+            android:textSize="16sp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:inputType="text"
+            android:hint="@string/password"
+            android:elevation="4dp"
+            />
+
+        <TextView
+            android:id="@+id/textView_ajustes_confirmarPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_password"
+            android:layout_marginTop="3dp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:background="@color/settingOptionsBackground"
+            android:text="@string/confirmar_password_2"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:elevation="4dp"
+            />
+
+        <EditText
+            android:id="@+id/editText_ajustes_confirmarPassword"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="@id/editText_ajustes_nombreCompleto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_ajustes_confirmarPassword"
+            app:layout_constraintBottom_toBottomOf="@id/textView_ajustes_confirmarPassword"
+            android:layout_marginEnd="16dp"
+            android:background="@color/settingOptionsBackground"
+            android:textSize="16sp"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:inputType="text"
+            android:hint="@string/password"
+            android:elevation="4dp"
+            />
+
+        <Button
+            style="@style/buttons"
+            android:id="@+id/button_ajustes_actualizarPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginHorizontal="@dimen/space_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_ajustes_confirmarPassword"
+            android:text="@string/actualizar_password"
+            />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:contentDescription="@string/loading"
+            app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_ajustes_actualizarPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

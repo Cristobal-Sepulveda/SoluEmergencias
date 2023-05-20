@@ -31,7 +31,7 @@ class VistaGeneralFragment : Fragment() {
         _binding!!.lifecycleOwner = this
         _binding!!.recyclerviewVistaGeneralListadoDeEmergencias.adapter = adapter
 
-        _binding!!.buttonVistaGeneralCrearContactoDeAsistencia.setOnClickListener{
+        _binding!!.fabVistaGeneralCrearContactoDeAsistencia.setOnClickListener{
             val dialogFragment = CrearContactoDeAsistenciaFragment()
             dialogFragment.show(requireActivity().supportFragmentManager, "CrearContactoDeAsistencia")
         }
@@ -57,13 +57,9 @@ class VistaGeneralFragment : Fragment() {
     private fun editarUISegunPerfil() {
         lifecycleScope.launch(Dispatchers.IO) {
             val user = _appDataSource.obtenerUsuarioDesdeRoom()
-            if (user.perfil == "Dueño de casa") {
+            if (user.perfil != "Dueño de casa") {
                 lifecycleScope.launch(Dispatchers.Main) {
-                    _binding!!.textViewVistaGeneralRutVinculado.visibility = View.INVISIBLE
-                }
-            }else{
-                lifecycleScope.launch(Dispatchers.Main) {
-                    _binding!!.buttonVistaGeneralCrearContactoDeAsistencia.visibility = View.INVISIBLE
+                    _binding!!.fabVistaGeneralCrearContactoDeAsistencia.visibility = View.INVISIBLE
                 }
             }
         }

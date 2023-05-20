@@ -24,5 +24,7 @@ interface AppDataSource {
     suspend fun recuperarClave(rut: String): Pair<Boolean, String>
 
     suspend fun enviarSugerencia(comentario: String): Pair<Boolean, Int>
+    suspend fun actualizarDatosDelUsuario(nombreCompleto: String, telefono: String): Pair<Boolean, Int>
+    suspend fun actualizarPassword(password: String): Pair<Boolean, Int>
 
 }
