@@ -76,7 +76,7 @@ class VistaGeneralFragment : Fragment() {
         }
         defaultContactosDeEmergencia = aux as MutableList<ContactoDeEmergencia>
     }
-
+ //asd
     private fun editarUISegunPerfil() {
         lifecycleScope.launch(Dispatchers.IO) {
             val user = _appDataSource.obtenerUsuarioDesdeRoom()
