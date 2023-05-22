@@ -14,8 +14,10 @@
         android:background="@color/container"
         tools:context=".ui.vistageneral.VistaGeneralFragment">
 
-        <TextView
-            android:id="@+id/textView_vistaGeneral_rutVinculado"
+
+        <include
+            layout="@layout/include_vistageneral_banner"
+            android:id="@+id/include_vistaGeneral_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_vistaGeneral_rutVinculado"
+            app:layout_constraintTop_toBottomOf="@id/include_vistaGeneral_banner"
             android:layout_marginHorizontal="@dimen/space_small"
             android:layout_marginBottom="@dimen/space_big"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

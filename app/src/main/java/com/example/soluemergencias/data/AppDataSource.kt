@@ -3,6 +3,7 @@ package com.example.soluemergencias.data
 import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
+import com.example.soluemergencias.data.data_objects.domainObjects.LlamadoDeEmergencia
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
 
 interface AppDataSource {
@@ -33,5 +34,9 @@ interface AppDataSource {
     ): Pair<Boolean, Int>
 
     suspend fun actualizarPassword(password: String): Pair<Boolean, Int>
-    suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, String>
+    suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, DataUsuarioEnFirestore?>
+
+    suspend fun desvincularUsuarios(): Pair<Boolean, Int>
+
+    /*suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia): Pair<Boolean, Int>*/
 }

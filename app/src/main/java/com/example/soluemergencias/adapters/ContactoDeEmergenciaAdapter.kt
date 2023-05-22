@@ -3,6 +3,7 @@ package com.example.soluemergencias.adapters
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,8 @@ import java.util.*
 
 class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: AppDataSource, val onClickListener: OnClickListener)
     : ListAdapter<ContactoDeEmergencia, ContactoDeEmergenciaAdapter.ContactoDeEmergenciaViewHolder>(DiffCallBack) {
+
+    val _dataSource = dataSource
 
     class ContactoDeEmergenciaViewHolder(private var binding: ItemContactoDeEmergenciaBinding):
             RecyclerView.ViewHolder(binding.root) {
@@ -59,6 +62,9 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: 
         }
         holder.bind(contactoDeEmergencia)
     }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactoDeEmergenciaViewHolder {
+        return ContactoDeEmergenciaViewHolder(ItemContactoDeEmergenciaBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
 
     private fun bindearElItemSegunElNombre(foto: String, view: View, contactoDeEmergencia: ContactoDeEmergencia) {
         if ((foto.last().toString() == "=") || ((foto.first().toString() == "/") && (foto[1].toString() == "9"))) {
@@ -75,16 +81,18 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: 
         view.findViewById<TextView>(R.id.textView_itemContactoDeEmergencia_nombre).text = "Contacto: "+contactoDeEmergencia.nombre
         view.findViewById<TextView>(R.id.textView_itemContactoDeEmergencia_telefono).text = "Teléfono: "+contactoDeEmergencia.telefono
         view.findViewById<ImageView>(R.id.imageView_itemContactoDeEmergencia_llamarContacto)
-            .setOnClickListener { llamarContacto(contactoDeEmergencia.telefono, view) }
+            .setOnClickListener {
+                val (date, hour) = gettingLocalCurrentDateAndHour()
+                Log.e("TAG", "date: $date, hour: $hour")
+                /*_dataSource.registrarLlamadoDeEmergencia()*/
+                //llamarContacto(contactoDeEmergencia.telefono, view)
+
+            }
     }
 
     private fun llamarContacto(telefono: String, view: View){
         val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$telefono"))
         view.context.startActivity(intent)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactoDeEmergenciaViewHolder {
-        return ContactoDeEmergenciaViewHolder(ItemContactoDeEmergenciaBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     class OnClickListener(val clickListener: (contactoDeEmergencia : ContactoDeEmergencia) -> Unit) {

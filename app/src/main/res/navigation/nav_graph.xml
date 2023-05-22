@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/navigation_vistageneralfragment">
+    app:startDestination="@id/navigation_vistageneral">
 
     <fragment
-        android:id="@+id/navigation_vistageneralfragment"
+        android:id="@+id/navigation_vistageneral"
         android:name="com.example.soluemergencias.ui.vistageneral.VistaGeneralFragment"
         android:label="@string/solu_emergencias"
         tools:layout="@layout/fragment_vista_general">

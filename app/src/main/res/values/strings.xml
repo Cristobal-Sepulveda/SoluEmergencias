@@ -142,4 +142,11 @@
     <string name="error_al_cambiar_password_en_firestore">Ha ocurrido un error al actualizar su contraseña.</string>
     <string name="actualizar_clave_check">Para actualizar la clave debes completar ambos cambos</string>
     <string name="agregar_contacto_de_emergencia">Agregar contacto de emergencia</string>
+    <string name="fotoPerfil">Foto de perfil</string>
+    <string name="desvincular">Desvincular</string>
+    <string name="contorno_del_logo">Contorno del logo</string>
+    <string name="nombre">Nombre</string>
+    <string name="cuenta_no_vinculada">Tu cuenta no esta vinculada a ningún rut.</string>
+    <string name="exito_cuenta_desvinculada">Cuenta desvinculada con éxito.</string>
+    <string name="contacte_administrador">Error. \nContacte administrador</string>
 </resources>

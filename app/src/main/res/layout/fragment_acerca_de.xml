@@ -6,20 +6,6 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/textView_crearCuenta_titulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_small"
-        android:layout_marginTop="@dimen/space_medium"
-        android:background="@color/azulMarino"
-        android:text="@string/acerca_de"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        />
-
     <ImageView
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -57,14 +43,7 @@
         android:layout_marginHorizontal="@dimen/space_small"
         android:textAlignment="center"/>
 
-    <Button
-        style="@style/buttons"
-        android:id="@+id/button_acercaDe_volver"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_medium"
-        android:layout_marginHorizontal="@dimen/space_small"
-        android:text="@string/volver" />
+
 
 
 </LinearLayout>

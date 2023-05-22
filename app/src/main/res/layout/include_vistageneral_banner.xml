@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/container">
+
+    <!--iprofile txt & btn-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/azulMarino"
+        android:layout_marginEnd="@dimen/space_bigger"
+        >
+        <!--Foto perfil-->
+        <ImageView
+            android:id="@+id/imageView_vistaGeneral_banner_fotoPerfil"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/space_small"
+            tools:src="@drawable/app_logo"
+            tools:background="@color/white"
+            android:layout_weight="1"
+            android:contentDescription="@string/fotoPerfil" />
+        <!--Txt y btn-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/space_very_small"
+            android:layout_weight="3"
+            >
+            <TextView
+                android:id="@+id/textView_vistageneral_banner_nombreYApellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Cristóbal\nSepúlveda"
+                android:layout_marginStart="@dimen/space_small"
+                />
+            <TextView
+                android:id="@+id/textView_vistageneral_banner_rut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginTop="2dp"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="Vinculado al rut:\n 9.500.940-9"
+                android:layout_marginStart="@dimen/space_small"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <!--Circle Logo-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/fab_banner_container"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="@dimen/space_very_small"
+        android:src="@drawable/fondo_verde"
+        android:contentDescription="@string/contorno_del_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/buttonVistageneralBannerDesvincular"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/contorno_del_logo"
+        app:layout_constraintStart_toStartOf="@id/fab_banner_container"
+        app:layout_constraintEnd_toEndOf="@id/fab_banner_container"
+        app:layout_constraintTop_toTopOf="@id/fab_banner_container"
+        app:layout_constraintBottom_toBottomOf="@id/fab_banner_container"
+        app:fabCustomSize="80dp"
+        tools:src="@drawable/app_logo"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

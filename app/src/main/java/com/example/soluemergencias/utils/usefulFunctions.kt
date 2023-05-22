@@ -1,8 +1,11 @@
 package com.example.soluemergencias.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
+import android.util.Base64
 import android.widget.Toast
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -51,6 +54,20 @@ fun isThisRutValid(rutAValidar: String): Boolean{
         else -> dvCalc.toString()
     }
     return dv.toString() == dvExpected
+}
+
+fun parsingBase64ImageToBitMap(fotoPerfil: String): Bitmap {
+    return if (fotoPerfil.last().toString() == "=" ||
+        (fotoPerfil.first().toString() == "/" && fotoPerfil[1].toString() == "9")
+    ) {
+        val decodedString = Base64.decode(fotoPerfil, Base64.DEFAULT)
+        BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+    } else {
+        val aux2 = fotoPerfil.indexOf("=") + 1
+        val aux3 = fotoPerfil.substring(0, aux2)
+        val decodedString = Base64.decode(aux3, Base64.DEFAULT)
+        BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+    }
 }
 
 

@@ -1,6 +1,5 @@
 package com.example.soluemergencias.data.data_objects.domainObjects
 
-
 data class DataUsuarioEnFirestore(
     val fotoPerfil: String,
     val nombreCompleto: String,
@@ -11,7 +10,8 @@ data class DataUsuarioEnFirestore(
     val perfil: String,
     val sesionActiva: Boolean = false,
     val rutVinculado: String = ""
-){
+) {
+    constructor() : this("", "", "", "", "", "", "", false, "")
     fun toMap(): Map<String, Any> {
         return mapOf(
             "fotoPerfil" to fotoPerfil,

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
+import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
 import com.example.soluemergencias.utils.Constants.CloudRequestStatus
 
@@ -28,7 +29,17 @@ class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(
         return task
     }
 
-    suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, String>{
+    suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, DataUsuarioEnFirestore?>{
         return dataSource.obtenerUsuarioVinculado()
+    }
+
+    suspend fun desvincularUsuarios(): Pair<Boolean, Int>{
+        _status.postValue(CloudRequestStatus.LOADING)
+        val task = dataSource.desvincularUsuarios()
+        _status.postValue(when(task.first){
+            true -> CloudRequestStatus.DONE
+            false -> CloudRequestStatus.ERROR
+        })
+        return task
     }
 }

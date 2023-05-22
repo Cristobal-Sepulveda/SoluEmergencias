@@ -6,22 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView_sugerencias_titulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sugerencias"
-        android:textSize="30sp"
-        android:layout_marginTop="@dimen/space_medium"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:background="@color/azulMarino"
-        android:layout_marginHorizontal="@dimen/space_small"
-        />
-
     <EditText
         android:id="@+id/editText_sugerencias_comentarios"
         android:layout_width="match_parent"
@@ -30,7 +14,7 @@
         android:layout_marginHorizontal="@dimen/space_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_sugerencias_titulo"
+        app:layout_constraintTop_toTopOf="parent"
         android:hint="@string/escriba_sugerencias"
         android:gravity="top"
         android:background="@drawable/edittext_border"

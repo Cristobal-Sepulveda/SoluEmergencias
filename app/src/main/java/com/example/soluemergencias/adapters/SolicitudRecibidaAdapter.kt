@@ -1,5 +1,7 @@
 package com.example.soluemergencias.adapters
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,10 +28,10 @@ class SolicitudRecibidaAdapter(viewModel: VincularCuentasViewModel, dataSource: 
         val solicitudDeVinculo = getItem(position)
         holder.itemView.apply {
             findViewById<ImageView>(R.id.imageView_itemSolicitudDeVinculo_aprobar).setOnClickListener {
-                onAprobarRechazarClicked(true, solicitudDeVinculo.rutDelSolicitante,this)
+                showConfirmationDialog(true, solicitudDeVinculo.rutDelSolicitante, it.context, it)
             }
             findViewById<ImageView>(R.id.imageView_itemSolicitudDeVinculo_rechazar).setOnClickListener {
-                onAprobarRechazarClicked(false, solicitudDeVinculo.rutDelSolicitante,this)
+                showConfirmationDialog(false, solicitudDeVinculo.rutDelSolicitante, it.context, it)
             }
         }
         holder.bind(solicitudDeVinculo)
@@ -50,6 +52,20 @@ class SolicitudRecibidaAdapter(viewModel: VincularCuentasViewModel, dataSource: 
             binding.solicitudItem = solicitudDeVinculo
             binding.executePendingBindings()
         }
+    }
+
+    private fun showConfirmationDialog(aprobar: Boolean, rutDelSolicitante: String, context: Context, view: View) {
+        AlertDialog.Builder(context)
+            .setTitle(R.string.atencion)
+            .setMessage(if (aprobar) "¿Quieres confirmar esta solicitud?" else "¿Quieres rechazar esta solicitud?")
+            .setPositiveButton("Si") { dialog, _ ->
+                onAprobarRechazarClicked(aprobar, rutDelSolicitante, view)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create().show()
     }
     private fun onAprobarRechazarClicked(aprobar: Boolean, rutDelSolicitante: String, itemView: View) {
         CoroutineScope(Dispatchers.IO).launch {

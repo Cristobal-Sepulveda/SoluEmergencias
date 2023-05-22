@@ -14,9 +14,6 @@ class AcercaDeFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAcercaDeBinding.inflate(inflater, container, false)
 
-        _binding!!.buttonAcercaDeVolver.setOnClickListener{
-            findNavController().popBackStack()
-        }
         return _binding!!.root
     }
 }
