@@ -8,5 +8,17 @@ data class LlamadoDeEmergencia(
     val hora: String,
     val geoPoint: GeoPoint,
     val motivoDelLlamado: String,
-    val estado: String,
-)
+    var estado: String,
+){
+    constructor(): this("", "", "", GeoPoint(0.0, 0.0), "", "")
+    fun toMap(): Map<String,Any>{
+        return mapOf(
+            "rut" to rut,
+            "fecha" to fecha,
+            "hora" to hora,
+            "geoPoint" to geoPoint,
+            "motivoDelLlamado" to motivoDelLlamado,
+            "estado" to estado,
+        )
+    }
+}

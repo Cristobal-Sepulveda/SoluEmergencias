@@ -620,6 +620,7 @@ class AppRepository(private val context: Context,
             return@withContext deferred.await()
         }
     }
+
     override suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, DataUsuarioEnFirestore?> = withContext(ioDispatcher) {
         withContext(ioDispatcher){
             val deferred = CompletableDeferred<Triple<Boolean,Int, DataUsuarioEnFirestore?>>()
@@ -658,17 +659,81 @@ class AppRepository(private val context: Context,
         }
     }
 
+
     override suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia):
             Pair<Boolean, Int> = withContext(ioDispatcher) {
         withContext(ioDispatcher) {
             val deferred = CompletableDeferred<Pair<Boolean,Int>>()
-            cloudDB.collection("LllamadosDeEmergencias")
+            cloudDB.collection("LlamadosDeEmergencias")
                 .add(llamadoDeEmergencia)
                 .addOnFailureListener{
                     deferred.complete(Pair(false, R.string.error_cloud_request))
                 }
                 .addOnSuccessListener {
                     deferred.complete(Pair(true, R.string.exito))
+                }
+            return@withContext deferred.await()
+        }
+    }
+
+    override suspend fun guardarComentarioDeLaEmergencia(comentarios: String):
+            Pair<Boolean, Int> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean,Int>>()
+            cloudDB.collection("LlamadosDeEmergencias")
+                .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
+                .whereEqualTo("estado", "Sin gestionar")
+                .get()
+                .addOnFailureListener{
+                    deferred.complete(Pair(false, R.string.error_cloud_request))
+                }
+                .addOnSuccessListener {
+                    if(it.isEmpty){
+                        deferred.complete(Pair(false, R.string.error_cloud_request))
+                    }else{
+                        var llamadoDeEmergencia = it.documents[0].toObject(LlamadoDeEmergencia::class.java)
+                        llamadoDeEmergencia!!.estado = "Confirmado"
+                        cloudDB.collection("LlamadosDeEmergencias")
+                            .document(it.documents[0].id).update(llamadoDeEmergencia.toMap())
+                            .addOnFailureListener {
+                                deferred.complete(Pair(false, R.string.error_cloud_request))
+                            }
+                            .addOnSuccessListener {
+                                deferred.complete(Pair(true, R.string.exito))
+                            }
+                    }
+                }
+
+            return@withContext deferred.await()
+        }
+    }
+
+    override suspend fun ignorarEmergencia():
+            Pair<Boolean, Int> = withContext(ioDispatcher) {
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Pair<Boolean,Int>>()
+            cloudDB.collection("LlamadosDeEmergencias")
+                .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
+                .whereEqualTo("estado", "Sin gestionar")
+                .get()
+                .addOnFailureListener{
+                    deferred.complete(Pair(false, R.string.error_cloud_request))
+                }
+                .addOnSuccessListener {
+                    if(it.isEmpty){
+                        deferred.complete(Pair(false, R.string.error_cloud_request))
+                    }else{
+                        var llamadoDeEmergencia = it.documents[0].toObject(LlamadoDeEmergencia::class.java)
+                        llamadoDeEmergencia!!.estado = "Desestimada"
+                        cloudDB.collection("LlamadosDeEmergencias")
+                            .document(it.documents[0].id).update(llamadoDeEmergencia.toMap())
+                            .addOnFailureListener {
+                                deferred.complete(Pair(false, R.string.error_cloud_request))
+                            }
+                            .addOnSuccessListener {
+                                deferred.complete(Pair(true, R.string.exito))
+                            }
+                    }
                 }
             return@withContext deferred.await()
         }

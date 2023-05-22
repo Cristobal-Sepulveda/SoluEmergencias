@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewLlamadaRealizadaTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="center"
+        android:paddingVertical="@dimen/space_big"
+        android:text="@string/registrar_comentarios_de_la_emergencia"
+        android:background="@color/azulMarino"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        />
+
+    <EditText
+        android:id="@+id/editTextLlamadaRealizadaObservacion"
+        android:padding="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewLlamadaRealizadaTitulo"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="@dimen/space_medium"
+        android:background="@drawable/edittext_border"
+        android:hint="@string/ingresa_observaciones"
+        android:gravity="top" />
+
+    <Button
+        android:id="@+id/buttonLlamadaRealizadaCancelar"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextLlamadaRealizadaObservacion"
+        app:layout_constraintEnd_toStartOf="@id/buttonLlamadaRealizadaGuardar"
+        android:layout_marginEnd="@dimen/space_very_small"
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginStart="@dimen/space_medium"
+        android:text="@string/Cancelar"
+        />
+
+    <Button
+        android:id="@+id/buttonLlamadaRealizadaGuardar"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextLlamadaRealizadaObservacion"
+        app:layout_constraintStart_toEndOf="@id/buttonLlamadaRealizadaCancelar"
+        android:layout_marginStart="@dimen/space_very_small"
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_medium"
+        android:text="@string/Guardar"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

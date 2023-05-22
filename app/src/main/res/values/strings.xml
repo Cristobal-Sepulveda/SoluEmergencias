@@ -149,4 +149,11 @@
     <string name="cuenta_no_vinculada">Tu cuenta no esta vinculada a ningún rut.</string>
     <string name="exito_cuenta_desvinculada">Cuenta desvinculada con éxito.</string>
     <string name="contacte_administrador">Error. \nContacte administrador</string>
+    <string name="vistageneral_llamada_realizada">Haz realizado una llamada de emergencias. Si la emergencia fue real, registra los datos requeridos, si no, cancela.</string>
+    <string name="registrar_comentarios_de_la_emergencia">Registrar comentarios de la emergencia</string>
+    <string name="ingresa_observaciones">Observaciones</string>
+    <string name="Cancelar">cancelar</string>
+    <string name="Guardar">Guardar</string>
+    <string name="completar_campos">Antes de guardar debes de ingresar un comentario.</string>
+    <string name="faltaCompletarDatosDeLaUltimaEmergencia">Antes de llamar, completa los datos de la emergencia anterior</string>
 </resources>

@@ -2,7 +2,9 @@ package com.example.soluemergencias.adapters
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +22,12 @@ import com.example.soluemergencias.utils.*
 import kotlinx.coroutines.*
 
 
-class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, activity: Activity)
+class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, sharedPreferences: SharedPreferences, activity: Activity)
     : ListAdapter<ContactoDeEmergencia, ContactoDeEmergenciaAdapter.ContactoDeEmergenciaViewHolder>(DiffCallBack) {
 
     private val _viewModel = viewModel
     private val _activity = activity
+    private val _sharedPreferences = sharedPreferences
 
     class ContactoDeEmergenciaViewHolder(private var binding: ItemContactoDeEmergenciaBinding):
             RecyclerView.ViewHolder(binding.root) {
@@ -82,10 +85,19 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, activity: Ac
         telefonoContacto.text = "Teléfono: "+contactoDeEmergencia.telefono
 
         botonLlamarContacto.setOnClickListener {
-            _viewModel.viewModelScope.launch(Dispatchers.IO){
-                guardarLlamadoDeEmergencia()
-                llamarContacto(contactoDeEmergencia.telefono, view)
+            val aux =  _sharedPreferences.getBoolean("llamadaRealizada", false)
+            Log.e("TAG", aux.toString())
+            if(aux){
+                showToastInMainThreadWithStringResource(_activity,
+                    R.string.faltaCompletarDatosDeLaUltimaEmergencia
+                )
+            }else{
+                _viewModel.viewModelScope.launch(Dispatchers.IO){
+                    guardarLlamadoDeEmergencia()
+                    llamarContacto(contactoDeEmergencia.telefono, view)
+                }
             }
+
         }
 
     }
@@ -97,7 +109,7 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, activity: Ac
             hour,
             getCurrentLocationAsGeoPoint(_activity),
             "",
-            "Sin confirmar"
+            "Sin gestionar"
         )
         _viewModel.registrarLlamadoDeEmergencia(llamadoDeEmergencia)
     }

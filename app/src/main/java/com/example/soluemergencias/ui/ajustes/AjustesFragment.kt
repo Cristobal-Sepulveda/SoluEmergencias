@@ -1,6 +1,7 @@
 package com.example.soluemergencias.ui.ajustes
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.Editable
@@ -25,15 +26,15 @@ import org.koin.android.ext.android.inject
 class AjustesFragment: Fragment() {
     private var _binding : FragmentAjustesBinding? = null
     private val _viewModel: AjustesViewModel by inject()
+    private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var usuario: UsuarioDBO
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAjustesBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = this
+        sharedPreferences = requireActivity().getSharedPreferences("dark_mode", Context.MODE_PRIVATE)
 
-        val sharedPreferences = requireContext().getSharedPreferences("dark_mode", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
         lifecycleScope.launch(Dispatchers.IO){
             usuario = _viewModel.obtenerDatosDelUsuario()
             lifecycleScope.launch(Dispatchers.Main){
@@ -48,12 +49,11 @@ class AjustesFragment: Fragment() {
             this.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked ) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    editor.putBoolean("dark_mode", true)
+                    sharedPreferences.edit().putBoolean("dark_mode", true).apply()
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    editor.putBoolean("dark_mode", false)
+                    sharedPreferences.edit().putBoolean("dark_mode", false).apply()
                 }
-                editor.apply()
             }
         }
         _binding!!.buttonAjustesActualizarPerfil.setOnClickListener{

@@ -39,4 +39,8 @@ interface AppDataSource {
     suspend fun desvincularUsuarios(): Pair<Boolean, Int>
 
     suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia): Pair<Boolean, Int>
+
+    suspend fun guardarComentarioDeLaEmergencia(comentarios: String): Pair<Boolean, Int>
+
+    suspend fun ignorarEmergencia(): Pair<Boolean, Int>
 }

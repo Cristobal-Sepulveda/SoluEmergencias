@@ -1,6 +1,10 @@
 package com.example.soluemergencias.ui.vistageneral
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +13,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.R
 import com.example.soluemergencias.adapters.ContactoDeEmergenciaAdapter
+import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.databinding.FragmentVistaGeneralBinding
 import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaFragment
+import com.example.soluemergencias.ui.llamadarealizada.LlamadaRealizadaDialogFragment
 import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.parsingBase64ImageToBitMap
 import com.example.soluemergencias.utils.showToastInMainThreadWithHardcoreString
@@ -28,6 +34,9 @@ class VistaGeneralFragment : Fragment() {
     private val _viewModel: VistaGeneralViewModel by inject()
     private val cloudDB = FirebaseFirestore.getInstance()
     private lateinit var snapshotListener: ListenerRegistration
+    private lateinit var userLocalData : UsuarioDBO
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +46,10 @@ class VistaGeneralFragment : Fragment() {
         _binding = FragmentVistaGeneralBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = this
-        val adapter = ContactoDeEmergenciaAdapter(_viewModel, requireActivity())
+        sharedPreferences = requireContext().getSharedPreferences(
+            "llamadaRealizada", Context.MODE_PRIVATE
+        )
+        val adapter = ContactoDeEmergenciaAdapter(_viewModel, sharedPreferences, requireActivity())
         _binding!!.recyclerviewVistaGeneralListadoDeEmergencias.adapter = adapter
 
         /*Click Listeners*/
@@ -48,6 +60,7 @@ class VistaGeneralFragment : Fragment() {
                 "CrearContactoDeAsistencia"
             )
         }
+
         _binding!!.includeVistaGeneralBanner
             .buttonVistageneralBannerDesvincular.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -70,22 +83,29 @@ class VistaGeneralFragment : Fragment() {
         validarSiDeboMostrarElFabButton()
         cargandoListaDeContactosDeEmergencia()
         completarContenidoDelBanner()
+        iniciarSnapshotListenerDeLaColeccionLlamadosDeEmergencias()
 
         return _binding!!.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        iniciarSnapshotListenerDeLaColeccionLlamadosDeEmergencias()
+    override fun onStart(){
+        super.onStart()
+        val aux = sharedPreferences.getBoolean("llamadaRealizada", false)
+        Log.e("Tag", aux.toString())
+        if(aux){
+            Log.e("TAG", sharedPreferences.getBoolean("llamadaRealizada", false).toString())
+            LlamadaRealizadaDialogFragment().show(
+                requireActivity().supportFragmentManager,
+                "LlamadaRealizada"
+            )
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        snapshotListener.remove()
-    }
     override fun onDestroyView() {
         super.onDestroyView()
-
+        if (::snapshotListener.isInitialized) {
+            snapshotListener.remove()
+        }
         val aux = defaultContactosDeEmergencia.filter {
             it.id.length != 2
         }
@@ -93,38 +113,42 @@ class VistaGeneralFragment : Fragment() {
     }
 
     private fun iniciarSnapshotListenerDeLaColeccionLlamadosDeEmergencias() {
-        val colRef = cloudDB.collection("LlamadosDeEmergencias")
-        snapshotListener = colRef.addSnapshotListener { snapshot, FirebaseFirestoreException ->
-            if (FirebaseFirestoreException != null) {
-                showToastInMainThreadWithHardcoreString(
-                    requireContext(),
-                    "Error: " + FirebaseFirestoreException.localizedMessage
-                )
-                return@addSnapshotListener
-            }
-            if (snapshot != null && !snapshot.isEmpty) {
-                for (documentChange in snapshot.documentChanges) {
-                    when (documentChange.type) {
-                        DocumentChange.Type.ADDED -> {
-                        }
-                        DocumentChange.Type.MODIFIED -> {
-                        }
-                        DocumentChange.Type.REMOVED -> {
+        cloudDB.collection("LlamadosDeEmergencias")
+            .addSnapshotListener { snapshot, FirebaseFirestoreException ->
+                if (FirebaseFirestoreException != null) {
+                    showToastInMainThreadWithHardcoreString(
+                        requireContext(),
+                        "Error: " + FirebaseFirestoreException.localizedMessage)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null && !snapshot.isEmpty) {
+                    for (documentChange in snapshot.documentChanges) {
+                        when (documentChange.type) {
+                            DocumentChange.Type.ADDED -> {
+                                Log.e("TAG", "ADDED")
+                                if(documentChange.document.data["rut"] == userLocalData.rut
+                                    && documentChange.document.data["estado"] == "Sin gestionar"){
+                                    Log.e("TAG", "22222")
+                                    sharedPreferences.edit().putBoolean("llamadaRealizada", true).apply()
+                                }
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                Log.e("TAG", "MODIFIED")
+                            }
+                            DocumentChange.Type.REMOVED -> {
+                                Log.e("TAG", "REMOVED")
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
     private fun validarSiDeboMostrarElFabButton() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val perfil = _viewModel.obtenerUsuarioDesdeRoom().perfil
-            lifecycleScope.launch(Dispatchers.Main) {
-                if(perfil!="Dueño de casa"){
-                    _binding!!.fabVistaGeneralCrearContactoDeAsistencia
-                        .visibility = View.INVISIBLE
-                }
+        lifecycleScope.launch(Dispatchers.IO){
+            userLocalData = _viewModel.obtenerUsuarioDesdeRoom()
+            if(userLocalData.perfil != "Dueño de casa"){
+                _binding!!.fabVistaGeneralCrearContactoDeAsistencia.visibility = View.INVISIBLE
             }
         }
     }
@@ -139,7 +163,6 @@ class VistaGeneralFragment : Fragment() {
 
     private fun completarContenidoDelBanner() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val userLocalData = _viewModel.obtenerUsuarioDesdeRoom()
             val task = _viewModel.obtenerUsuarioVinculado()
 
             lifecycleScope.launch(Dispatchers.Main) {
