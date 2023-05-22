@@ -9,7 +9,4 @@ data class LlamadoDeEmergencia(
     val geoPoint: GeoPoint,
     val motivoDelLlamado: String,
     val estado: String,
-){
-    constructor(): this("", "", "", GeoPoint(0.0, 0.0), "", "")
-
-}
+)

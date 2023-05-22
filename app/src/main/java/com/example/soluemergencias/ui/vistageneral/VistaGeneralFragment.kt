@@ -9,13 +9,16 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.R
 import com.example.soluemergencias.adapters.ContactoDeEmergenciaAdapter
-import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
 import com.example.soluemergencias.databinding.FragmentVistaGeneralBinding
 import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeAsistenciaFragment
 import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.parsingBase64ImageToBitMap
+import com.example.soluemergencias.utils.showToastInMainThreadWithHardcoreString
 import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -23,10 +26,8 @@ import org.koin.android.ext.android.inject
 class VistaGeneralFragment : Fragment() {
     private var _binding: FragmentVistaGeneralBinding? = null
     private val _viewModel: VistaGeneralViewModel by inject()
-    private val _appDataSource: AppDataSource by inject()
-    private val adapter = ContactoDeEmergenciaAdapter(
-        _viewModel, _appDataSource, ContactoDeEmergenciaAdapter.OnClickListener { }
-    )
+    private val cloudDB = FirebaseFirestore.getInstance()
+    private lateinit var snapshotListener: ListenerRegistration
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +37,7 @@ class VistaGeneralFragment : Fragment() {
         _binding = FragmentVistaGeneralBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = this
+        val adapter = ContactoDeEmergenciaAdapter(_viewModel, requireActivity())
         _binding!!.recyclerviewVistaGeneralListadoDeEmergencias.adapter = adapter
 
         /*Click Listeners*/
@@ -72,22 +74,56 @@ class VistaGeneralFragment : Fragment() {
         return _binding!!.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        iniciarSnapshotListenerDeLaColeccionLlamadosDeEmergencias()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        snapshotListener.remove()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
+
         val aux = defaultContactosDeEmergencia.filter {
             it.id.length != 2
         }
         defaultContactosDeEmergencia = aux as MutableList<ContactoDeEmergencia>
     }
 
-    private fun validarSiDeboMostrarElFabButton() {
-        val fabCrearContactoDeEmergencia = _binding!!.fabVistaGeneralCrearContactoDeAsistencia
+    private fun iniciarSnapshotListenerDeLaColeccionLlamadosDeEmergencias() {
+        val colRef = cloudDB.collection("LlamadosDeEmergencias")
+        snapshotListener = colRef.addSnapshotListener { snapshot, FirebaseFirestoreException ->
+            if (FirebaseFirestoreException != null) {
+                showToastInMainThreadWithHardcoreString(
+                    requireContext(),
+                    "Error: " + FirebaseFirestoreException.localizedMessage
+                )
+                return@addSnapshotListener
+            }
+            if (snapshot != null && !snapshot.isEmpty) {
+                for (documentChange in snapshot.documentChanges) {
+                    when (documentChange.type) {
+                        DocumentChange.Type.ADDED -> {
+                        }
+                        DocumentChange.Type.MODIFIED -> {
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private fun validarSiDeboMostrarElFabButton() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val perfil = _appDataSource.obtenerUsuarioDesdeRoom().perfil
+            val perfil = _viewModel.obtenerUsuarioDesdeRoom().perfil
             lifecycleScope.launch(Dispatchers.Main) {
                 if(perfil!="Dueño de casa"){
-                    fabCrearContactoDeEmergencia.visibility = View.INVISIBLE
+                    _binding!!.fabVistaGeneralCrearContactoDeAsistencia
+                        .visibility = View.INVISIBLE
                 }
             }
         }
@@ -102,23 +138,22 @@ class VistaGeneralFragment : Fragment() {
     }
 
     private fun completarContenidoDelBanner() {
-        val botonDesvincular = _binding!!.includeVistaGeneralBanner
-            .buttonVistageneralBannerDesvincular
-        val imgFotoPerfil = _binding!!.includeVistaGeneralBanner
-            .imageViewVistaGeneralBannerFotoPerfil
-        val textoNombreCompleto = _binding!!.includeVistaGeneralBanner
-            .textViewVistageneralBannerNombreYApellido
-        val textoRutVinculado = _binding!!.includeVistaGeneralBanner
-            .textViewVistageneralBannerRut
-
         lifecycleScope.launch(Dispatchers.IO) {
-            val userLocalData = _appDataSource.obtenerUsuarioDesdeRoom()
+            val userLocalData = _viewModel.obtenerUsuarioDesdeRoom()
             val task = _viewModel.obtenerUsuarioVinculado()
 
             lifecycleScope.launch(Dispatchers.Main) {
+                val botonDesvincular = _binding!!.includeVistaGeneralBanner
+                    .buttonVistageneralBannerDesvincular
+                val imgFotoPerfil = _binding!!.includeVistaGeneralBanner
+                    .imageViewVistaGeneralBannerFotoPerfil
+                val textoNombreCompleto = _binding!!.includeVistaGeneralBanner
+                    .textViewVistageneralBannerNombreYApellido
+                val textoRutVinculado = _binding!!.includeVistaGeneralBanner
+                    .textViewVistageneralBannerRut
+
                 val nombreCompletoDelUsuario = userLocalData.nombreCompleto.split(" ")
                 val nombreYApellido = "${nombreCompletoDelUsuario[0]}\n${nombreCompletoDelUsuario[1]}"
-
                 textoNombreCompleto.text = nombreYApellido
                 imgFotoPerfil.setImageBitmap(parsingBase64ImageToBitMap(userLocalData.fotoPerfil))
 

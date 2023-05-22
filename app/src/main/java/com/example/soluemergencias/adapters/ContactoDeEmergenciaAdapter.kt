@@ -1,34 +1,30 @@
 package com.example.soluemergencias.adapters
 
+import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.soluemergencias.R
-import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
-import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
+import com.example.soluemergencias.data.data_objects.domainObjects.LlamadoDeEmergencia
 import com.example.soluemergencias.databinding.ItemContactoDeEmergenciaBinding
-import com.example.soluemergencias.databinding.ItemSolicitudDeVinculoBinding
-import com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel
 import com.example.soluemergencias.ui.vistageneral.VistaGeneralViewModel
 import com.example.soluemergencias.utils.*
 import kotlinx.coroutines.*
-import java.util.*
 
 
-class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: AppDataSource, val onClickListener: OnClickListener)
+class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, activity: Activity)
     : ListAdapter<ContactoDeEmergencia, ContactoDeEmergenciaAdapter.ContactoDeEmergenciaViewHolder>(DiffCallBack) {
 
-    val _dataSource = dataSource
+    private val _viewModel = viewModel
+    private val _activity = activity
 
     class ContactoDeEmergenciaViewHolder(private var binding: ItemContactoDeEmergenciaBinding):
             RecyclerView.ViewHolder(binding.root) {
@@ -37,7 +33,6 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: 
             binding.executePendingBindings()
         }
     }
-
     object DiffCallBack: DiffUtil.ItemCallback<ContactoDeEmergencia>(){
         override fun areItemsTheSame(oldItem: ContactoDeEmergencia, newItem: ContactoDeEmergencia): Boolean {
             return oldItem === newItem
@@ -47,7 +42,6 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: 
             return oldItem.id == newItem.id
         }
     }
-
     override fun onBindViewHolder(holder: ContactoDeEmergenciaViewHolder, position: Int) {
         val contactoDeEmergencia = getItem(position)
         holder.itemView.apply {
@@ -65,38 +59,50 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, dataSource: 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactoDeEmergenciaViewHolder {
         return ContactoDeEmergenciaViewHolder(ItemContactoDeEmergenciaBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
+    private fun bindearElItemSegunElNombre(
+        foto: String,
+        view: View,
+        contactoDeEmergencia: ContactoDeEmergencia) {
 
-    private fun bindearElItemSegunElNombre(foto: String, view: View, contactoDeEmergencia: ContactoDeEmergencia) {
-        if ((foto.last().toString() == "=") || ((foto.first().toString() == "/") && (foto[1].toString() == "9"))) {
-            val decodedString = android.util.Base64.decode(foto, android.util.Base64.DEFAULT)
-            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-            view.findViewById<ImageView>(R.id.imageView_itemContactoDeEmergencia_foto).setImageBitmap(decodedByte)
-        } else {
-            val aux2 = foto.indexOf("=") + 1
-            val aux3 = foto.substring(0, aux2)
-            val decodedString = android.util.Base64.decode(aux3, android.util.Base64.DEFAULT)
-            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-            view.findViewById<ImageView>(R.id.imageView_itemContactoDeEmergencia_foto).setImageBitmap(decodedByte)
-        }
-        view.findViewById<TextView>(R.id.textView_itemContactoDeEmergencia_nombre).text = "Contacto: "+contactoDeEmergencia.nombre
-        view.findViewById<TextView>(R.id.textView_itemContactoDeEmergencia_telefono).text = "Teléfono: "+contactoDeEmergencia.telefono
-        view.findViewById<ImageView>(R.id.imageView_itemContactoDeEmergencia_llamarContacto)
-            .setOnClickListener {
-                val (date, hour) = gettingLocalCurrentDateAndHour()
-                Log.e("TAG", "date: $date, hour: $hour")
-                /*_dataSource.registrarLlamadoDeEmergencia()*/
-                //llamarContacto(contactoDeEmergencia.telefono, view)
+        val fotoContacto = view.findViewById<ImageView>(
+            R.id.imageView_itemContactoDeEmergencia_foto
+        )
+        val nombreContacto = view.findViewById<TextView>(
+            R.id.textView_itemContactoDeEmergencia_nombre
+        )
+        val telefonoContacto = view.findViewById<TextView>(
+            R.id.textView_itemContactoDeEmergencia_telefono
+        )
+        val botonLlamarContacto= view.findViewById<ImageView>(
+            R.id.imageView_itemContactoDeEmergencia_llamarContacto
+        )
 
+        fotoContacto.setImageBitmap(parsingBase64ImageToBitMap(foto))
+        nombreContacto.text = "Contacto: "+contactoDeEmergencia.nombre
+        telefonoContacto.text = "Teléfono: "+contactoDeEmergencia.telefono
+
+        botonLlamarContacto.setOnClickListener {
+            _viewModel.viewModelScope.launch(Dispatchers.IO){
+                guardarLlamadoDeEmergencia()
+                llamarContacto(contactoDeEmergencia.telefono, view)
             }
-    }
+        }
 
+    }
+    private suspend fun guardarLlamadoDeEmergencia(){
+        val (date, hour) = gettingLocalCurrentDateAndHour()
+        val llamadoDeEmergencia = LlamadoDeEmergencia(
+            _viewModel.obtenerUsuarioDesdeRoom().rut,
+            date,
+            hour,
+            getCurrentLocationAsGeoPoint(_activity),
+            "",
+            "Sin confirmar"
+        )
+        _viewModel.registrarLlamadoDeEmergencia(llamadoDeEmergencia)
+    }
     private fun llamarContacto(telefono: String, view: View){
         val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$telefono"))
         view.context.startActivity(intent)
     }
-
-    class OnClickListener(val clickListener: (contactoDeEmergencia : ContactoDeEmergencia) -> Unit) {
-        fun onClick(contactoDeEmergencia : ContactoDeEmergencia) = clickListener(contactoDeEmergencia)
-    }
-
 }

@@ -1,12 +1,18 @@
 package com.example.soluemergencias.utils
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.widget.Toast
+import com.google.android.gms.location.LocationServices
+import com.google.firebase.firestore.GeoPoint
+import kotlinx.coroutines.CompletableDeferred
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -68,6 +74,22 @@ fun parsingBase64ImageToBitMap(fotoPerfil: String): Bitmap {
         val decodedString = Base64.decode(aux3, Base64.DEFAULT)
         BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
     }
+}
+
+//write a function that can get the current latlng of the user
+@SuppressLint("MissingPermission")
+suspend fun getCurrentLocationAsGeoPoint(activity: Activity): GeoPoint {
+    val geoPoint = CompletableDeferred<GeoPoint>()
+    LocationServices.getFusedLocationProviderClient(activity).lastLocation
+    .addOnFailureListener {
+        geoPoint.complete(GeoPoint(0.0, 0.0))
+    }
+    .addOnSuccessListener { location : Location? ->
+        geoPoint.complete(
+            GeoPoint(location?.latitude ?: 0.0, location?.longitude ?: 0.0)
+        )
+    }
+    return geoPoint.await()
 }
 
 

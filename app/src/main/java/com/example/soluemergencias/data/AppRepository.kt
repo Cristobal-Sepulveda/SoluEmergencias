@@ -658,13 +658,12 @@ class AppRepository(private val context: Context,
         }
     }
 
-/*    override suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia):
+    override suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia):
             Pair<Boolean, Int> = withContext(ioDispatcher) {
         withContext(ioDispatcher) {
             val deferred = CompletableDeferred<Pair<Boolean,Int>>()
-            val llamadoDeEmergencia =
             cloudDB.collection("LllamadosDeEmergencias")
-                .add()
+                .add(llamadoDeEmergencia)
                 .addOnFailureListener{
                     deferred.complete(Pair(false, R.string.error_cloud_request))
                 }
@@ -673,7 +672,7 @@ class AppRepository(private val context: Context,
                 }
             return@withContext deferred.await()
         }
-    }*/
+    }
 
     private fun parseErrorResponse(errorBody: String?): String {
         if (errorBody == null) return "Unknown error"
