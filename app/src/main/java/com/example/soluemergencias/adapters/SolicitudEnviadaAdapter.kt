@@ -1,20 +1,12 @@
 package com.example.soluemergencias.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.soluemergencias.R
-import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
-import com.example.soluemergencias.databinding.ItemSolicitudDeVinculoBinding
 import com.example.soluemergencias.databinding.ItemSolicitudEnviadaBinding
-import com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
-import kotlinx.coroutines.*
 
 
 class SolicitudEnviadaAdapter()

@@ -27,7 +27,7 @@ import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.databinding.ActivityMainBinding
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.mostrarSnackBarEnMainThread
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
                             decodeAndSetImageString(foto)
                         }
                     }else{
-                        showToastInMainThreadWithStringResource(this@MainActivity, intentoDeGuardarEnFirestore.second)
+                        showToastInMainThread(this@MainActivity, intentoDeGuardarEnFirestore.second)
                     }
                 }
             }

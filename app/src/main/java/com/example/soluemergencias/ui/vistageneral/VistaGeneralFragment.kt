@@ -1,6 +1,5 @@
 package com.example.soluemergencias.ui.vistageneral
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -21,7 +20,7 @@ import com.example.soluemergencias.ui.llamadarealizada.LlamadaRealizadaDialogFra
 import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.parsingBase64ImageToBitMap
 import com.example.soluemergencias.utils.showToastInMainThreadWithHardcoreString
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -38,17 +37,13 @@ class VistaGeneralFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
         _binding = FragmentVistaGeneralBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = this
-        sharedPreferences = requireContext().getSharedPreferences(
-            "llamadaRealizada", Context.MODE_PRIVATE
-        )
+        sharedPreferences = requireContext().getSharedPreferences("llamadaRealizada", Context.MODE_PRIVATE)
+
         val adapter = ContactoDeEmergenciaAdapter(_viewModel, sharedPreferences, requireActivity())
         _binding!!.recyclerviewVistaGeneralListadoDeEmergencias.adapter = adapter
 
@@ -65,7 +60,7 @@ class VistaGeneralFragment : Fragment() {
             .buttonVistageneralBannerDesvincular.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
                     val task = _viewModel.desvincularUsuarios()
-                    showToastInMainThreadWithStringResource(requireContext(), task.second)
+                    showToastInMainThread(requireContext(), task.second)
                     lifecycleScope.launch(Dispatchers.Main) {
                         requireActivity().recreate()
                     }
@@ -91,13 +86,9 @@ class VistaGeneralFragment : Fragment() {
     override fun onStart(){
         super.onStart()
         val aux = sharedPreferences.getBoolean("llamadaRealizada", false)
-        Log.e("Tag", aux.toString())
         if(aux){
-            Log.e("TAG", sharedPreferences.getBoolean("llamadaRealizada", false).toString())
-            LlamadaRealizadaDialogFragment().show(
-                requireActivity().supportFragmentManager,
-                "LlamadaRealizada"
-            )
+            LlamadaRealizadaDialogFragment()
+                .show(requireActivity().supportFragmentManager, "LlamadaRealizada")
         }
     }
 
@@ -156,7 +147,7 @@ class VistaGeneralFragment : Fragment() {
     private fun cargandoListaDeContactosDeEmergencia() {
         lifecycleScope.launch(Dispatchers.IO) {
             val task = _viewModel.cargandoListaDeContactosDeEmergencia()
-            if (!task.first) showToastInMainThreadWithStringResource(requireContext(), task.second)
+            if (!task.first) showToastInMainThread(requireContext(), task.second)
 
         }
     }
@@ -181,6 +172,7 @@ class VistaGeneralFragment : Fragment() {
                 imgFotoPerfil.setImageBitmap(parsingBase64ImageToBitMap(userLocalData.fotoPerfil))
 
                 if (task.third == null) {
+                    sharedPreferences.edit().putString("rutVinculado", "").apply()
                     textoRutVinculado.setText(R.string.contacte_administrador)
                     botonDesvincular.apply {
                         isEnabled = false
@@ -194,6 +186,7 @@ class VistaGeneralFragment : Fragment() {
                     }
                 } else {
                     if (task.third!!.rutVinculado == "") {
+                        sharedPreferences.edit().putString("rutVinculado", "").apply()
                         textoRutVinculado.text = "Cuenta no vinculada."
                         botonDesvincular.apply {
                             isEnabled = false
@@ -206,6 +199,7 @@ class VistaGeneralFragment : Fragment() {
                             )
                         }
                     } else {
+                        sharedPreferences.edit().putString("rutVinculado", task.third!!.rutVinculado).apply()
                         textoRutVinculado.text = "Vinculado al rut: \n${task.third!!.rutVinculado}"
                         botonDesvincular.apply {
                             setImageDrawable(

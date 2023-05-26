@@ -3,14 +3,10 @@ package com.example.soluemergencias.ui.ajustes
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.R
@@ -18,7 +14,7 @@ import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
 import com.example.soluemergencias.databinding.FragmentAjustesBinding
 import com.example.soluemergencias.utils.closeKeyboard
 import com.example.soluemergencias.utils.showAlertWithStringResources
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -61,13 +57,13 @@ class AjustesFragment: Fragment() {
             val telefono = _binding!!.editTextAjustesTelefono.text.toString()
             requireActivity().closeKeyboard(it)
             if(nombreCompleto == usuario.nombreCompleto && telefono == usuario.telefono){
-                showToastInMainThreadWithStringResource(requireContext(), R.string.actualizar_campos_check)
+                showToastInMainThread(requireContext(), R.string.actualizar_campos_check)
                 return@setOnClickListener
             }
             requireActivity().showAlertWithStringResources(R.string.atencion, R.string.actualizar_datos_consulta){
                 lifecycleScope.launch(Dispatchers.IO){
                     val task = _viewModel.actualizarDatosDelUsuario(nombreCompleto, telefono)
-                    showToastInMainThreadWithStringResource(requireContext(), task.second)
+                    showToastInMainThread(requireContext(), task.second)
                 }
             }
 
@@ -78,21 +74,21 @@ class AjustesFragment: Fragment() {
             val confirmarPassword = _binding!!.editTextAjustesConfirmarPassword.text.toString()
             requireActivity().closeKeyboard(it)
             if(password.isEmpty() || confirmarPassword.isEmpty()){
-                showToastInMainThreadWithStringResource(requireContext(), R.string.actualizar_password_check)
+                showToastInMainThread(requireContext(), R.string.actualizar_password_check)
                 return@setOnClickListener
             }
             if(password == usuario.password){
-                showToastInMainThreadWithStringResource(requireContext(), R.string.actualizar_password_check)
+                showToastInMainThread(requireContext(), R.string.actualizar_password_check)
                 return@setOnClickListener
             }
             if(password != confirmarPassword){
-                showToastInMainThreadWithStringResource(requireContext(), R.string.password_no_coinciden)
+                showToastInMainThread(requireContext(), R.string.password_no_coinciden)
                 return@setOnClickListener
             }else{
                 requireActivity().showAlertWithStringResources(R.string.atencion, R.string.actualizar_password_consulta){
                     lifecycleScope.launch(Dispatchers.IO){
                         val task = _viewModel.actualizarPassword(password)
-                        showToastInMainThreadWithStringResource(requireContext(), task.second)
+                        showToastInMainThread(requireContext(), task.second)
                     }
                 }
             }

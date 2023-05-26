@@ -88,7 +88,7 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, sharedPrefer
             val aux =  _sharedPreferences.getBoolean("llamadaRealizada", false)
             Log.e("TAG", aux.toString())
             if(aux){
-                showToastInMainThreadWithStringResource(_activity,
+                showToastInMainThread(_activity,
                     R.string.faltaCompletarDatosDeLaUltimaEmergencia
                 )
             }else{
@@ -109,7 +109,8 @@ class ContactoDeEmergenciaAdapter(viewModel: VistaGeneralViewModel, sharedPrefer
             hour,
             getCurrentLocationAsGeoPoint(_activity),
             "",
-            "Sin gestionar"
+            "Sin gestionar",
+            _sharedPreferences.getString("rutVinculado", "")!!
         )
         _viewModel.registrarLlamadoDeEmergencia(llamadoDeEmergencia)
     }

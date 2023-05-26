@@ -12,6 +12,7 @@ import com.example.soluemergencias.ui.crearcuenta.CrearCuentaViewModel
 import com.example.soluemergencias.ui.llamadarealizada.LlamadaRealizadaViewModel
 import com.example.soluemergencias.ui.login.LoginViewModel
 import com.example.soluemergencias.ui.recuperarclave.RecuperarClaveViewModel
+import com.example.soluemergencias.ui.registro.RegistroViewModel
 import com.example.soluemergencias.ui.sugerencias.SugerenciasViewModel
 import com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel
 import com.example.soluemergencias.ui.vistageneral.VistaGeneralViewModel
@@ -65,6 +66,9 @@ class MyApp : Application() {
             }
             single{
                 LlamadaRealizadaViewModel(get() as AppDataSource)
+            }
+            single{
+                RegistroViewModel(get() as AppDataSource)
             }
 
             single { getDatabase(this@MyApp).usuarioDao }

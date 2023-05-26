@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type= "com.example.soluemergencias.ui.registro.RegistroViewModel"
+            />
+    </data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_registro_registroDeActividad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/circularProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:contentDescription="@string/loading"
+            app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+            app:layout_constraintStart_toStartOf="@+id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintEnd_toEndOf="@id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintTop_toTopOf="@id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerView_registro_registroDeActividad"
+            />
+        <ImageView
+            android:id="@+id/imageView_vincularCuentas_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintEnd_toEndOf="@id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintTop_toTopOf="@id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerView_registro_registroDeActividad"
+            app:cloudRequestStatusImage="@{viewModel.status}"
+            android:src="@drawable/ic_connection_error_100"
+            android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintEnd_toEndOf="@id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintTop_toTopOf="@id/recyclerView_registro_registroDeActividad"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerView_registro_registroDeActividad"
+            android:layout_marginHorizontal="@dimen/space_small"
+            app:cloudRequestStatusTextView="@{viewModel.status}"
+            android:text="@string/sin_actividad"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

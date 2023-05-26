@@ -2,7 +2,6 @@ package com.example.soluemergencias.data
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.example.soluemergencias.R
 import com.example.soluemergencias.data.apiservices.RecuperarClaveApi
 import com.example.soluemergencias.data.daos.UsuarioDao
@@ -13,15 +12,13 @@ import com.example.soluemergencias.utils.Constants.defaultContactosDeEmergencia
 import com.example.soluemergencias.utils.Constants.firebaseAuth
 import com.example.soluemergencias.utils.fotoDuenoDeCasa
 import com.example.soluemergencias.utils.gettingLocalCurrentDateAndHour
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.*
-import retrofit2.HttpException
-import retrofit2.await
 import java.util.*
 
 @Suppress("LABEL_NAME_CLASH")
@@ -699,7 +696,7 @@ class AppRepository(private val context: Context,
                                 deferred.complete(Pair(false, R.string.error_cloud_request))
                             }
                             .addOnSuccessListener {
-                                deferred.complete(Pair(true, R.string.exito))
+                                deferred.complete(Pair(true, R.string.llamada_confirmada_con_exito))
                             }
                     }
                 }
@@ -731,13 +728,103 @@ class AppRepository(private val context: Context,
                                 deferred.complete(Pair(false, R.string.error_cloud_request))
                             }
                             .addOnSuccessListener {
-                                deferred.complete(Pair(true, R.string.exito))
+                                deferred.complete(Pair(true, R.string.llamada_desestimada_con_exito))
                             }
                     }
                 }
             return@withContext deferred.await()
         }
     }
+
+
+    override suspend fun cargandoRegistroDeActividadAsesorDelHogar():
+            Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?> = withContext(ioDispatcher){
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?>>()
+
+            cloudDB.collection("LlamadosDeEmergencias")
+                .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
+                .whereEqualTo("estado", "Confirmado")
+                .get()
+
+                .addOnFailureListener{
+                    deferred.complete(Triple(false, R.string.error_cloud_request, null))
+                }
+
+                .addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Triple(true, R.string.error_cloud_request, mutableListOf()))
+                    }else{
+                        val llamadosDeEmergenciaList = it.documents.map { document ->
+                            val data = document.data!!
+                            val rut = data["rut"] as String
+                            val fecha = data["fecha"] as String
+                            val hora = data["hora"] as String
+                            val geoPoint = data["geoPoint"] as GeoPoint
+                            val motivoDelLlamado = data["motivoDelLlamado"] as String
+                            val estado = data["estado"] as String
+                            val hogarDeLaEmergencia = data["hogarDeLaEmergencia"] as String
+                            val id = document.id
+                            LlamadoDeEmergenciaEnRecyclerView(
+                                rut,
+                                fecha,
+                                hora,
+                                geoPoint,
+                                motivoDelLlamado,
+                                estado,
+                                hogarDeLaEmergencia,
+                                id
+                            )
+                        }
+                        deferred.complete(Triple(true, R.string.exito, llamadosDeEmergenciaList.toMutableList()))
+                    }
+                }
+            return@withContext deferred.await()
+        }
+    }
+    override suspend fun cargandoRegistroDeActividadDuenoDeCasa():
+            Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?> = withContext(ioDispatcher){
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?>>()
+            cloudDB.collection("LlamadosDeEmergencias")
+                .whereEqualTo("hogarDeLaEmergencia", usuarioDao.obtenerUsuarios()[0].rut)
+                .get()
+                .addOnFailureListener{
+                    deferred.complete(Triple(false, R.string.error_cloud_request, null))
+                }
+                .addOnSuccessListener{
+                    if(it.isEmpty){
+                        deferred.complete(Triple(true, R.string.error_cloud_request, mutableListOf()))
+                    }else{
+                        val llamadosDeEmergenciaList = it.documents.map { document ->
+                            val data = document.data!!
+                            val rut = data["rut"] as String
+                            val fecha = data["fecha"] as String
+                            val hora = data["hora"] as String
+                            val geoPoint = data["geoPoint"] as GeoPoint
+                            val motivoDelLlamado = data["motivoDelLlamado"] as String
+                            val estado = data["estado"] as String
+                            val hogarDeLaEmergencia = data["hogarDeLaEmergencia"] as String
+                            val id = document.id
+                            LlamadoDeEmergenciaEnRecyclerView(
+                                rut,
+                                fecha,
+                                hora,
+                                geoPoint,
+                                motivoDelLlamado,
+                                estado,
+                                hogarDeLaEmergencia,
+                                id
+                            )
+                        }
+                        deferred.complete(Triple(true, R.string.exito, llamadosDeEmergenciaList.toMutableList()))
+                    }
+                }
+            return@withContext deferred.await()
+        }
+    }
+
+
 
     private fun parseErrorResponse(errorBody: String?): String {
         if (errorBody == null) return "Unknown error"
@@ -746,6 +833,8 @@ class AppRepository(private val context: Context,
         val errorResponse: ApiResponse? = adapter.fromJson(errorBody)
         return errorResponse?.msg ?: "Unknown error"
     }
+
+
 }
 
 

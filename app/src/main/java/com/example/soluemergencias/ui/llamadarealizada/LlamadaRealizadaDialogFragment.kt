@@ -1,6 +1,5 @@
 package com.example.soluemergencias.ui.llamadarealizada
 
-import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.R
 import com.example.soluemergencias.databinding.DialogFragmentLlamadaRealizadaBinding
 import com.example.soluemergencias.utils.closeKeyboard
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -40,41 +39,30 @@ class LlamadaRealizadaDialogFragment: DialogFragment() {
         }
 
         binding!!.buttonLlamadaRealizadaGuardar.setOnClickListener{
-            val comentarios = binding!!.editTextLlamadaRealizadaObservacion.text.toString()
-            if(comentarios.isEmpty()){
-                showToastInMainThreadWithStringResource(
-                    requireContext(),
-                    R.string.completar_campos
-                )
-                return@setOnClickListener
-            }
-            lifecycleScope.launch(Dispatchers.IO){
-                val task = viewModel.guardarComentarioDeLaEmergencia(comentarios)
-                requireActivity().closeKeyboard(it)
-                showToastInMainThreadWithStringResource(
-                    requireContext(),
-                    task.second
-                )
-                if(task.first){
-                    sharedPreferences.edit().putBoolean("llamadaRealizada", false).apply()
-                }
-                dismiss()
-            }
+            registrarLlamadaDeEmergencia(it)
         }
 
         return binding!!.root
     }
 
+    private fun registrarLlamadaDeEmergencia(it: View) {
+        val comentarios = binding!!.editTextLlamadaRealizadaObservacion.text.toString()
+        if (comentarios.isEmpty()) return showToastInMainThread(requireContext(), R.string.completar_campos)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val task = viewModel.guardarComentarioDeLaEmergencia(comentarios)
+            requireActivity().closeKeyboard(it)
+            showToastInMainThread(requireContext(), task.second)
+            if (task.first) sharedPreferences.edit().putBoolean("llamadaRealizada", false).apply()
+            dismiss()
+        }
+    }
+
 
     private suspend fun desestimarLlamada(){
         val task = viewModel.ignorarEmergencia()
-        if(task.first) {
-            sharedPreferences.edit().putBoolean("llamadaRealizada", false).apply()
-        }
-        showToastInMainThreadWithStringResource(
-            requireContext(),
-            task.second
-        )
+        if(task.first) sharedPreferences.edit().putBoolean("llamadaRealizada", false).apply()
+        showToastInMainThread(requireContext(), task.second)
         dismiss()
     }
 }

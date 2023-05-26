@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.soluemergencias.databinding.FragmentRecuperarClaveBinding
 import com.example.soluemergencias.utils.closeKeyboard
 import com.example.soluemergencias.utils.showToastInMainThreadWithHardcoreString
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

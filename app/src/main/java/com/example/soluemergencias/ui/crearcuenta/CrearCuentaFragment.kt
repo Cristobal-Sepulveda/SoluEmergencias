@@ -18,7 +18,7 @@ import com.example.soluemergencias.R
 import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
 import com.example.soluemergencias.databinding.FragmentCrearCuentaBinding
 import com.example.soluemergencias.utils.isThisRutValid
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -112,7 +112,7 @@ class CrearCuentaFragment: Fragment() {
             DataUsuarioEnFirestore(foto, nombreCompleto, rut, telefono,
                 email, password, perfil,false)
         )
-        showToastInMainThreadWithStringResource(requireActivity(), task.second)
+        showToastInMainThread(requireActivity(), task.second)
     }
 
     private fun validarInputsYFoto(nombreCompleto: String, rut: String, email: String, password: String, password2: String, rol: String): Boolean {

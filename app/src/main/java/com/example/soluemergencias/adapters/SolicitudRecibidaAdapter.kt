@@ -14,7 +14,7 @@ import com.example.soluemergencias.data.AppDataSource
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
 import com.example.soluemergencias.databinding.ItemSolicitudDeVinculoBinding
 import com.example.soluemergencias.ui.vincularcuentas.VincularCuentasViewModel
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import kotlinx.coroutines.*
 
 
@@ -70,7 +70,7 @@ class SolicitudRecibidaAdapter(viewModel: VincularCuentasViewModel, dataSource: 
     private fun onAprobarRechazarClicked(aprobar: Boolean, rutDelSolicitante: String, itemView: View) {
         CoroutineScope(Dispatchers.IO).launch {
             val task = dataSourcee.aprobarORechazarSolicitudDeVinculo(rutDelSolicitante, aprobar)
-            showToastInMainThreadWithStringResource(itemView.context, task.second)
+            showToastInMainThread(itemView.context, task.second)
         }
     }
     class OnClickListener(val clickListener: (solicitudDeVinculo: SolicitudDeVinculo) -> Unit) {

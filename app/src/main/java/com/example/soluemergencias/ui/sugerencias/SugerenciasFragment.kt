@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.soluemergencias.databinding.FragmentSugerenciasBinding
 import com.example.soluemergencias.utils.closeKeyboard
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -34,7 +34,7 @@ class SugerenciasFragment: Fragment() {
 
         lifecycleScope.launch(Dispatchers.IO){
             val task = _viewModel.enviarSugerencia(_binding!!.editTextSugerenciasComentarios.text.toString())
-             showToastInMainThreadWithStringResource(requireContext(), task.second)
+             showToastInMainThread(requireContext(), task.second)
         }
     }
 }

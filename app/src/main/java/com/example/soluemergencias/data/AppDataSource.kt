@@ -1,10 +1,7 @@
 package com.example.soluemergencias.data
 
 import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
-import com.example.soluemergencias.data.data_objects.domainObjects.ContactoDeEmergencia
-import com.example.soluemergencias.data.data_objects.domainObjects.DataUsuarioEnFirestore
-import com.example.soluemergencias.data.data_objects.domainObjects.LlamadoDeEmergencia
-import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
+import com.example.soluemergencias.data.data_objects.domainObjects.*
 
 interface AppDataSource {
 
@@ -20,13 +17,9 @@ interface AppDataSource {
         rutSolicitante: String,
         boolean: Boolean
     ): Pair<Boolean, Int>
-
     suspend fun cargandoListaDeContactosDeEmergencia(): Triple<Boolean, Int, MutableList<ContactoDeEmergencia>>
-
     suspend fun crearContactoDeAsistencia(nombre: String, telefono: String): Pair<Boolean, Int>
-
     suspend fun recuperarClave(rut: String): Pair<Boolean, String>
-
     suspend fun enviarSugerencia(comentario: String): Pair<Boolean, Int>
     suspend fun actualizarDatosDelUsuario(
         nombreCompleto: String,
@@ -35,12 +28,10 @@ interface AppDataSource {
 
     suspend fun actualizarPassword(password: String): Pair<Boolean, Int>
     suspend fun obtenerUsuarioVinculado(): Triple<Boolean, Int, DataUsuarioEnFirestore?>
-
     suspend fun desvincularUsuarios(): Pair<Boolean, Int>
-
     suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia): Pair<Boolean, Int>
-
     suspend fun guardarComentarioDeLaEmergencia(comentarios: String): Pair<Boolean, Int>
-
     suspend fun ignorarEmergencia(): Pair<Boolean, Int>
+    suspend fun cargandoRegistroDeActividadAsesorDelHogar(): Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?>
+    suspend fun cargandoRegistroDeActividadDuenoDeCasa(): Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?>
 }

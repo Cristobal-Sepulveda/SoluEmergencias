@@ -14,7 +14,7 @@ import com.example.soluemergencias.R
 import com.example.soluemergencias.databinding.FragmentLoginBinding
 import com.example.soluemergencias.ui.recuperarclave.RecuperarClaveFragment
 import com.example.soluemergencias.utils.Constants.firebaseAuth
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -74,7 +74,7 @@ class LoginFragment: Fragment() {
         
         val task = _viewModel.iniciarLoginYValidacionesConRut(rut)
         if(!task.first){
-            showToastInMainThreadWithStringResource(requireActivity(),task.second)
+            showToastInMainThread(requireActivity(),task.second)
             aparecerYDesaparecerElementosTrasNoLogin()
         }else{
             val intent = Intent(requireActivity(), MainActivity::class.java)

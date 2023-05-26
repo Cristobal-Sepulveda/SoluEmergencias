@@ -97,3 +97,13 @@ fun bindCambiarBooleanAString2(textView: TextView, boolean1: Boolean, boolean2: 
         textView.text = "Sin gestionar"
     }
 }
+
+@BindingAdapter("seteandoRegistroItem", "atributo")
+fun bindSeteandoRegistroItem(textView: TextView, text: String, atributo: String){
+    when(atributo){
+        "fecha" -> textView.text = "Fecha: $text"
+        "hora" -> textView.text = "Hora: $text"
+        "geopoint" -> textView.text = "Dirección = $text"
+        "detalles" -> textView.text = "Detalles: $text"
+    }
+}

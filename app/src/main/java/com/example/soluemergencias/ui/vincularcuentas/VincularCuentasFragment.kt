@@ -15,7 +15,7 @@ import com.example.soluemergencias.databinding.FragmentVincularCuentasBinding
 import com.example.soluemergencias.utils.closeKeyboard
 import com.example.soluemergencias.utils.isThisRutValid
 import com.example.soluemergencias.utils.showAlertWithStringResources
-import com.example.soluemergencias.utils.showToastInMainThreadWithStringResource
+import com.example.soluemergencias.utils.showToastInMainThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -62,20 +62,20 @@ class VincularCuentasFragment: Fragment() {
     private fun chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar() {
         lifecycleScope.launch(Dispatchers.IO){
             val request = _viewModel.chequearSiHaySolicitudesDeVinculacionRecibidasSinGestionar()
-            if(!request.first) showToastInMainThreadWithStringResource(requireContext(), request.second)
+            if(!request.first) showToastInMainThread(requireContext(), request.second)
         }
     }
 
     private fun chequearSiHaySolicitudesDeVinculacionEnviadas() {
         lifecycleScope.launch(Dispatchers.IO){
             val request = _viewModel.chequearSiHaySolicitudesDeVinculacionEnviadas()
-            if(!request.first) showToastInMainThreadWithStringResource(requireContext(), request.second)
+            if(!request.first) showToastInMainThread(requireContext(), request.second)
         }
     }
 
     private fun enviarSolicitudDeVinculacion(rut: String, it: View) {
         if(!isThisRutValid(rut)){
-            showToastInMainThreadWithStringResource(requireContext(), R.string.rut_invalido)
+            showToastInMainThread(requireContext(), R.string.rut_invalido)
             return
         }
         requireActivity().apply{
@@ -84,7 +84,7 @@ class VincularCuentasFragment: Fragment() {
             ){
                 lifecycleScope.launch(Dispatchers.IO){
                     val request = _viewModel.crearSolicitudDeVinculo(rut)
-                    showToastInMainThreadWithStringResource(requireContext(),request.second)
+                    showToastInMainThread(requireContext(),request.second)
                 }
             }
         }

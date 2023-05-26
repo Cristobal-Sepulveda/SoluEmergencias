@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-fun showToastInMainThreadWithStringResource(context: Context, message: Int){
+fun showToastInMainThread(context: Context, message: Int){
     Handler(Looper.getMainLooper()).post {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
