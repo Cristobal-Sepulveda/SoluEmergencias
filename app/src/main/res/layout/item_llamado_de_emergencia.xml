@@ -10,81 +10,158 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/space_small"
+        android:elevation="4dp"
+        android:background="@color/settingOptionsBackground">
 
+        <!--Fecha-->
         <TextView
             android:id="@+id/textView_llamadoDeEmergencia_fecha"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/space_small"
             android:paddingHorizontal="@dimen/space_medium"
             android:paddingVertical="@dimen/textPadding"
-            android:background="@color/settingOptionsBackground"
             android:text="@string/fecha"
             android:textColor="@color/text"
             android:textSize="20sp"
-            android:elevation="4dp"
-            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.fecha}"
-            app:atributo="fecha"
-            />
-        <TextView
-            android:id="@+id/textView_llamadoDeEmergencia_hora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="@+id/textView_llamadoDeEmergencia_motivoDelLlamado"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_llamadoDeEmergencia_fecha"
-            android:layout_marginTop="@dimen/space_small"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/space_medium"
             android:paddingVertical="@dimen/textPadding"
-            android:background="@color/settingOptionsBackground"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/textView_llamadoDeEmergencia_fecha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.fecha}"
+            tools:text="28-05-2023"/>
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:elevation="4dp"
+            android:background="@color/azulMarino"
+            app:layout_constraintTop_toBottomOf="@id/textView_llamadoDeEmergencia_fecha"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!--Hora-->
+        <TextView
+            android:id="@+id/textView_llamadoDeEmergencia_hora"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textView_llamadoDeEmergencia_motivoDelLlamado"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider1"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
             android:text="@string/hora"
             android:textColor="@color/text"
             android:textSize="20sp"
-            android:elevation="4dp"
-            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.hora}"
-            app:atributo="hora"
-            />
+            android:gravity="end"
+             />
         <TextView
-            android:id="@+id/textView_llamadoDeEmergencia_geoPoint"
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView_llamadoDeEmergencia_motivoDelLlamado"
+            app:layout_constraintBottom_toBottomOf="@id/textView_llamadoDeEmergencia_hora"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_llamadoDeEmergencia_hora"
+            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.hora}"
+            tools:text="18:01:00"/>
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:elevation="4dp"
+            android:background="@color/azulMarino"
+            app:layout_constraintTop_toBottomOf="@id/textView_llamadoDeEmergencia_hora"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!--Ubicación-->
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_llamadoDeEmergencia_hora"
-            android:layout_marginTop="@dimen/space_small"
-            android:paddingHorizontal="@dimen/space_medium"
-            android:paddingVertical="@dimen/textPadding"
-            android:background="@color/settingOptionsBackground"
-            android:text="@string/geoPoint"
-            android:textColor="@color/text"
-            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/divider2">
+
+            <TextView
+                android:id="@+id/textView_llamadoDeEmergencia_geoPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:paddingHorizontal="@dimen/space_medium"
+                android:paddingVertical="@dimen/textPadding"
+                android:text="@string/geoPoint"
+                android:textColor="@color/text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/space_medium"
+                android:textColor="@color/text"
+                android:textSize="14sp"
+                app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.direccion}"
+                tools:text="asd\nasdasd\nasdasd\nasd" />
+        </LinearLayout>
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:elevation="4dp"
-            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.geoPoint.toString()}"
-            app:atributo="geopoint"
-            />
+            android:background="@color/azulMarino"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!--Detalles-->
         <TextView
             android:id="@+id/textView_llamadoDeEmergencia_motivoDelLlamado"
-            android:layout_width="match_parent"
+            android:layout_width="126dp"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_llamadoDeEmergencia_geoPoint"
-            android:layout_marginTop="@dimen/space_small"
+            app:layout_constraintTop_toBottomOf="@id/divider3"
+            android:gravity="end"
             android:paddingHorizontal="@dimen/space_medium"
             android:paddingVertical="@dimen/textPadding"
-            android:background="@color/settingOptionsBackground"
             android:text="@string/detalles"
             android:textColor="@color/text"
             android:textSize="20sp"
-            android:elevation="4dp"
-            android:layout_marginBottom="@dimen/space_small"
-            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.motivoDelLlamado}"
-            app:atributo="detalles"
-            />
+             />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/space_medium"
+            android:paddingVertical="@dimen/textPadding"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/textView_llamadoDeEmergencia_motivoDelLlamado"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView_llamadoDeEmergencia_motivoDelLlamado"
+            app:layout_constraintTop_toTopOf="@id/textView_llamadoDeEmergencia_motivoDelLlamado"
+            app:seteandoRegistroItem="@{llamadoDeEmergenciaItem.motivoDelLlamado}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

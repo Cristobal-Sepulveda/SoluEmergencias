@@ -1,6 +1,7 @@
 package com.example.soluemergencias.ui.registro
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,13 +24,12 @@ class RegistroFragment: Fragment() {
         binding = FragmentRegistroBinding.inflate(inflater, container, false)
         binding!!.viewModel = viewModel
         binding!!.lifecycleOwner = this
-
         binding!!.recyclerViewRegistroRegistroDeActividad.adapter = adapter
 
+
         viewModel.llamadosDeEmergencia.observe(viewLifecycleOwner){
-            it.let{
-                adapter.submitList(it as MutableList<LlamadoDeEmergenciaEnRecyclerView>)
-            }
+
+            it.let{ adapter.submitList(it as MutableList<LlamadoDeEmergenciaEnRecyclerView>) }
         }
 
         cargarRecyclerViewSegunPerfil()

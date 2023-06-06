@@ -41,4 +41,10 @@
         android:name="com.example.soluemergencias.ui.registro.RegistroFragment"
         android:label="@string/registro_de_actividad" />
 
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.example.soluemergencias.ui.map.MapFragment"
+        android:label="@string/mapa"
+        />
+
 </navigation>

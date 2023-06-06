@@ -11,6 +11,7 @@ import com.example.soluemergencias.ui.crearcontactodeasistencia.CrearContactoDeA
 import com.example.soluemergencias.ui.crearcuenta.CrearCuentaViewModel
 import com.example.soluemergencias.ui.llamadarealizada.LlamadaRealizadaViewModel
 import com.example.soluemergencias.ui.login.LoginViewModel
+import com.example.soluemergencias.ui.map.MapViewModel
 import com.example.soluemergencias.ui.recuperarclave.RecuperarClaveViewModel
 import com.example.soluemergencias.ui.registro.RegistroViewModel
 import com.example.soluemergencias.ui.sugerencias.SugerenciasViewModel
@@ -70,13 +71,17 @@ class MyApp : Application() {
             single{
                 RegistroViewModel(get() as AppDataSource)
             }
+            single{
+                MapViewModel(get() as AppDataSource)
+            }
 
             single { getDatabase(this@MyApp).usuarioDao }
+            single { getDatabase(this@MyApp).rutVinculadoDao }
 /*            single { getDatabase(this@MyApp).latLngYHoraActualDao }
             single { getDatabase(this@MyApp).jwtDao }*/
 
             //REPOSITORY
-            single { AppRepository(applicationContext, get()) as AppDataSource }
+            single { AppRepository(applicationContext, get(),get()) as AppDataSource }
         }
 
         startKoin {

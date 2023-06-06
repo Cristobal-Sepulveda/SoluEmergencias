@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.example.soluemergencias.R
 import com.example.soluemergencias.data.apiservices.RecuperarClaveApi
+import com.example.soluemergencias.data.daos.RutVinculadoDao
 import com.example.soluemergencias.data.daos.UsuarioDao
+import com.example.soluemergencias.data.data_objects.dbo.RutVinculadoDBO
 import com.example.soluemergencias.data.data_objects.dbo.UsuarioDBO
 import com.example.soluemergencias.data.data_objects.domainObjects.*
 import com.example.soluemergencias.data.data_objects.dto.ApiResponse
@@ -24,6 +26,7 @@ import java.util.*
 @Suppress("LABEL_NAME_CLASH")
 class AppRepository(private val context: Context,
                     private val usuarioDao: UsuarioDao,
+                    private val rutVinculadoDao: RutVinculadoDao,
                     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO): AppDataSource {
 
     private val cloudDB = FirebaseFirestore.getInstance()
@@ -673,69 +676,6 @@ class AppRepository(private val context: Context,
         }
     }
 
-    override suspend fun guardarComentarioDeLaEmergencia(comentarios: String):
-            Pair<Boolean, Int> = withContext(ioDispatcher) {
-        withContext(ioDispatcher){
-            val deferred = CompletableDeferred<Pair<Boolean,Int>>()
-            cloudDB.collection("LlamadosDeEmergencias")
-                .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
-                .whereEqualTo("estado", "Sin gestionar")
-                .get()
-                .addOnFailureListener{
-                    deferred.complete(Pair(false, R.string.error_cloud_request))
-                }
-                .addOnSuccessListener {
-                    if(it.isEmpty){
-                        deferred.complete(Pair(false, R.string.error_cloud_request))
-                    }else{
-                        var llamadoDeEmergencia = it.documents[0].toObject(LlamadoDeEmergencia::class.java)
-                        llamadoDeEmergencia!!.estado = "Confirmado"
-                        cloudDB.collection("LlamadosDeEmergencias")
-                            .document(it.documents[0].id).update(llamadoDeEmergencia.toMap())
-                            .addOnFailureListener {
-                                deferred.complete(Pair(false, R.string.error_cloud_request))
-                            }
-                            .addOnSuccessListener {
-                                deferred.complete(Pair(true, R.string.llamada_confirmada_con_exito))
-                            }
-                    }
-                }
-
-            return@withContext deferred.await()
-        }
-    }
-
-    override suspend fun ignorarEmergencia():
-            Pair<Boolean, Int> = withContext(ioDispatcher) {
-        withContext(ioDispatcher){
-            val deferred = CompletableDeferred<Pair<Boolean,Int>>()
-            cloudDB.collection("LlamadosDeEmergencias")
-                .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
-                .whereEqualTo("estado", "Sin gestionar")
-                .get()
-                .addOnFailureListener{
-                    deferred.complete(Pair(false, R.string.error_cloud_request))
-                }
-                .addOnSuccessListener {
-                    if(it.isEmpty){
-                        deferred.complete(Pair(false, R.string.error_cloud_request))
-                    }else{
-                        var llamadoDeEmergencia = it.documents[0].toObject(LlamadoDeEmergencia::class.java)
-                        llamadoDeEmergencia!!.estado = "Desestimada"
-                        cloudDB.collection("LlamadosDeEmergencias")
-                            .document(it.documents[0].id).update(llamadoDeEmergencia.toMap())
-                            .addOnFailureListener {
-                                deferred.complete(Pair(false, R.string.error_cloud_request))
-                            }
-                            .addOnSuccessListener {
-                                deferred.complete(Pair(true, R.string.llamada_desestimada_con_exito))
-                            }
-                    }
-                }
-            return@withContext deferred.await()
-        }
-    }
-
 
     override suspend fun cargandoRegistroDeActividadAsesorDelHogar():
             Triple<Boolean, Int, MutableList<LlamadoDeEmergenciaEnRecyclerView>?> = withContext(ioDispatcher){
@@ -744,13 +684,10 @@ class AppRepository(private val context: Context,
 
             cloudDB.collection("LlamadosDeEmergencias")
                 .whereEqualTo("rut", usuarioDao.obtenerUsuarios()[0].rut)
-                .whereEqualTo("estado", "Confirmado")
                 .get()
-
                 .addOnFailureListener{
                     deferred.complete(Triple(false, R.string.error_cloud_request, null))
                 }
-
                 .addOnSuccessListener{
                     if(it.isEmpty){
                         deferred.complete(Triple(true, R.string.error_cloud_request, mutableListOf()))
@@ -760,18 +697,16 @@ class AppRepository(private val context: Context,
                             val rut = data["rut"] as String
                             val fecha = data["fecha"] as String
                             val hora = data["hora"] as String
-                            val geoPoint = data["geoPoint"] as GeoPoint
+                            val direccion = data["direccion"] as String
                             val motivoDelLlamado = data["motivoDelLlamado"] as String
-                            val estado = data["estado"] as String
                             val hogarDeLaEmergencia = data["hogarDeLaEmergencia"] as String
                             val id = document.id
                             LlamadoDeEmergenciaEnRecyclerView(
                                 rut,
                                 fecha,
                                 hora,
-                                geoPoint,
+                                direccion,
                                 motivoDelLlamado,
-                                estado,
                                 hogarDeLaEmergencia,
                                 id
                             )
@@ -801,18 +736,16 @@ class AppRepository(private val context: Context,
                             val rut = data["rut"] as String
                             val fecha = data["fecha"] as String
                             val hora = data["hora"] as String
-                            val geoPoint = data["geoPoint"] as GeoPoint
+                            val direccion = data["direccion"] as String
                             val motivoDelLlamado = data["motivoDelLlamado"] as String
-                            val estado = data["estado"] as String
                             val hogarDeLaEmergencia = data["hogarDeLaEmergencia"] as String
                             val id = document.id
                             LlamadoDeEmergenciaEnRecyclerView(
                                 rut,
                                 fecha,
                                 hora,
-                                geoPoint,
+                                direccion,
                                 motivoDelLlamado,
-                                estado,
                                 hogarDeLaEmergencia,
                                 id
                             )
@@ -824,7 +757,46 @@ class AppRepository(private val context: Context,
         }
     }
 
+    override suspend fun registrarLocalizacionEnEmergencia(geoPoint: GeoPoint){
+        val rut = usuarioDao.obtenerUsuarios()[0].rut
+        withContext(ioDispatcher){
+            cloudDB.collection("registroLocalizacionEnEmergencia")
+                .document(rut)
+                .get()
+                .addOnSuccessListener{
+                    if(it.exists()){
+                        val newListOfGeoPoints = it.data!!["geoPoints"] as MutableList<GeoPoint>
+                        newListOfGeoPoints.add(geoPoint)
+                        cloudDB.collection("registroLocalizacionEnEmergencia")
+                            .document(rut)
+                            .update("geoPoints", newListOfGeoPoints)
+                    }else{
+                        val listOfGeoPoints = mutableListOf<GeoPoint>()
+                        listOfGeoPoints.add(geoPoint)
+                        cloudDB.collection("registroLocalizacionEnEmergencia")
+                            .document(rut)
+                            .set(mapOf("geoPoints" to listOfGeoPoints))
+                    }
+                }
+                .addOnFailureListener{
+                    Log.e("ERROR", "Error al registrar la localizacion en emergencia")
+                }
+        }
+    }
 
+    override suspend fun guardarRutVinculado(rutVinculadoDBO: RutVinculadoDBO) {
+        CoroutineScope(Dispatchers.IO).launch {
+            rutVinculadoDao.guardarRutVinculado(rutVinculadoDBO)
+        }
+    }
+
+    override suspend fun obtenerRutVinculado(): RutVinculadoDBO = withContext(ioDispatcher){
+        withContext(ioDispatcher){
+            val deferred = CompletableDeferred<RutVinculadoDBO>()
+            deferred.complete(rutVinculadoDao.obtenerRutVinculados().first())
+            return@withContext deferred.await()
+        }
+    }
 
     private fun parseErrorResponse(errorBody: String?): String {
         if (errorBody == null) return "Unknown error"

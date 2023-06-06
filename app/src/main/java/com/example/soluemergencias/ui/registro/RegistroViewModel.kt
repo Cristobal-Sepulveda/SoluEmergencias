@@ -46,6 +46,7 @@ class RegistroViewModel(val dataSource: AppDataSource): ViewModel() {
                 if(task.third!!.isEmpty()){
                     CloudRequestStatus.DONE_WITH_NO_DATA
                 }else{
+                    _llamadosDeEmergencia.postValue(task.third!!)
                     CloudRequestStatus.DONE
                 }
             }

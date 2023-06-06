@@ -9,9 +9,12 @@ import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.firestore.GeoPoint
+import com.google.maps.GeoApiContext
+import com.google.maps.GeocodingApi
+import com.google.maps.model.LatLng
 import kotlinx.coroutines.CompletableDeferred
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -76,21 +79,34 @@ fun parsingBase64ImageToBitMap(fotoPerfil: String): Bitmap {
     }
 }
 
-//write a function that can get the current latlng of the user
-@SuppressLint("MissingPermission")
-suspend fun getCurrentLocationAsGeoPoint(activity: Activity): GeoPoint {
-    val geoPoint = CompletableDeferred<GeoPoint>()
-    LocationServices.getFusedLocationProviderClient(activity).lastLocation
-    .addOnFailureListener {
-        geoPoint.complete(GeoPoint(0.0, 0.0))
+fun getAddressFromLatLng(apiKey: String, latLng: LatLng): String {
+    val geoApiContext = GeoApiContext.Builder().apiKey(apiKey).build()
+    val request = GeocodingApi.newRequest(geoApiContext).latlng(latLng)
+
+    return try {
+        val results = request.await()
+        if (results.isNotEmpty()) results[0].formattedAddress else "No se pudo obtener la dirección"
+    } catch (e: Exception) {
+        Log.e("getAddressFromLatLng", "Error: ${e.message}")
+        "No se pudo obtener la dirección"
     }
-    .addOnSuccessListener { location : Location? ->
-        geoPoint.complete(
-            GeoPoint(location?.latitude ?: 0.0, location?.longitude ?: 0.0)
-        )
-    }
-    return geoPoint.await()
 }
+
+@SuppressLint("MissingPermission")
+suspend fun getCurrentLocationAsLatLng(activity: Activity): LatLng {
+    val latLng = CompletableDeferred<LatLng>()
+    LocationServices.getFusedLocationProviderClient(activity).lastLocation
+        .addOnFailureListener {
+            latLng.complete(LatLng(0.0, 0.0))
+        }
+        .addOnSuccessListener { location : Location? ->
+            latLng.complete(
+                LatLng(location?.latitude ?: 0.0, location?.longitude ?: 0.0)
+            )
+        }
+    return latLng.await()
+}
+
 
 
 

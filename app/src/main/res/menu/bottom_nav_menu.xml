@@ -8,8 +8,8 @@
         android:title="@string/agenda" />
 
     <item
-        android:id="@+id/navigation_registro"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/registro" />
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/baseline_map_24"
+        android:title="@string/mapa" />
 </menu>
 

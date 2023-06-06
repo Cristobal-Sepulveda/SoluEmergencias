@@ -9,6 +9,16 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+def googleMapsApiKey = localProperties.getProperty('googleMapsApiKey')
+
+if (googleMapsApiKey == null) {
+    googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY_ENVIRONMENT_VARIABLE")
+}
+
+
 android {
     namespace 'com.example.soluemergencias'
     compileSdkPreview "UpsideDownCake"
@@ -21,6 +31,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+            googleMapsApiKey : googleMapsApiKey,
+        ]
+        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"$googleMapsApiKey\""
     }
 
     buildTypes {
@@ -30,11 +44,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        //sourceCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        //targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        //jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         dataBinding true
@@ -68,6 +85,12 @@ dependencies {
     implementation "com.google.firebase:firebase-auth-ktx"
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Google Maps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.maps:google-maps-services:0.18.0'
+
 
     //Koin Dependency Injection
     // Koin Core features

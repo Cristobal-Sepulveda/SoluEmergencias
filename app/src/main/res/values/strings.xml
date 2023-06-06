@@ -156,13 +156,20 @@
     <string name="Guardar">Guardar</string>
     <string name="completar_campos">Antes de guardar debes de ingresar un comentario.</string>
     <string name="faltaCompletarDatosDeLaUltimaEmergencia">Antes de llamar, completa los datos de la emergencia anterior</string>
-    <string name="fecha">Fecha</string>
-    <string name="hora">Hora</string>
-    <string name="geoPoint">Ubicacion</string>
+    <string name="fecha">Fecha: </string>
+    <string name="hora">Hora: </string>
+    <string name="geoPoint">Ubicación: </string>
     <string name="direccion">Dirección</string>
-    <string name="detalles">Detalles</string>
+    <string name="detalles">Detalles: </string>
     <string name="sin_actividad">Aún no has gestionado una emergencia. En cuanto lo hagas, ¡podras ver sus detalles aquí!</string>
     <string name="refresh">Recargar</string>
     <string name="llamada_desestimada_con_exito">La llamada ha sido desestimada</string>
     <string name="llamada_confirmada_con_exito">La llamada ha sido registrada con éxito.</string>
+    <string name="mapa_sin_permisos_autorizados">Para habilitar el mapa tienes que aceptar los permisos de localización</string>
+    <string name="ubicacionActual">ubicación actual</string>
+    <string name="mapa">Mapa</string>
+    <string name="preference_file_key">com.example.soluemergencias</string>
+    <string name="servicio_rastreo_iniciado">Se ha iniciado el servicio de localización</string>
+    <string name="no_location_detected">No se pudo obtener la ubicación actual</string>
+    <string name="detener_transmision">Detener transmisión</string>
 </resources>

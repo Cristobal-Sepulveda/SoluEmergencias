@@ -10,7 +10,7 @@ import com.example.soluemergencias.data.data_objects.domainObjects.LlamadoDeEmer
 import com.example.soluemergencias.data.data_objects.domainObjects.SolicitudDeVinculo
 import com.example.soluemergencias.utils.Constants.CloudRequestStatus
 
-class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(){
+class VistaGeneralViewModel(val dataSource: AppDataSource,) : ViewModel(){
     private val _status = MutableLiveData<CloudRequestStatus>()
     val status: MutableLiveData<CloudRequestStatus>
         get() = _status
@@ -22,9 +22,7 @@ class VistaGeneralViewModel(private val dataSource: AppDataSource,) : ViewModel(
     suspend fun obtenerUsuarioDesdeRoom(): UsuarioDBO {
         return dataSource.obtenerUsuarioDesdeRoom()
     }
-    suspend fun registrarLlamadoDeEmergencia(llamadoDeEmergencia: LlamadoDeEmergencia){
-        dataSource.registrarLlamadoDeEmergencia(llamadoDeEmergencia)
-    }
+
     suspend fun cargandoListaDeContactosDeEmergencia():
             Triple<Boolean, Int, MutableList<ContactoDeEmergencia>>{
 

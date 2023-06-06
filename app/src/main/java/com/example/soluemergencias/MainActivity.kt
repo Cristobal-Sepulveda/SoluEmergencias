@@ -21,6 +21,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.soluemergencias.data.AppDataSource
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -77,8 +79,8 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
         menuHost.addMenuProvider(this, this, Lifecycle.State.RESUMED)
-        /*bottomNavigationView = findViewById(R.id.bottom_navigation_view)
-        bottomNavigationView.setupWithNavController(navController)*/
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.setupWithNavController(navController)
         rootView = binding.root
         pintandoSideBarMenuYBottomAppBarSegunElPerfilDelUsuario()
 
@@ -107,6 +109,12 @@ class MainActivity : AppCompatActivity(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.refresh -> {
+                navController.currentDestination?.id?.let { fragmentId ->
+                    navController.popBackStack(fragmentId, true)
+                    navController.navigate(fragmentId)
+                }
+            }
             R.id.sugerencias -> {
                 navController.navigate(R.id.navigation_sugerencias)
                 return true
@@ -123,8 +131,10 @@ class MainActivity : AppCompatActivity(), MenuProvider {
             dataSource.obtenerUsuarioDesdeRoom().let {
                 val nombre = it.nombreCompleto.split(" ")[0]
                 val perfil = it.perfil
-                Log.e("perfil", it.perfil)
                 val fotoPerfil = it.fotoPerfil
+
+                if(perfil !="Dueño de casa") binding.fragmentBaseInterface.bottomNavigationView.visibility = View.GONE
+
                 binding.navView.getHeaderView(0)
                     .findViewById<TextView>(R.id.textView_drawerNavHeader_nombreUsuario)
                     .text = nombre
